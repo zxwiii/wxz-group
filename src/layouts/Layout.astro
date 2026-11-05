@@ -1,0 +1,397 @@
+---
+interface Props {
+  title: string;
+  activeNav?: string;
+  description?: string;
+}
+
+const { 
+  title, 
+  activeNav = '',
+  description = '扬州大学环境科学与工程学院王小治课题组官方网站。主要致力于农业面源污染防控、水土环境化学、新型环境功能纳米催化材料等前沿领域研究。'
+} = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{title} | 扬州大学环境科学与工程学院王小治课题组</title>
+  <meta name="description" content={description} />
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <!-- Netlify Identity Widget for Decap CMS -->
+  <script is:inline src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  <style is:global>
+    :root {
+      --primary-navy: #0f2c59;      /* 扬大深海蓝 */
+      --primary-blue: #185a9d;
+      --accent-blue: #0284c7;
+      --accent-gold: #c29d59;
+      --bg-page: #f8fafc;
+      --border-color: #e2e8f0;
+      --text-dark: #1e293b;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      background-color: var(--bg-page);
+      color: var(--text-dark);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* 顶部导航栏 (纯中文规范，无英文) */
+    .site-header {
+      background: #ffffff;
+      border-bottom: 2px solid var(--primary-navy);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      position: sticky;
+      top: 0;
+      z-index: 9999;
+    }
+
+    .header-inner {
+      max-width: 1380px;
+      margin: 0 auto;
+      padding: 0 24px;
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      text-decoration: none;
+      color: var(--primary-navy);
+    }
+
+    .brand-badge {
+      width: 44px;
+      height: 44px;
+      background: linear-gradient(135deg, #0f2c59 0%, #185a9d 100%);
+      color: #fff;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 20px;
+      letter-spacing: 1px;
+      box-shadow: 0 4px 8px rgba(15, 44, 89, 0.2);
+    }
+
+    .brand-title {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .main-name {
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      color: var(--primary-navy);
+      line-height: 1.2;
+    }
+
+    .sub-name {
+      font-size: 12px;
+      color: #64748b;
+      margin-top: 3px;
+      font-weight: 500;
+    }
+
+    /* 纯中文导航菜单 */
+    .site-nav {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      list-style: none;
+    }
+
+    .nav-item {
+      display: inline-flex;
+      align-items: center;
+      padding: 8px 14px;
+      color: #334155;
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: 600;
+      border-radius: 6px;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .nav-item:hover, .nav-item.active {
+      color: var(--primary-navy);
+      background-color: #f1f5f9;
+    }
+
+    .nav-item.active {
+      color: #185a9d;
+      border-bottom: 2px solid #185a9d;
+      border-radius: 6px 6px 0 0;
+    }
+
+    .nav-btn-internal {
+      background: #eff6ff;
+      color: #1e40af !important;
+      border: 1px solid #bfdbfe;
+      border-radius: 6px;
+      margin-left: 6px;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .nav-btn-internal:hover {
+      background: #dbeafe !important;
+    }
+
+    .nav-btn-admin {
+      background: #f8fafc;
+      color: #475569 !important;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      margin-left: 6px;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 14px;
+    }
+
+    .nav-btn-admin:hover {
+      background: #e2e8f0 !important;
+      color: #0f172a !important;
+    }
+
+    /* 移动端菜单按钮 */
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      color: var(--primary-navy);
+    }
+
+    @media (max-width: 1080px) {
+      .header-inner {
+        height: 64px;
+        padding: 0 16px;
+      }
+      .mobile-menu-btn {
+        display: block;
+      }
+      .site-nav {
+        display: none;
+        position: absolute;
+        top: 64px;
+        left: 0;
+        right: 0;
+        background: #ffffff;
+        flex-direction: column;
+        padding: 16px;
+        border-bottom: 1px solid var(--border-color);
+        box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+        gap: 8px;
+      }
+      .site-nav.open {
+        display: flex;
+      }
+      .nav-item {
+        width: 100%;
+        padding: 12px 16px;
+      }
+    }
+
+    /* 统一规范底部 */
+    .site-footer {
+      background: #0f2c59;
+      color: #94a3b8;
+      padding: 48px 24px 32px;
+      border-top: 1px solid #1e3a8a;
+      margin-top: 60px;
+    }
+
+    .footer-inner {
+      max-width: 1380px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 40px;
+    }
+
+    .footer-col h4 {
+      color: #ffffff;
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+
+    .footer-col p {
+      font-size: 14px;
+      line-height: 1.8;
+      color: #cbd5e1;
+    }
+
+    .footer-links {
+      list-style: none;
+    }
+
+    .footer-links li {
+      margin-bottom: 10px;
+    }
+
+    .footer-links a {
+      color: #cbd5e1;
+      text-decoration: none;
+      font-size: 14px;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover {
+      color: #38bdf8;
+    }
+
+    .footer-bottom {
+      max-width: 1380px;
+      margin: 36px auto 0;
+      padding-top: 24px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 13px;
+      color: #94a3b8;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    @media (max-width: 768px) {
+      .footer-inner {
+        grid-template-columns: 1fr;
+        gap: 30px;
+      }
+      .footer-bottom {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- 顶部纯中文导航栏 -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="/" class="brand-logo">
+        <div class="brand-badge">W</div>
+        <div class="brand-title">
+          <span class="main-name">王小治课题组</span>
+          <span class="sub-name">扬州大学环境科学与工程学院</span>
+        </div>
+      </a>
+
+      <button class="mobile-menu-btn" id="menuToggle" aria-label="切换导航菜单">☰</button>
+
+      <ul class="site-nav" id="siteNav">
+        <li><a href="/" class={`nav-item ${activeNav === '首页' ? 'active' : ''}`}>首页</a></li>
+        <li><a href="/research" class={`nav-item ${activeNav === '研究方向' ? 'active' : ''}`}>研究方向</a></li>
+        <li><a href="/publications" class={`nav-item ${activeNav === '学术文章' ? 'active' : ''}`}>学术文章</a></li>
+        <li><a href="/patents" class={`nav-item ${activeNav === '专利成果' ? 'active' : ''}`}>专利成果</a></li>
+        <li><a href="/members" class={`nav-item ${activeNav === '团队成员' ? 'active' : ''}`}>团队成员</a></li>
+        <li><a href="/news" class={`nav-item ${activeNav === '新闻动态' ? 'active' : ''}`}>新闻动态</a></li>
+        <li><a href="/joinus" class={`nav-item ${activeNav === '诚邀英才' ? 'active' : ''}`}>诚邀英才</a></li>
+        <li><a href="/contact" class={`nav-item ${activeNav === '联系我们' ? 'active' : ''}`}>联系我们</a></li>
+        <li>
+          <a href="/internal" class={`nav-item nav-btn-internal ${activeNav === '内部专区' ? 'active' : ''}`} title="Microsoft 365 登录受保护区">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+              <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+            </svg>
+            内部专区
+          </a>
+        </li>
+        <li>
+          <a href="/admin" class="nav-item nav-btn-admin" title="内容管理后台">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="3"></circle>
+              <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+            </svg>
+            管理后台
+          </a>
+        </li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- 主体插槽 -->
+  <main>
+    <slot />
+  </main>
+
+  <!-- 全站统一页脚 -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-col">
+        <h4>扬州大学环境科学与工程学院 · 王小治课题组</h4>
+        <p>地址：江苏省扬州市华扬西路196号 扬州大学文汇路校区</p>
+        <p>邮编：225009 | 联系邮箱：wangxz@yzu.edu.cn</p>
+        <p style="margin-top: 10px;">研究领域：农业面源污染防控、水土环境化学、新型环境功能纳米催化材料</p>
+      </div>
+
+      <div class="footer-col">
+        <h4>快速导航</h4>
+        <ul class="footer-links">
+          <li><a href="/research">研究方向</a></li>
+          <li><a href="/publications">学术论文 (WoS实时引证)</a></li>
+          <li><a href="/patents">知识产权与发明专利</a></li>
+          <li><a href="/members">课题组成员 (师生名录)</a></li>
+          <li><a href="/news">组内新闻与学术动态</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>学术与管理服务</h4>
+        <ul class="footer-links">
+          <li><a href="/internal">课题组内部专区 (Zero Trust)</a></li>
+          <li><a href="/admin">内容管理后台 (Decap CMS)</a></li>
+          <li><a href="/joinus">研究生与博士后招聘</a></li>
+          <li><a href="/contact">实验室位置与乘车指南</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div>© {new Date().getFullYear()} 扬州大学王小治课题组 (Wang Xiaozhi Research Group). 保留所有权利.</div>
+      <div>托管于 Cloudflare 全球边缘网络 · 由 GitHub 持续集成自动构建</div>
+    </div>
+  </footer>
+
+  <script>
+    // 移动端菜单切换
+    const toggleBtn = document.getElementById('menuToggle');
+    const navMenu = document.getElementById('siteNav');
+    if (toggleBtn && navMenu) {
+      toggleBtn.addEventListener('click', () => {
+        navMenu.classList.toggle('open');
+      });
+    }
+
+    // Netlify Identity CMS 登录状态监听
+    if (window.netlifyIdentity) {
+      window.netlifyIdentity.on("init", user => {
+        if (!user) {
+          window.netlifyIdentity.on("login", () => {
+            document.location.href = "/admin/";
+          });
+        }
+      });
+    }
+  </script>
+</body>
+</html>

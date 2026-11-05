@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>王小治课题组 | 可视化内容管理后台</title>
+  <!-- Decap CMS Script -->
+  <script src="https://unpkg.com/decap-cms@^3.1.2/dist/decap-cms.js"></script>
+</head>
+<body>
+  <!-- Decap CMS 自动挂载 -->
+  <script>
+    // 中文本地化语言包
+    CMS.registerLocale('zh_CN', {
+      auth: {
+        login: '登录',
+        loggingIn: '正在登录...',
+        loginWithNetlifyIdentity: '使用 Netlify Identity 登录',
+        loginWithGitHub: '使用 GitHub 登录',
+        loginWithGitLab: '使用 GitLab 登录',
+        errors: {
+          email: '请输入您的邮箱。',
+          password: '请输入您的密码。',
+        },
+      },
+      app: {
+        header: {
+          content: '内容管理',
+          workflow: '发布流',
+          media: '媒体库',
+          quickAdd: '快速发布',
+        },
+        app: {
+          loading: '正在加载管理后台...',
+          error: '加载后台时发生错误。',
+          close: '关闭',
+        },
+      },
+      collection: {
+        sidebar: {
+          collections: '栏目分类',
+          allCollections: '全部栏目',
+          searchAll: '全局搜索',
+        },
+        collectionTop: {
+          title: '条目列表',
+          viewAs: '视图',
+          newButton: '新建动态',
+          ascending: '升序',
+          descending: '降序',
+        },
+        entries: {
+          emptyCollection: '暂无动态',
+          loadingEntries: '正在加载条目...',
+          noEntriesFound: '未找到相关条目',
+        },
+      },
+      editor: {
+        editorControl: {
+          field: {
+            optional: '选填',
+          },
+        },
+        editorControlPane: {
+          widget: {
+            required: '%{fieldLabel} 为必填项。',
+          },
+        },
+        editor: {
+          onSaveTitle: '保存草稿',
+          onPublishTitle: '发布文章',
+          onPublishing: '正在发布...',
+          publish: '立即发布',
+          published: '已发布',
+          save: '保存草稿',
+          saving: '正在保存...',
+          saved: '已保存',
+          back: '返回',
+        },
+      },
+    });
+  </script>
+</body>
+</html>

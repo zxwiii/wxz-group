@@ -1,0 +1,25 @@
+backend:
+  name: github
+  repo: zxwiii/wxz-group  # 替换为您 GitHub 上的实际仓库路径，例如: 您的GitHub用户名/wxz-group
+  branch: main
+  site_domain: wxz.zxw.ac.cn
+
+locale: zh_CN
+
+media_folder: "public/images/uploads"
+public_folder: "/images/uploads"
+
+collections:
+  - name: "news"
+    label: "科研动态与新闻"
+    label_singular: "新闻动态"
+    folder: "src/content/news"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    editor:
+      preview: true
+    fields:
+      - { label: "文章标题", name: "title", widget: "string" }
+      - { label: "发布日期", name: "date", widget: "date", format: "YYYY-MM-DD", date_format: "YYYY-MM-DD", time_format: false }
+      - { label: "封面图片", name: "coverImage", widget: "image", required: false }
+      - { label: "正文详细内容 (支持富文本与 Markdown 排版)", name: "body", widget: "markdown" }

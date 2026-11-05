@@ -1,0 +1,357 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="研究方向" activeNav="research">
+  <!-- 用户原版研究方向.txt (无损嵌入) -->
+  <div class="jz_fix_ue_img">
+    <style>/* 白底专属 - 研究方向整页容器 */
+  .awsr-light-research-page {
+    max-width: 1200px;
+    margin: 25px auto 50px;
+    padding: 0 15px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    color: #1e293b; /* 深色文字，彻底告别隐形 */
+    box-sizing: border-box;
+  }
+
+  /* 页面大标题 */
+  .awsr-light-page-header {
+    text-align: center;
+    margin-bottom: 35px;
+  }
+  .awsr-light-page-title {
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    margin: 0;
+    color: #0f172a; /* 极深蓝黑大标题 */
+  }
+  .awsr-light-page-subtitle {
+    font-size: 13px;
+    color: #0284c7; /* 科技蓝副标题 */
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-top: 6px;
+    font-weight: 600;
+  }
+
+  /* 方向大卡片 */
+  .awsr-light-dir-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 30px;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 20px rgba(15, 23, 42, 0.05); /* 柔和浅色投影 */
+    transition: all 0.3s ease;
+  }
+  .awsr-light-dir-card:hover {
+    border-color: #38bdf8;
+    box-shadow: 0 10px 25px rgba(2, 132, 199, 0.1);
+  }
+
+  /* 方向卡片头部 */
+  .awsr-light-head {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 16px;
+    margin-bottom: 18px;
+  }
+  .awsr-light-num {
+    font-size: 28px;
+    font-weight: 900;
+    color: #0284c7;
+    font-family: Impact, "Arial Black", sans-serif;
+  }
+  .awsr-light-title-cn {
+    font-size: 21px;
+    font-weight: 700;
+    color: #0f172a;
+    margin: 0;
+  }
+  .awsr-light-title-en {
+    font-size: 13px;
+    color: #64748b;
+    margin-top: 3px;
+    font-weight: 500;
+  }
+
+  /* 研究内容简介框 */
+  .awsr-light-summary {
+    font-size: 14px;
+    line-height: 1.8;
+    color: #334155;
+    margin: 0 0 22px 0;
+    text-align: justify;
+    background: #f8fafc;
+    border: 1px solid #f1f5f9;
+    padding: 15px 18px;
+    border-radius: 8px;
+    border-left: 4px solid #0284c7;
+  }
+
+  /* 代表作小标题 */
+  .awsr-light-pub-header {
+    font-size: 15px;
+    font-weight: 700;
+    color: #0284c7;
+    margin: 0 0 12px 0;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  /* 代表作列表 */
+  .awsr-light-pub-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .awsr-light-pub-item {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 14px 16px;
+    transition: all 0.2s ease;
+  }
+  .awsr-light-pub-item:hover {
+    background: #f8fafc;
+    border-color: #93c5fd;
+  }
+
+  /* 论文标题与作者 */
+  .awsr-light-paper-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #0f172a;
+    line-height: 1.5;
+    margin-bottom: 5px;
+  }
+  .awsr-light-paper-meta {
+    font-size: 13px;
+    color: #475569;
+    line-height: 1.6;
+  }
+  .awsr-light-paper-meta b {
+    color: #0284c7; /* 突出导师姓名 */
+  }
+  .awsr-light-journal {
+    color: #0369a1;
+    font-style: italic;
+    font-weight: 600;
+  }
+
+  /* DOI 链接 */
+  .awsr-light-doi {
+    display: inline-block;
+    margin-top: 6px;
+    font-size: 12px;
+    color: #64748b !important;
+    text-decoration: none !important;
+    font-weight: 500;
+  }
+  .awsr-light-doi:hover {
+    color: #0284c7 !important;
+    text-decoration: underline !important;
+  }
+
+  @media (max-width: 768px) {
+    .awsr-light-dir-card {
+      padding: 20px 15px;
+    }
+  }</style>
+    <div class="awsr-light-research-page">
+        <div class="awsr-light-page-header">
+            <h1 class="awsr-light-page-title">
+                研究方向
+            </h1>
+            <div class="awsr-light-page-subtitle">
+                Research&nbsp;Directions&nbsp;&amp;&nbsp;Representative&nbsp;Publications
+            </div>
+        </div>
+        <div class="awsr-light-dir-card">
+            <div class="awsr-light-head">
+                <span class="awsr-light-num">01</span> &nbsp;
+                <div>
+                    <h2 class="awsr-light-title-cn">
+                        水土环境修复与污染控制
+                    </h2>
+                    <div class="awsr-light-title-en">
+                        Soil&nbsp;&amp;&nbsp;Water&nbsp;Remediation&nbsp;&amp;&nbsp;Environmental&nbsp;Quality
+                    </div>
+                </div>
+            </div>
+            <p class="awsr-light-summary">
+                针对长江中下游及典型农业区农田土壤重金属（Cd、Pb、Hg、As）复合污染与农业面源污染问题，重点研发改性层状双金属氢氧化物（LDH）、铁基纳米功能矿物及绿色钝化修复剂，系统揭示重金属在“土壤-作物-水体”系统的生物有效性迁移阻控机制，构建农田原位生态安全修复技术体系。
+            </p>
+            <div class="awsr-light-pub-header">
+                代表性成果：
+            </div>
+            <div class="awsr-light-pub-list">
+                <div class="awsr-light-pub-item">
+                    <div class="awsr-light-paper-title">
+                        Passivation&nbsp;Remediation&nbsp;of&nbsp;Cd-Contaminated&nbsp;Farmland&nbsp;by&nbsp;CaAl-LDH:&nbsp;A&nbsp;Mechanism&nbsp;and&nbsp;Application&nbsp;Study
+                    </div>
+                    <div class="awsr-light-paper-meta">
+                        Lu,&nbsp;X.;&nbsp;Wei,&nbsp;N.;&nbsp;Fang,&nbsp;H.;&nbsp;...&nbsp;<b>Wang,&nbsp;Xiaozhi*</b>.&nbsp;<span class="awsr-light-journal">Agronomy</span>,&nbsp;2025,&nbsp;15,&nbsp;2354.
+                    </div><a href="https://doi.org/10.3390/agronomy15102354" target="_blank" class="awsr-light-doi">DOI:&nbsp;10.3390/agronomy15102354&nbsp;↗</a> &nbsp;
+                </div>
+                <div class="awsr-light-pub-item">
+                    <div class="awsr-light-paper-title">
+                        Enhanced&nbsp;removal&nbsp;of&nbsp;lead&nbsp;complexes&nbsp;using&nbsp;phosphide-modified&nbsp;nanoscale&nbsp;zero-valent&nbsp;iron:&nbsp;The&nbsp;boosting&nbsp;impact&nbsp;of&nbsp;the&nbsp;iron&nbsp;cycle
+                    </div>
+                    <div class="awsr-light-paper-meta">
+                        Li,&nbsp;Rui;&nbsp;Liu,&nbsp;Xinya;&nbsp;Ge,&nbsp;Xiao;&nbsp;<b>Wang,&nbsp;Xiaozhi*</b>.&nbsp;<span class="awsr-light-journal">Journal&nbsp;of&nbsp;Cleaner&nbsp;Production</span>,&nbsp;2025,&nbsp;501,&nbsp;145336.
+                    </div><a href="https://doi.org/10.1016/j.jclepro.2025.145336" target="_blank" class="awsr-light-doi">DOI:&nbsp;10.1016/j.jclepro.2025.145336&nbsp;↗</a> &nbsp;
+                </div>
+                <div class="awsr-light-pub-item">
+                    <div class="awsr-light-paper-title">
+                        Efficient&nbsp;Hg(II)&nbsp;removed&nbsp;by&nbsp;L-cysteine&nbsp;modified&nbsp;UiO-66&nbsp;through&nbsp;chemical&nbsp;adsorption&nbsp;via&nbsp;a&nbsp;facile&nbsp;partial&nbsp;ligand&nbsp;replacement&nbsp;strategy
+                    </div>
+                    <div class="awsr-light-paper-meta">
+                        Dai,&nbsp;Zeming;&nbsp;Zhou,&nbsp;Xuan;&nbsp;Lin,&nbsp;Yuting;&nbsp;...&nbsp;<b>Wang,&nbsp;Xiaozhi*</b>.&nbsp;<span class="awsr-light-journal">Journal&nbsp;of&nbsp;Colloid&nbsp;and&nbsp;Interface&nbsp;Science</span>,&nbsp;2025,&nbsp;684,&nbsp;705-716.
+                    </div><a href="https://doi.org/10.1016/j.jcis.2025.01.043" target="_blank" class="awsr-light-doi">DOI:&nbsp;10.1016/j.jcis.2025.01.043&nbsp;↗</a> &nbsp;
+                </div>
+            </div>
+        </div>
+        <div class="awsr-light-dir-card">
+            <div class="awsr-light-head">
+                <span class="awsr-light-num">02</span> &nbsp;
+                <div>
+                    <h2 class="awsr-light-title-cn">
+                        先进催化与环境功能材料
+                    </h2>
+                    <div class="awsr-light-title-en">
+                        Advanced&nbsp;Catalysis&nbsp;&amp;&nbsp;Functional&nbsp;Environmental&nbsp;Materials
+                    </div>
+                </div>
+            </div>
+            <p class="awsr-light-summary">
+                立足前沿催化化学与低碳能源转化，重点开展单原子催化剂（SACs）的活性位点微环境精准调控、缺陷工程石墨相氮化碳（g-C₃N₄）及金属有机骨架（MOF/COF）衍生复合材料设计；应用于类芬顿高级氧化微污染物深度降解、高效光催化还原&nbsp;CO₂&nbsp;转化合成燃料及光催化固氮固碳。
+            </p>
+            <div class="awsr-light-pub-header">
+                代表性成果：
+            </div>
+            <div class="awsr-light-pub-list">
+                <div class="awsr-light-pub-item">
+                    <div class="awsr-light-paper-title">
+                        Electronic&nbsp;Structure&nbsp;Reconfiguration&nbsp;of&nbsp;Zn-NxB4-x&nbsp;Sites&nbsp;for&nbsp;Enhanced&nbsp;Fenton-Like&nbsp;Catalysis
+                    </div>
+                    <div class="awsr-light-paper-meta">
+                        Ge,&nbsp;Xiao;&nbsp;Xu,&nbsp;Jinze;&nbsp;Zhou,&nbsp;Tao;&nbsp;...&nbsp;<b>Wang,&nbsp;Xiaozhi*</b>.&nbsp;<span class="awsr-light-journal">Angewandte&nbsp;Chemie&nbsp;International&nbsp;Edition</span>,&nbsp;2025,&nbsp;64,&nbsp;e202515736.
+                    </div><a href="https://doi.org/10.1002/anie.202515736" target="_blank" class="awsr-light-doi">DOI:&nbsp;10.1002/anie.202515736&nbsp;↗</a> &nbsp;
+                </div>
+                <div class="awsr-light-pub-item">
+                    <div class="awsr-light-paper-title">
+                        Engineering&nbsp;Spin&nbsp;State&nbsp;of&nbsp;Atomic&nbsp;Iron&nbsp;Centers&nbsp;for&nbsp;High-Performance&nbsp;Photocatalytic&nbsp;Nitrogen&nbsp;Fixation
+                    </div>
+                    <div class="awsr-light-paper-meta">
+                        Ge,&nbsp;Xiao;&nbsp;Zheng,&nbsp;Xiyang;&nbsp;Zhou,&nbsp;Tao;&nbsp;...&nbsp;<b>Wang,&nbsp;Xiaozhi*</b>.&nbsp;<span class="awsr-light-journal">Angewandte&nbsp;Chemie&nbsp;International&nbsp;Edition</span>,&nbsp;2025,&nbsp;64,&nbsp;e202506470.
+                    </div><a href="https://doi.org/10.1002/anie.202506470" target="_blank" class="awsr-light-doi">DOI:&nbsp;10.1002/anie.202506470&nbsp;↗</a> &nbsp;
+                </div>
+                <div class="awsr-light-pub-item">
+                    <div class="awsr-light-paper-title">
+                        Enhanced&nbsp;CO2&nbsp;photoreduction&nbsp;in&nbsp;pure&nbsp;water&nbsp;systems&nbsp;by&nbsp;surface-reconstructed&nbsp;asymmetric&nbsp;Mn-Cu&nbsp;sites
+                    </div>
+                    <div class="awsr-light-paper-meta">
+                        Zhou,&nbsp;Ganghua;&nbsp;Chen,&nbsp;Yun;&nbsp;Xu,&nbsp;Hangmin;&nbsp;...&nbsp;<b>Wang,&nbsp;Xiaozhi*</b>.&nbsp;<span class="awsr-light-journal">Applied&nbsp;Catalysis&nbsp;B:&nbsp;Environment&nbsp;and&nbsp;Energy</span>,&nbsp;2025,&nbsp;361,&nbsp;124617.
+                    </div><a href="https://doi.org/10.1016/j.apcatb.2024.124617" target="_blank" class="awsr-light-doi">DOI:&nbsp;10.1016/j.apcatb.2024.124617&nbsp;↗</a> &nbsp;
+                </div>
+            </div>
+        </div>
+        <div class="awsr-light-dir-card">
+            <div class="awsr-light-head">
+                <span class="awsr-light-num">03</span> &nbsp;
+                <div>
+                    <h2 class="awsr-light-title-cn">
+                        土壤碳氮循环与全球变化
+                    </h2>
+                    <div class="awsr-light-title-en">
+                        Soil&nbsp;Carbon&nbsp;&amp;&nbsp;Nitrogen&nbsp;Cycling&nbsp;&amp;&nbsp;Climate&nbsp;Change
+                    </div>
+                </div>
+            </div>
+            <p class="awsr-light-summary">
+                深入探究全球气候变化（大气&nbsp;CO₂&nbsp;浓度升高、增温及极端降雨）对典型农业土壤生物地球化学循环的驱动机理。定量评估稻麦轮作、果园草-豆间作模式下土壤温室气体（CO₂、CH₄、N₂O）产生与减排潜能，阐释矿物结合态有机碳与微生物残体碳的动态转化及土壤长效碳汇稳定性。
+            </p>
+            <div class="awsr-light-pub-header">
+                代表性成果：
+            </div>
+            <div class="awsr-light-pub-list">
+                <div class="awsr-light-pub-item">
+                    <div class="awsr-light-paper-title">
+                        Grass-legume&nbsp;mixture&nbsp;optimizes&nbsp;soil&nbsp;new&nbsp;carbon&nbsp;sequestration&nbsp;by&nbsp;leveraging&nbsp;microbial&nbsp;necromass&nbsp;dynamics&nbsp;in&nbsp;a&nbsp;pear&nbsp;orchard
+                    </div>
+                    <div class="awsr-light-paper-meta">
+                        Xu,&nbsp;Qiao;&nbsp;Zhao,&nbsp;Yingdong;&nbsp;Xu,&nbsp;Meiling;&nbsp;...&nbsp;<b>Wang,&nbsp;Xiaozhi*</b>.&nbsp;<span class="awsr-light-journal">Agriculture,&nbsp;Ecosystems&nbsp;&amp;&nbsp;Environment</span>,&nbsp;2025,&nbsp;394,&nbsp;109898.
+                    </div><a href="https://doi.org/10.1016/j.agee.2025.109898" target="_blank" class="awsr-light-doi">DOI:&nbsp;10.1016/j.agee.2025.109898&nbsp;↗</a> &nbsp;
+                </div>
+                <div class="awsr-light-pub-item">
+                    <div class="awsr-light-paper-title">
+                        Coupled&nbsp;iron&nbsp;oxides&nbsp;and&nbsp;microbial-mediated&nbsp;soil&nbsp;organic&nbsp;carbon&nbsp;stabilization&nbsp;across&nbsp;tea&nbsp;plantation&nbsp;chronosequences
+                    </div>
+                    <div class="awsr-light-paper-meta">
+                        Tang,&nbsp;Quan;&nbsp;Li,&nbsp;Wei;&nbsp;Wang,&nbsp;Jing;&nbsp;...&nbsp;<b>Wang,&nbsp;Xiaozhi*</b>.&nbsp;<span class="awsr-light-journal">Soil&nbsp;&amp;&nbsp;Tillage&nbsp;Research</span>,&nbsp;2025,&nbsp;247,&nbsp;106382.
+                    </div><a href="https://doi.org/10.1016/j.still.2024.106382" target="_blank" class="awsr-light-doi">DOI:&nbsp;10.1016/j.still.2024.106382&nbsp;↗</a> &nbsp;
+                </div>
+                <div class="awsr-light-pub-item">
+                    <div class="awsr-light-paper-title">
+                        Biochar&nbsp;mitigated&nbsp;zerovalent&nbsp;iron-induced&nbsp;methane&nbsp;emissions&nbsp;in&nbsp;arsenic-contaminated&nbsp;paddy&nbsp;soil
+                    </div>
+                    <div class="awsr-light-paper-meta">
+                        Ding,&nbsp;Chengyu;&nbsp;Wei,&nbsp;Liqing;&nbsp;...&nbsp;<b>Wang,&nbsp;Xiaozhi*</b>;&nbsp;Wang,&nbsp;Shengsen.&nbsp;<span class="awsr-light-journal">Chemical&nbsp;Engineering&nbsp;Journal</span>,&nbsp;2025,&nbsp;522,&nbsp;168110.
+                    </div><a href="https://doi.org/10.1016/j.cej.2025.168110" target="_blank" class="awsr-light-doi">DOI:&nbsp;10.1016/j.cej.2025.168110&nbsp;↗</a> &nbsp;
+                </div>
+            </div>
+        </div>
+        <div class="awsr-light-dir-card">
+            <div class="awsr-light-head">
+                <span class="awsr-light-num">04</span> &nbsp;
+                <div>
+                    <h2 class="awsr-light-title-cn">
+                        农业废弃物处置与资源化
+                    </h2>
+                    <div class="awsr-light-title-en">
+                        Agricultural&nbsp;Waste&nbsp;Recycling&nbsp;&amp;&nbsp;Biochar&nbsp;Engineering
+                    </div>
+                </div>
+            </div>
+            <p class="awsr-light-summary">
+                针对农林秸秆、海带残渣、养殖废弃物及市政污泥等大宗固体废弃物，研发定向热解、微波辅助炭化及化学改性技术，创制多孔生物炭基土壤调理剂与微纳碳点材料；探索废弃生物质高值化在重金属原位固化、抗生素抗性基因阻控及绿色水土功能材料方面的全链条循环利用路径。
+            </p>
+            <div class="awsr-light-pub-header">
+                代表性成果：
+            </div>
+            <div class="awsr-light-pub-list">
+                <div class="awsr-light-pub-item">
+                    <div class="awsr-light-paper-title">
+                        Transforming&nbsp;Waste&nbsp;Biomass&nbsp;into&nbsp;N-Rich&nbsp;Carbon&nbsp;Dots&nbsp;with&nbsp;Built-In&nbsp;Active&nbsp;Sites&nbsp;for&nbsp;Efficient&nbsp;CO2&nbsp;Photoreduction&nbsp;from&nbsp;Flue&nbsp;Gas
+                    </div>
+                    <div class="awsr-light-paper-meta">
+                        Zhou,&nbsp;Ganghua;&nbsp;Bi,&nbsp;Chuanzhou;&nbsp;...&nbsp;<b>Wang,&nbsp;Xiaozhi*</b>;&nbsp;Zhu,&nbsp;Xingwang.&nbsp;<span class="awsr-light-journal">ACS&nbsp;Catalysis</span>,&nbsp;2025,&nbsp;15,&nbsp;15972-15981.
+                    </div><a href="https://doi.org/10.1021/acscatal.5c04589" target="_blank" class="awsr-light-doi">DOI:&nbsp;10.1021/acscatal.5c04589&nbsp;↗</a> &nbsp;
+                </div>
+                <div class="awsr-light-pub-item">
+                    <div class="awsr-light-paper-title">
+                        Highly&nbsp;dispersed&nbsp;kelp-derived&nbsp;carbon&nbsp;dots&nbsp;for&nbsp;peroxydisulfate&nbsp;activation&nbsp;towards&nbsp;efficient&nbsp;degradation&nbsp;of&nbsp;tetracycline
+                    </div>
+                    <div class="awsr-light-paper-meta">
+                        Ning,&nbsp;Xin;&nbsp;Chen,&nbsp;Gaoran;&nbsp;Wang,&nbsp;Heming;&nbsp;...&nbsp;<b>Wang,&nbsp;Xiaozhi*</b>.&nbsp;<span class="awsr-light-journal">Colloids&nbsp;and&nbsp;Surfaces&nbsp;A</span>,&nbsp;2025,&nbsp;727,&nbsp;138149.
+                    </div><a href="https://doi.org/10.1016/j.colsurfa.2025.138149" target="_blank" class="awsr-light-doi">DOI:&nbsp;10.1016/j.colsurfa.2025.138149&nbsp;↗</a> &nbsp;
+                </div>
+                <div class="awsr-light-pub-item">
+                    <div class="awsr-light-paper-title">
+                        Divergent&nbsp;mitigation&nbsp;mechanisms&nbsp;of&nbsp;soil&nbsp;antibiotic&nbsp;resistance&nbsp;genes&nbsp;by&nbsp;biochar&nbsp;from&nbsp;different&nbsp;agricultural&nbsp;wastes
+                    </div>
+                    <div class="awsr-light-paper-meta">
+                        Yao,&nbsp;Yu;&nbsp;Yang,&nbsp;Peiyang;&nbsp;Wang,&nbsp;Bin;&nbsp;...&nbsp;<b>Wang,&nbsp;Xiaozhi*</b>.&nbsp;<span class="awsr-light-journal">Environmental&nbsp;Pollution</span>,&nbsp;2025,&nbsp;374,&nbsp;126247.
+                    </div><a href="https://doi.org/10.1016/j.envpol.2025.126247" target="_blank" class="awsr-light-doi">DOI:&nbsp;10.1016/j.envpol.2025.126247&nbsp;↗</a> &nbsp;
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</Layout>

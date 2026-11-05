@@ -1,0 +1,1272 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>专利成果 | 王小治课题组 - 扬州大学环境科学与工程学院</title>
+  <style>
+    
+    :root {
+      --primary-navy: #0f2c59;      /* 扬大深海蓝 */
+      --primary-blue: #1e3a8a;
+      --accent-blue: #0284c7;
+      --accent-gold: #c29d59;
+      --bg-page: #f8fafc;
+      --border-color: #e2e8f0;
+      --text-dark: #1e293b;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      background-color: var(--bg-page);
+      color: var(--text-dark);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* 顶部导航栏 (无任何英文) */
+    .site-header {
+      background: #ffffff;
+      border-bottom: 2px solid var(--primary-navy);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      position: sticky;
+      top: 0;
+      z-index: 9999;
+    }
+    .header-inner {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 0.8rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .site-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--primary-navy);
+    }
+    .brand-crest {
+      width: 42px;
+      height: 42px;
+      background: linear-gradient(135deg, var(--primary-navy) 0%, var(--primary-blue) 100%);
+      color: #ffffff;
+      font-size: 1.35rem;
+      font-weight: 800;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 5px rgba(15, 44, 89, 0.25);
+    }
+    .brand-text { display: flex; flex-direction: column; }
+    .brand-main { font-size: 1.25rem; font-weight: 800; letter-spacing: 1px; color: var(--primary-navy); }
+    .brand-sub { font-size: 0.78rem; color: var(--primary-blue); font-weight: 600; margin-top: 1px; }
+
+    .site-nav ul.nav-menu {
+      display: flex;
+      list-style: none;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .nav-item {
+      display: block;
+      padding: 0.5rem 0.9rem;
+      text-decoration: none;
+      color: var(--text-dark);
+      font-weight: 600;
+      font-size: 0.95rem;
+      border-radius: 6px;
+      transition: all 0.2s ease;
+    }
+    .nav-item:hover, .nav-item.active {
+      color: var(--primary-navy);
+      background: #eff6ff;
+    }
+    .has-dropdown { position: relative; }
+    .has-dropdown:hover .dropdown-menu { display: block; }
+    .dropdown-menu {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background: #ffffff;
+      min-width: 140px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 0.5rem 0;
+      list-style: none;
+      z-index: 10000;
+    }
+    .dropdown-menu li a {
+      display: block;
+      padding: 0.6rem 1.2rem;
+      text-decoration: none;
+      color: var(--text-dark);
+      font-size: 0.92rem;
+      font-weight: 600;
+    }
+    .dropdown-menu li a:hover {
+      background: #eff6ff;
+      color: var(--primary-blue);
+    }
+    .nav-lock-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 0.45rem 1rem;
+      background: #f0fdf4;
+      color: #166534;
+      border: 1px solid #bbf7d0;
+      border-radius: 20px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      text-decoration: none;
+      margin-left: 0.5rem;
+      transition: all 0.2s ease;
+    }
+    .nav-lock-btn:hover { background: #dcfce7; }
+    .lock-icon { width: 14px; height: 14px; }
+
+    /* 纯中文页面标题条 */
+    .page-title-banner {
+      background: linear-gradient(135deg, #0f2c59 0%, #1e3a8a 100%);
+      color: #ffffff;
+      padding: 2.5rem 1.5rem;
+      text-align: center;
+      border-bottom: 3px solid var(--accent-gold);
+    }
+    .page-title-cn {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: 2px;
+    }
+
+    /* 统一底部 (深色沉稳包装用户全站底部) */
+    .unified-footer-wrapper {
+      background: #0f172a;
+      border-top: 4px solid var(--primary-blue);
+      margin-top: 4rem;
+      padding: 2rem 0;
+    }
+
+    .custom-embed-container {
+      max-width: 1240px;
+      margin: 1.5rem auto 3rem auto;
+      padding: 0 1.5rem;
+    }
+  </style>
+</head>
+<body>
+  
+  <!-- 官方统一导航栏 (纯中文规范) -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="index.html" class="site-brand">
+        <div class="brand-crest">王</div>
+        <div class="brand-text">
+          <span class="brand-main">王小治课题组</span>
+          <span class="brand-sub">扬州大学环境科学与工程学院</span>
+        </div>
+      </a>
+
+      <nav class="site-nav">
+        <ul class="nav-menu">
+          <li><a href="index.html" class="nav-item">主页</a></li>
+          <li><a href="research.html" class="nav-item">研究方向</a></li>
+          <li class="has-dropdown">
+            <a href="publications.html" class="nav-item active">学术成果 ▾</a>
+            <ul class="dropdown-menu">
+              <li><a href="publications.html">学术文章</a></li>
+              <li><a href="patents.html">专利成果</a></li>
+            </ul>
+          </li>
+          <li><a href="members.html" class="nav-item">团队成员</a></li>
+          <li><a href="joinus.html" class="nav-item">诚邀英才</a></li>
+          <li><a href="contact.html" class="nav-item">联系我们</a></li>
+          <li>
+            <a href="/internal/" class="nav-lock-btn" title="由 Cloudflare Zero Trust 与微软 Entra ID 统一身份鉴权">
+              <svg class="lock-icon" viewBox="0 0 24 24"><path fill="currentColor" d="M12 17a2 2 0 0 0 2-2 2 2 0 0 0-2-2 2 2 0 0 0-2 2 2 2 0 0 0 2 2m6-9a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V10a2 2 0 0 1 2-2h1V6a5 5 0 0 1 5-5 5 5 0 0 1 5 5v2h1m-6-5a3 3 0 0 0-3 3v2h6V6a3 3 0 0 0-3-3z"/></svg>
+              组内资料库
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+
+  <div class="custom-embed-container">
+    <!-- 用户原版专利.txt (无损嵌入) -->
+    <!-- =======================================================================
+  王小治教授课题组 (wxz.group) · 发明专利展示系统
+  - 标题结构：完全一致对齐 Joinus 页面风格 (<div class="jz_fix_ue_img">)
+  - 数据文件：优先从 https://wxz.group/patents_data.js 读取
+  - 隔离规范：严格以 #wxz-patent-app 为根容器，杜绝凡科全局样式污染
+  - 视觉规范：已授权采用典雅翡翠翠绿 (#059669)，完全区别于橙色
+======================================================================= -->
+
+<div id="wxz-patent-app" class="wxz-patent-wrapper">
+  <!-- 页面居中标题 (完全一致对齐 Joinus 页面风格) -->
+  <div class="jz_fix_ue_img">
+    <div style="text-align:center;padding:40px 0 30px;">
+      <div style="display:inline-flex;align-items:center;gap:12px;margin-bottom:14px;">
+        <span style="display:block;width:40px;height:2px;background:linear-gradient(to right, transparent, #0e8faa);"></span>
+        <span style="font-size:0.85rem;color:#0e8faa;letter-spacing:4px;font-weight:500;">PATENTS</span>
+        <span style="display:block;width:40px;height:2px;background:linear-gradient(to left, transparent, #0e8faa);"></span>
+      </div>
+      <h2 style="font-size:2.2rem;font-weight:700;color:#0f172a;margin:0;letter-spacing:6px;line-height:1;">
+        发明专利
+      </h2>
+      <div style="margin:16px auto 0;width:50px;height:4px;border-radius:2px;background:linear-gradient(to right, #0e8faa, #22d3ee);"></div>
+    </div>
+  </div>
+
+  <!-- 成果控制台：统计计数、排序开关与实时搜索框 -->
+  <div class="wxz-pub-control-card">
+    <div class="wxz-pub-top-row">
+      <!-- 统计指标与重置筛选 -->
+      <div class="wxz-pub-stat-group">
+        <span class="wxz-pub-badge-total" id="wxz-lbl-total-badge">全部共 63 项成果</span>
+        <span class="wxz-pub-badge-filtered" id="wxz-lbl-filtered-badge" style="display:none;">当前显示 0 项</span>
+        <button type="button" class="wxz-pub-btn-reset" id="wxz-btn-reset">
+          <svg viewBox="0 0 24 24" width="13" height="13"><path fill="currentColor" d="M17.65 6.35A7.958 7.958 0 0 0 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08A5.99 5.99 0 0 1 12 18c-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></svg>
+          <span>重置筛选</span>
+        </button>
+      </div>
+
+      <!-- 右侧排序切换组 -->
+      <div class="wxz-pub-sort-switch">
+        <span class="wxz-sort-label">排序：</span>
+        <button type="button" class="wxz-sort-btn active" data-sort="default" id="wxz-sort-default">⭐ 推荐优先</button>
+        <button type="button" class="wxz-sort-btn" data-sort="date" id="wxz-sort-date"> 申请日期</button>
+        <button type="button" class="wxz-sort-btn" data-sort="status" id="wxz-sort-status"> 授权优先</button>
+      </div>
+    </div>
+
+    <!-- 实时极速搜索框 -->
+    <div class="wxz-pub-search-box">
+      <span class="wxz-pub-search-icon">
+        <svg viewBox="0 0 24 24" width="17" height="17"><path fill="currentColor" d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+      </span>
+      <input type="text" id="wxz-search-input" placeholder="输入专利名称、专利号(如 ZL...)、发明人、IPC分类号或摘要实时检索..." autocomplete="off" />
+      <button type="button" id="wxz-search-clear" class="wxz-pub-search-clear" style="display:none;">&times;</button>
+    </div>
+
+    <!-- 多维度筛选面板 (纯中文、2016及以前合并) -->
+    <div class="wxz-pub-filters-panel">
+      <!-- 维度 1: 授权状态 -->
+      <div class="wxz-pub-filter-row">
+        <span class="wxz-filter-label">授权状态:</span>
+        <div class="wxz-filter-btns" id="wxz-status-filter-group">
+          <button type="button" class="wxz-filter-btn active" data-filter="status" data-val="all">全部</button>
+          <button type="button" class="wxz-filter-btn" data-filter="status" data-val="granted">已授权</button>
+          <button type="button" class="wxz-filter-btn" data-filter="status" data-val="filed">已受理</button>
+        </div>
+      </div>
+
+      <!-- 维度 2: 发明人角色 (去掉王小治前缀) -->
+      <div class="wxz-pub-filter-row">
+        <span class="wxz-filter-label">发明人角色:</span>
+        <div class="wxz-filter-btns" id="wxz-role-filter-group">
+          <button type="button" class="wxz-filter-btn active" data-filter="role" data-val="all">全部</button>
+          <button type="button" class="wxz-filter-btn" data-filter="role" data-val="first">第一发明人</button>
+          <button type="button" class="wxz-filter-btn" data-filter="role" data-val="co">合作发明人</button>
+        </div>
+      </div>
+
+      <!-- 维度 3: 专利类别 -->
+      <div class="wxz-pub-filter-row">
+        <span class="wxz-filter-label">专利类别:</span>
+        <div class="wxz-filter-btns" id="wxz-type-filter-group">
+          <button type="button" class="wxz-filter-btn active" data-filter="type" data-val="all">全部</button>
+          <button type="button" class="wxz-filter-btn" data-filter="type" data-val="inv">发明专利</button>
+          <button type="button" class="wxz-filter-btn" data-filter="type" data-val="utility">实用新型</button>
+        </div>
+      </div>
+
+      <!-- 维度 4: 申请年份 (2016及以前合并) -->
+      <div class="wxz-pub-filter-row">
+        <span class="wxz-filter-label">申请年份:</span>
+        <div class="wxz-filter-btns" id="wxz-year-filter-group">
+          <button type="button" class="wxz-filter-btn active" data-filter="year" data-val="all">全部</button>
+          <button type="button" class="wxz-filter-btn" data-filter="year" data-val="2026">2026</button>
+          <button type="button" class="wxz-filter-btn" data-filter="year" data-val="2025">2025</button>
+          <button type="button" class="wxz-filter-btn" data-filter="year" data-val="2024">2024</button>
+          <button type="button" class="wxz-filter-btn" data-filter="year" data-val="2023">2023</button>
+          <button type="button" class="wxz-filter-btn" data-filter="year" data-val="2022">2022</button>
+          <button type="button" class="wxz-filter-btn" data-filter="year" data-val="2021">2021</button>
+          <button type="button" class="wxz-filter-btn" data-filter="year" data-val="2020">2020</button>
+          <button type="button" class="wxz-filter-btn" data-filter="year" data-val="2019">2019</button>
+          <button type="button" class="wxz-filter-btn" data-filter="year" data-val="2018">2018</button>
+          <button type="button" class="wxz-filter-btn" data-filter="year" data-val="2017">2017</button>
+          <button type="button" class="wxz-filter-btn" data-filter="year" data-val="lte2016">2016及以前</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 成果卡片列表容器 -->
+  <div id="wxz-pat-list" class="wxz-pub-list">
+    <div class="wxz-pub-loading">
+      <div class="wxz-loading-spinner"></div>
+      <div style="color: #64748b; font-size: 13.5px; margin-top: 10px;">正在加载专利数据...</div>
+    </div>
+  </div>
+
+  <!-- 无匹配结果提示 -->
+  <div id="wxz-pub-empty" class="wxz-pub-empty" style="display:none;">
+    <div style="font-size: 38px; margin-bottom: 10px;"></div>
+    <div class="wxz-empty-title">未找到符合当前条件的专利成果</div>
+    <div class="wxz-empty-hint">请尝试调整搜索关键词，或重置筛选维度</div>
+    <button type="button" class="wxz-empty-btn" id="wxz-btn-empty-reset">查看全部专利成果</button>
+  </div>
+
+  <!-- 复制气泡 Toast -->
+  <div id="wxz-toast" class="wxz-toast"></div>
+</div>
+
+<style>
+/* =======================================================================
+   作用域隔离样式表 (严格以 #wxz-patent-app 挂载)
+   视觉主色：
+     - 主科技蓝 (Primary): #1e50ae
+     - 已授权翠绿 (Granted): #059669 (底色: #ecfdf5, 边框: #a7f3d0, 深字: #047857)
+     - 已受理科技蓝 (Filed): #2563eb (底色: #eff6ff, 边框: #bfdbfe)
+======================================================================= */
+#wxz-patent-app {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Microsoft YaHei", sans-serif;
+  color: #1e293b;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  box-sizing: border-box;
+  padding: 10px 0 40px 0;
+  line-height: 1.6;
+}
+#wxz-patent-app * {
+  box-sizing: border-box;
+}
+
+/* 控制台卡片 */
+#wxz-patent-app .wxz-pub-control-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 20px 24px;
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.05);
+}
+#wxz-patent-app .wxz-pub-top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+#wxz-patent-app .wxz-pub-stat-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+#wxz-patent-app .wxz-pub-badge-total {
+  background: #1e50ae;
+  color: #ffffff;
+  font-size: 12.5px;
+  font-weight: 700;
+  padding: 5px 12px;
+  border-radius: 20px;
+}
+#wxz-patent-app .wxz-pub-badge-filtered {
+  background: #059669;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 20px;
+}
+#wxz-patent-app .wxz-pub-btn-reset {
+  background: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  color: #475569;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+#wxz-patent-app .wxz-pub-btn-reset:hover {
+  background: #e2e8f0;
+  color: #0f172a;
+}
+
+#wxz-patent-app .wxz-pub-sort-switch {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  padding: 3px 6px;
+  border-radius: 8px;
+}
+#wxz-patent-app .wxz-sort-label {
+  font-size: 12px;
+  color: #64748b;
+  font-weight: 600;
+}
+#wxz-patent-app .wxz-sort-btn {
+  background: transparent;
+  border: none;
+  font-size: 12px;
+  font-weight: 600;
+  color: #64748b;
+  padding: 4px 8px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+#wxz-patent-app .wxz-sort-btn:hover {
+  color: #1e50ae;
+}
+#wxz-patent-app .wxz-sort-btn.active {
+  background: #1e50ae;
+  color: #ffffff;
+}
+
+/* 搜索框 */
+#wxz-patent-app .wxz-pub-search-box {
+  position: relative;
+  margin-bottom: 16px;
+}
+#wxz-patent-app .wxz-pub-search-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #94a3b8;
+  pointer-events: none;
+  display: flex;
+}
+#wxz-patent-app #wxz-search-input {
+  width: 100%;
+  height: 42px;
+  background: #f8fafc;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 0 36px 0 38px;
+  font-size: 13.5px;
+  color: #1e293b;
+  outline: none;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+#wxz-patent-app #wxz-search-input:focus {
+  background: #ffffff;
+  border-color: #0284c7;
+  box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.12);
+}
+#wxz-patent-app .wxz-pub-search-clear {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #cbd5e1;
+  color: #ffffff;
+  border: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  font-size: 14px;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+#wxz-patent-app .wxz-pub-search-clear:hover {
+  background: #94a3b8;
+}
+
+/* 多维度筛选面板 */
+#wxz-patent-app .wxz-pub-filters-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-top: 14px;
+  border-top: 1px dashed #e2e8f0;
+}
+#wxz-patent-app .wxz-pub-filter-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+#wxz-patent-app .wxz-filter-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: #64748b;
+  min-width: 72px;
+}
+#wxz-patent-app .wxz-filter-btns {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+#wxz-patent-app .wxz-filter-btn {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 20px;
+  padding: 4px 11px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #475569;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+#wxz-patent-app .wxz-filter-btn:hover {
+  background: #f1f5f9;
+  border-color: #cbd5e1;
+  color: #1e293b;
+}
+#wxz-patent-app .wxz-filter-btn.active {
+  background: #1e50ae;
+  border-color: #1e50ae;
+  color: #ffffff;
+}
+
+/* 卡片列表区 */
+#wxz-patent-app .wxz-pub-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 16px;
+}
+#wxz-patent-app .wxz-pub-loading {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 60px 20px;
+  text-align: center;
+}
+#wxz-patent-app .wxz-loading-spinner {
+  width: 36px;
+  height: 36px;
+  border: 3px solid #e2e8f0;
+  border-top-color: #1e50ae;
+  border-radius: 50%;
+  margin: 0 auto;
+  animation: wxzSpin 0.8s linear infinite;
+}
+@keyframes wxzSpin {
+  to { transform: rotate(360deg); }
+}
+
+/* 单项专利卡片 */
+#wxz-patent-app .wxz-pat-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-left: 4px solid #94a3b8;
+  border-radius: 10px;
+  padding: 18px 22px;
+  box-shadow: 0 3px 12px rgba(15, 23, 42, 0.04);
+  transition: all 0.2s ease;
+  position: relative;
+}
+#wxz-patent-app .wxz-pat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px -5px rgba(30, 80, 174, 0.1);
+}
+
+/* 已授权高雅翡翠绿 (#059669) 区分于橙色 */
+#wxz-patent-app .wxz-pat-card.is-granted {
+  border-left-color: #059669;
+}
+#wxz-patent-app .wxz-pat-card.is-filed {
+  border-left-color: #2563eb;
+}
+
+/* 顶部徽章行 + 复制引用放置于右侧 */
+#wxz-patent-app .wxz-card-top-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+#wxz-patent-app .wxz-badges-left {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+#wxz-patent-app .wxz-badge-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11.5px;
+  font-weight: 700;
+  padding: 3px 9px;
+  border-radius: 4px;
+}
+#wxz-patent-app .wxz-badge-status.badge-granted {
+  background: #ecfdf5;
+  border: 1px solid #a7f3d0;
+  color: #047857;
+}
+#wxz-patent-app .wxz-badge-status.badge-filed {
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  color: #1e50ae;
+}
+#wxz-patent-app .wxz-badge-type {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  color: #475569;
+  font-size: 11.5px;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 4px;
+}
+
+/* 复制引用按钮放置于顶部右侧 */
+#wxz-patent-app .wxz-btn-copy-cite {
+  background: #f8fafc;
+  border: 1px solid #cbd5e1;
+  color: #334155;
+  font-size: 11.5px;
+  font-weight: 600;
+  padding: 3px 9px;
+  border-radius: 5px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  transition: all 0.15s ease;
+}
+#wxz-patent-app .wxz-btn-copy-cite:hover {
+  background: #eff6ff;
+  color: #1e50ae;
+  border-color: #93c5fd;
+}
+
+/* 标题行 (固定编号与标题同排呈现) */
+#wxz-patent-app .wxz-card-title-row {
+  margin-bottom: 8px;
+}
+#wxz-patent-app .wxz-card-title {
+  font-size: 16.5px;
+  font-weight: 700;
+  color: #0f172a;
+  line-height: 1.45;
+  font-family: "Georgia", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Microsoft YaHei", serif;
+}
+#wxz-patent-app .wxz-fixed-id {
+  color: #1e50ae;
+  font-family: "Georgia", serif;
+  font-weight: 800;
+  margin-right: 6px;
+}
+
+/* 发明人行：王小治仅加粗划下划线，无黑框无背景 */
+#wxz-patent-app .wxz-card-authors {
+  font-size: 13.5px;
+  color: #475569;
+  margin-bottom: 10px;
+  line-height: 1.5;
+}
+#wxz-patent-app .wxz-target-author {
+  color: #0f172a;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  background: transparent !important;
+  border: none !important;
+  padding: 0 1px;
+}
+
+/* 元信息网格 (申请号/日期/IPC) */
+#wxz-patent-app .wxz-card-meta-grid {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: #f8fafc;
+  border: 1px solid #f1f5f9;
+  border-radius: 6px;
+  padding: 8px 12px;
+  margin-bottom: 10px;
+  font-size: 12px;
+  color: #64748b;
+  flex-wrap: wrap;
+}
+#wxz-patent-app .wxz-meta-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+#wxz-patent-app .wxz-meta-k {
+  font-weight: 600;
+  color: #64748b;
+}
+#wxz-patent-app .wxz-meta-v {
+  font-family: "Georgia", serif;
+  font-weight: 600;
+  color: #1e293b;
+}
+#wxz-patent-app .wxz-meta-v.highlight-no {
+  color: #1e50ae;
+}
+
+/* 摘要折叠区 */
+#wxz-patent-app .wxz-abstract-box {
+  margin-top: 4px;
+}
+#wxz-patent-app .wxz-abstract-toggle {
+  background: transparent;
+  border: none;
+  font-size: 12px;
+  font-weight: 600;
+  color: #0284c7;
+  padding: 0;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+#wxz-patent-app .wxz-abstract-toggle:hover {
+  color: #0369a1;
+  text-decoration: underline;
+}
+#wxz-patent-app .wxz-abstract-body {
+  font-size: 12.5px;
+  color: #334155;
+  background: #f8fafc;
+  border-left: 3px solid #cbd5e1;
+  padding: 8px 12px;
+  margin-top: 6px;
+  border-radius: 0 4px 4px 0;
+  line-height: 1.6;
+}
+
+/* 空状态与 Toast */
+#wxz-patent-app .wxz-pub-empty {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 50px 20px;
+  text-align: center;
+  margin-top: 16px;
+}
+#wxz-patent-app .wxz-empty-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 6px;
+}
+#wxz-patent-app .wxz-empty-hint {
+  font-size: 13px;
+  color: #64748b;
+  margin-bottom: 16px;
+}
+#wxz-patent-app .wxz-empty-btn {
+  background: #1e50ae;
+  color: #ffffff;
+  border: none;
+  padding: 8px 18px;
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+#wxz-patent-app .wxz-toast {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%) translateY(30px);
+  background: rgba(15, 23, 42, 0.92);
+  color: #ffffff;
+  padding: 9px 18px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.25s ease;
+  z-index: 999999;
+}
+#wxz-patent-app .wxz-toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+</style>
+
+<script>
+/**
+ * 王小治教授课题组专利展示系统 前端逻辑
+ * 优先引用 https://wxz.group/patents_data.js
+ */
+(function() {
+  var App = {
+    data: [],
+    stats: null,
+    currentSort: 'default', // 'default' | 'date' | 'status'
+    searchQuery: '',
+    filters: {
+      status: 'all',  // 'all' | 'granted' | 'filed'
+      role: 'all',    // 'all' | 'first' | 'co'
+      type: 'all',    // 'all' | 'inv' | 'utility'
+      year: 'all'     // 'all' | '2026' ... | 'lte2016'
+    },
+    expandedAbstracts: {},
+
+    init: function() {
+      var self = this;
+      self.bindGlobalEvents();
+      self.loadData(function() {
+        self.applyFilters();
+      });
+    },
+
+    loadData: function(callback) {
+      var self = this;
+      if (window.WXZ_PATENTS_DATA && window.WXZ_PATENTS_STATS) {
+        self.data = window.WXZ_PATENTS_DATA;
+        self.stats = window.WXZ_PATENTS_STATS;
+        if (callback) callback();
+        return;
+      }
+
+      // 优先从 https://wxz.group/patents_data.js 加载
+      var script = document.createElement('script');
+      script.src = 'https://wxz.group/patents_data.js';
+      script.onload = function() {
+        if (window.WXZ_PATENTS_DATA) {
+          self.data = window.WXZ_PATENTS_DATA;
+          self.stats = window.WXZ_PATENTS_STATS;
+          if (callback) callback();
+        }
+      };
+      script.onerror = function() {
+        // 本地环境或无网络时回退到 ./patents_data.js
+        var fallbackScript = document.createElement('script');
+        fallbackScript.src = './patents_data.js';
+        fallbackScript.onload = function() {
+          if (window.WXZ_PATENTS_DATA) {
+            self.data = window.WXZ_PATENTS_DATA;
+            self.stats = window.WXZ_PATENTS_STATS;
+            if (callback) callback();
+          }
+        };
+        fallbackScript.onerror = function() {
+          var listEl = document.getElementById('wxz-pat-list');
+          if (listEl) {
+            listEl.innerHTML = '<div style="padding:40px;text-align:center;color:#ef4444;font-size:14px;">未能读取 patents_data.js 数据文件，请检查网络或确认文件已上传至 https://wxz.group/patents_data.js。</div>';
+          }
+        };
+        document.head.appendChild(fallbackScript);
+      };
+      document.head.appendChild(script);
+    },
+
+    bindGlobalEvents: function() {
+      var self = this;
+      var root = document.getElementById('wxz-patent-app');
+      if (!root) return;
+
+      var searchInput = document.getElementById('wxz-search-input');
+      var searchClear = document.getElementById('wxz-search-clear');
+      if (searchInput) {
+        searchInput.addEventListener('input', function(e) {
+          self.searchQuery = e.target.value.trim().toLowerCase();
+          if (searchClear) searchClear.style.display = self.searchQuery ? 'block' : 'none';
+          self.applyFilters();
+        });
+      }
+      if (searchClear) {
+        searchClear.addEventListener('click', function() {
+          if (searchInput) searchInput.value = '';
+          self.searchQuery = '';
+          searchClear.style.display = 'none';
+          self.applyFilters();
+        });
+      }
+
+      var btnReset = document.getElementById('wxz-btn-reset');
+      if (btnReset) {
+        btnReset.addEventListener('click', function() { self.resetFilters(); });
+      }
+      var btnEmptyReset = document.getElementById('wxz-btn-empty-reset');
+      if (btnEmptyReset) {
+        btnEmptyReset.addEventListener('click', function() { self.resetFilters(); });
+      }
+
+      // 排序按钮
+      var sortBtns = root.querySelectorAll('.wxz-sort-btn');
+      sortBtns.forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          sortBtns.forEach(function(b) { b.classList.remove('active'); });
+          btn.classList.add('active');
+          self.currentSort = btn.getAttribute('data-sort');
+          self.applyFilters();
+        });
+      });
+
+      // 筛选按钮
+      root.addEventListener('click', function(e) {
+        var btn = e.target.closest('.wxz-filter-btn');
+        if (btn) {
+          var fType = btn.getAttribute('data-filter');
+          var fVal = btn.getAttribute('data-val');
+          var group = btn.closest('.wxz-filter-btns');
+          if (group) {
+            group.querySelectorAll('.wxz-filter-btn').forEach(function(b) { b.classList.remove('active'); });
+            btn.classList.add('active');
+          }
+          self.filters[fType] = fVal;
+          self.applyFilters();
+        }
+
+        // 复制标准引用
+        var copyBtn = e.target.closest('.wxz-btn-copy-cite');
+        if (copyBtn) {
+          var citeText = copyBtn.getAttribute('data-cite');
+          self.copyToClipboard(citeText);
+        }
+
+        // 摘要展开/折叠
+        var absToggle = e.target.closest('.wxz-abstract-toggle');
+        if (absToggle) {
+          var pid = absToggle.getAttribute('data-pid');
+          self.expandedAbstracts[pid] = !self.expandedAbstracts[pid];
+          var bodyEl = document.getElementById('wxz-abs-body-' + pid);
+          if (bodyEl) {
+            bodyEl.style.display = self.expandedAbstracts[pid] ? 'block' : 'none';
+            absToggle.innerHTML = self.expandedAbstracts[pid] ? '收起摘要 ▴' : '展开摘要 ▾';
+          }
+        }
+      });
+    },
+
+    resetFilters: function() {
+      this.filters = { status: 'all', role: 'all', type: 'all', year: 'all' };
+      this.searchQuery = '';
+      var searchInput = document.getElementById('wxz-search-input');
+      var searchClear = document.getElementById('wxz-search-clear');
+      if (searchInput) searchInput.value = '';
+      if (searchClear) searchClear.style.display = 'none';
+
+      var root = document.getElementById('wxz-patent-app');
+      if (root) {
+        root.querySelectorAll('.wxz-filter-btn').forEach(function(b) {
+          if (b.getAttribute('data-val') === 'all') {
+            b.classList.add('active');
+          } else {
+            b.classList.remove('active');
+          }
+        });
+      }
+      this.applyFilters();
+    },
+
+    applyFilters: function() {
+      var self = this;
+      var q = self.searchQuery;
+      var filtered = self.data.filter(function(item) {
+        // 状态筛选
+        if (self.filters.status === 'granted' && !item.is_granted) return false;
+        if (self.filters.status === 'filed' && item.is_granted) return false;
+
+        // 角色筛选
+        if (self.filters.role === 'first' && !item.is_first_wang) return false;
+        if (self.filters.role === 'co' && item.is_first_wang) return false;
+
+        // 类型筛选
+        if (self.filters.type === 'inv' && item.is_utility) return false;
+        if (self.filters.type === 'utility' && !item.is_utility) return false;
+
+        // 年份筛选 (支持 2016及以前)
+        if (self.filters.year !== 'all') {
+          if (self.filters.year === 'lte2016') {
+            if (item.app_year > 2016) return false;
+          } else {
+            if (String(item.app_year) !== String(self.filters.year)) return false;
+          }
+        }
+
+        // 关键词搜索
+        if (q) {
+          var matchText = (item.title_zh + ' ' + item.patent_no + ' ' + item.app_no + ' ' + item.inventors_zh_plain + ' ' + item.ipc + ' ' + item.abstract_zh).toLowerCase();
+          if (matchText.indexOf(q) === -1) return false;
+        }
+
+        return true;
+      });
+
+      // 排序
+      if (self.currentSort === 'date') {
+        filtered.sort(function(a, b) {
+          return b.app_date.localeCompare(a.app_date);
+        });
+      } else if (self.currentSort === 'status') {
+        filtered.sort(function(a, b) {
+          if (a.is_granted !== b.is_granted) {
+            return b.is_granted ? 1 : -1;
+          }
+          return b.app_date.localeCompare(a.app_date);
+        });
+      } else {
+        var orderMap = {};
+        self.data.forEach(function(item, idx) { orderMap[item.app_no] = idx; });
+        filtered.sort(function(a, b) {
+          return orderMap[a.app_no] - orderMap[b.app_no];
+        });
+      }
+
+      self.renderCards(filtered);
+      self.updateStatsUI(filtered.length);
+    },
+
+    updateStatsUI: function(visibleCount) {
+      var self = this;
+      var totalCount = self.data.length;
+      var lblTotal = document.getElementById('wxz-lbl-total-badge');
+      var lblFiltered = document.getElementById('wxz-lbl-filtered-badge');
+
+      if (lblTotal) lblTotal.innerText = '全部共 ' + totalCount + ' 项成果';
+      if (lblFiltered) {
+        if (visibleCount === totalCount) {
+          lblFiltered.style.display = 'none';
+        } else {
+          lblFiltered.style.display = 'inline-block';
+          lblFiltered.innerText = '当前显示 ' + visibleCount + ' 项';
+        }
+      }
+
+      var emptyEl = document.getElementById('wxz-pub-empty');
+      var listEl = document.getElementById('wxz-pat-list');
+      if (emptyEl && listEl) {
+        if (visibleCount === 0) {
+          emptyEl.style.display = 'block';
+          listEl.style.display = 'none';
+        } else {
+          emptyEl.style.display = 'none';
+          listEl.style.display = 'flex';
+        }
+      }
+    },
+
+    renderCards: function(items) {
+      var self = this;
+      var listEl = document.getElementById('wxz-pat-list');
+      if (!listEl) return;
+
+      var html = '';
+
+      items.forEach(function(item) {
+        var cardClass = item.is_granted ? 'is-granted' : 'is-filed';
+        var statusBadge = item.is_granted
+          ? '<span class="wxz-badge-status badge-granted">★ 已授权</span>'
+          : '<span class="wxz-badge-status badge-filed">● 已受理</span>';
+
+        var typeBadge = '<span class="wxz-badge-type">' + item.doc_type_zh + '</span>';
+        var isExpanded = self.expandedAbstracts[item.app_no];
+        var absDisplay = isExpanded ? 'block' : 'none';
+        var absBtnText = isExpanded ? '收起摘要 ▴' : '展开摘要 ▾';
+
+        html += '<div class="wxz-pat-card ' + cardClass + '">';
+        // 顶部微标行 + 右侧放置复制引用按钮
+        html += '  <div class="wxz-card-top-row">';
+        html += '    <div class="wxz-badges-left">';
+        html += '      ' + statusBadge;
+        html += '      ' + typeBadge;
+        html += '    </div>';
+        html += '    <button type="button" class="wxz-btn-copy-cite" data-cite="' + item.cite_zh.replace(/"/g, '&quot;') + '" title="点击复制 GB/T 7714 标准引用格式">';
+        html += '      <svg viewBox="0 0 24 24" width="13" height="13"><path fill="currentColor" d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>';
+        html += '      <span>复制引用</span>';
+        html += '    </button>';
+        html += '  </div>';
+
+        // 标题行 (永久固定编号与标题同排呈现)
+        html += '  <div class="wxz-card-title-row">';
+        html += '    <div class="wxz-card-title">';
+        html += '      <span class="wxz-fixed-id">' + item.fixed_id + '.</span>';
+        html += '      <span>' + item.title_zh + '</span>';
+        html += '    </div>';
+        html += '  </div>';
+
+        // 发明人行
+        html += '  <div class="wxz-card-authors">' + item.inventors_zh_html + '</div>';
+
+        // 元信息网格 (专利号/申请日/授权日/IPC)
+        html += '  <div class="wxz-card-meta-grid">';
+        html += '    <div class="wxz-meta-item"><span class="wxz-meta-k">专利/申请号:</span><span class="wxz-meta-v highlight-no">' + item.patent_no + '</span></div>';
+        html += '    <div class="wxz-meta-item"><span class="wxz-meta-k">申请日:</span><span class="wxz-meta-v">' + item.app_date + '</span></div>';
+        if (item.grant_date) {
+          html += '  <div class="wxz-meta-item"><span class="wxz-meta-k">授权公告日:</span><span class="wxz-meta-v">' + item.grant_date + '</span></div>';
+        } else if (item.pub_date) {
+          html += '  <div class="wxz-meta-item"><span class="wxz-meta-k">公开日:</span><span class="wxz-meta-v">' + item.pub_date + '</span></div>';
+        }
+        if (item.ipc) {
+          html += '  <div class="wxz-meta-item"><span class="wxz-meta-k">IPC:</span><span class="wxz-meta-v">' + item.ipc.split(';')[0] + '</span></div>';
+        }
+        html += '  </div>';
+
+        // 摘要折叠
+        if (item.abstract_zh) {
+          html += '  <div class="wxz-abstract-box">';
+          html += '    <button type="button" class="wxz-abstract-toggle" data-pid="' + item.app_no + '">' + absBtnText + '</button>';
+          html += '    <div class="wxz-abstract-body" id="wxz-abs-body-' + item.app_no + '" style="display:' + absDisplay + ';">' + item.abstract_zh + '</div>';
+          html += '  </div>';
+        }
+
+        html += '</div>';
+      });
+
+      listEl.innerHTML = html;
+    },
+
+    copyToClipboard: function(text) {
+      var self = this;
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text).then(function() {
+          self.showToast('✓ GB/T 7714 标准引用已复制到剪贴板！');
+        }).catch(function() {
+          self.fallbackCopy(text);
+        });
+      } else {
+        self.fallbackCopy(text);
+      }
+    },
+
+    fallbackCopy: function(text) {
+      var self = this;
+      var ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.focus();
+      ta.select();
+      try {
+        document.execCommand('copy');
+        self.showToast('✓ GB/T 7714 标准引用已复制到剪贴板！');
+      } catch (err) {
+        self.showToast('复制失败，请手动选取复制');
+      }
+      document.body.removeChild(ta);
+    },
+
+    showToast: function(msg) {
+      var toast = document.getElementById('wxz-toast');
+      if (!toast) return;
+      toast.innerText = msg;
+      toast.classList.add('show');
+      setTimeout(function() {
+        toast.classList.remove('show');
+      }, 2000);
+    }
+  };
+
+  window.WxzPatentApp = App;
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function() { App.init(); });
+  } else {
+    App.init();
+  }
+})();
+</script>
+
+  </div>
+
+  <div class="unified-footer-wrapper">
+    <style>.w-footer {
+    background: transparent;
+    padding: 25px 20px 20px;
+    text-align: center;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    box-sizing: border-box;
+    width: 100%;
+    color: #ffffff !important;
+  }
+
+  /* 强制全局所有元素、链接、已访问、悬停均为纯白，无下划线 */
+  .w-footer,
+  .w-footer *,
+  .w-footer a,
+  .w-footer a:hover,
+  .w-footer a:visited,
+  .w-footer a:active {
+    color: #ffffff !important;
+    text-decoration: none !important;
+  }
+
+  /* 课题组名称 */
+  .w-title {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    margin: 0 0 14px 0;
+  }
+
+  /* 中间信息行 */
+  .w-info {
+    font-size: 14px;
+    margin-bottom: 12px;
+    line-height: 1.8;
+  }
+
+  .w-info span {
+    margin: 0 10px;
+    display: inline-block;
+  }
+
+  /* 分隔符号 */
+  .w-sep {
+    opacity: 0.85;
+  }
+
+  /* 版权行 */
+  .w-copy {
+    font-size: 13px;
+    margin: 0;
+  }
+
+  @media (max-width: 600px) {
+    .w-info span {
+      display: block;
+      margin: 4px 0;
+    }
+    .w-sep {
+      display: none;
+    }
+  }</style>
+<div class="w-footer">
+    <h3 class="w-title" style="line-height:normal;">
+        王小治课题组
+    </h3>
+    <div class="w-info">
+        <span><a href="https://hjxy.yzu.edu.cn/" target="_blank">扬州大学环境科学与工程学院</a></span><span class="w-sep">·</span><span>江苏省扬州市华扬西路196号</span><span class="w-sep">·</span><span>邮编：225127</span><span class="w-sep">·</span><span>联系邮箱：<a href="mailto:xzwang@yzu.edu.cn">xzwang@yzu.edu.cn</a></span>
+ &nbsp;
+    </div>
+    <p class="w-copy">
+        <span style="font-size:13px;">© </span><a href="https://v6.51.la/s/pv04rwCAVdTsCCV" target="_blank" title="查看访问统计" style="font-size:13px;text-decoration:underline;"><span style="font-size:13px;">2005-2026</span></a> <span style="font-size:13px;">王小治课题组　</span><a href="https://www.webportal.top/" target="_blank" style="font-size:13px;text-decoration:underline;"><span style="font-size:13px;">版权所有</span></a><span style="font-size:13px;">
+ &nbsp;</span>
+    </p>
+</div>
+  </div>
+</body>
+</html>
