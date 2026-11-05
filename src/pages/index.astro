@@ -6,7 +6,7 @@ import Layout from '../layouts/Layout.astro';
   <div class="home-hero-container" style="background: linear-gradient(135deg, #0f2c59 0%, #1e3a8a 100%); padding: 2.5rem 1rem 3.5rem;">
     <!-- 用户原版王小治home.txt (无损嵌入) -->
     <div class="jz_fix_ue_img">
-    <style>.profile-card-container {
+    <style is:global>.profile-card-container {
     max-width: 1200px;
     margin: 20px auto;
     padding: 25px;
@@ -238,7 +238,7 @@ import Layout from '../layouts/Layout.astro';
 </div>
 
 
-<style>
+<style is:global>
   /* 4大研究方向容器 - 针对浅色/白底优化的高级学术质感 */
   .awsr-research-wrapper {
     max-width: 1240px;
