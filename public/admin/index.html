@@ -1,12 +1,141 @@
 <!doctype html>
-<html>
+<html lang="zh-CN">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>王小治课题组 | 可视化内容管理后台</title>
+  <title>王小治课题组 | 内容管理后台</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", sans-serif;
+      background: #f8fafc;
+    }
+    #custom-auth-modal {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(15, 23, 42, 0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 999999;
+      backdrop-filter: blur(4px);
+    }
+    .auth-card {
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 36px;
+      max-width: 440px;
+      width: 90%;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+      text-align: center;
+    }
+    .auth-icon {
+      width: 56px;
+      height: 56px;
+      background: #eff6ff;
+      color: #185a9d;
+      border-radius: 14px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+    .auth-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: #0f172a;
+      margin-bottom: 8px;
+    }
+    .auth-desc {
+      font-size: 14px;
+      color: #64748b;
+      line-height: 1.5;
+      margin-bottom: 24px;
+    }
+    .auth-input {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 12px 16px;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      font-size: 14px;
+      outline: none;
+      transition: all 0.2s;
+      margin-bottom: 20px;
+      font-family: monospace;
+    }
+    .auth-input:focus {
+      border-color: #185a9d;
+      box-shadow: 0 0 0 3px rgba(24, 90, 157, 0.15);
+    }
+    .btn-login {
+      width: 100%;
+      padding: 12px;
+      background: #185a9d;
+      color: #ffffff;
+      border: none;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-login:hover {
+      background: #0f3d6b;
+    }
+  </style>
 </head>
 <body>
-  <!-- Decap CMS 核心脚本，置于 body 确保 DOM 正常挂载 -->
+  <!-- 专属授权登录弹窗 (未检测到凭证时显示) -->
+  <div id="custom-auth-modal" style="display: none;">
+    <div class="auth-card">
+      <div class="auth-icon">
+        <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+          <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+        </svg>
+      </div>
+      <div class="auth-title">课题组管理后台授权</div>
+      <div class="auth-desc">请输入您的 GitHub 管理员 Token，授权后将自动记住登录状态，免密直达内容管理。</div>
+      <input type="password" id="tokenInput" class="auth-input" placeholder="粘贴您的 ghp_... Token" />
+      <button id="btnLogin" class="btn-login">确认授权并进入后台</button>
+    </div>
+  </div>
+
+  <script>
+    // 检查是否已有凭据
+    const checkUser = () => {
+      try {
+        const u1 = localStorage.getItem('decap-cms-user');
+        const u2 = localStorage.getItem('netlify-cms-user');
+        return u1 || u2;
+      } catch (e) {
+        return false;
+      }
+    };
+
+    if (!checkUser()) {
+      document.getElementById('custom-auth-modal').style.display = 'flex';
+    }
+
+    document.getElementById('btnLogin').addEventListener('click', () => {
+      const token = (document.getElementById('tokenInput').value || '').trim();
+      if (!token) {
+        alert('请输入有效的管理员 Token');
+        return;
+      }
+      const authData = JSON.stringify({
+        backendName: 'github',
+        token: token
+      });
+      localStorage.setItem('decap-cms-user', authData);
+      localStorage.setItem('netlify-cms-user', authData);
+      document.getElementById('custom-auth-modal').style.display = 'none';
+      window.location.reload();
+    });
+  </script>
+
+  <!-- Decap CMS 核心引擎 -->
   <script src="/admin/decap-cms.js"></script>
 </body>
 </html>
