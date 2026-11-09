@@ -3,7 +3,29 @@ import Layout from '../layouts/Layout.astro';
 import { getCollection } from 'astro:content';
 
 const allNews = await getCollection('news');
-allNews.sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime());
+
+function getSafeTime(d: any) {
+  if (!d) return 0;
+  try {
+    const t = new Date(d).getTime();
+    return isNaN(t) ? 0 : t;
+  } catch (e) {
+    return 0;
+  }
+}
+
+function formatSafeDate(d: any) {
+  if (!d) return '2024-01-01';
+  try {
+    const dateObj = new Date(d);
+    if (isNaN(dateObj.getTime())) return String(d).slice(0, 10);
+    return dateObj.toISOString().split('T')[0];
+  } catch (e) {
+    return '2024-01-01';
+  }
+}
+
+allNews.sort((a, b) => getSafeTime(b.data.date) - getSafeTime(a.data.date));
 ---
 
 <Layout title="科研与实验室管理中台 - 王小治课题组" activeNav="管理后台">
@@ -43,7 +65,7 @@ allNews.sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).g
             <line x1="16" y1="17" x2="8" y2="17"></line>
             <polyline points="10 9 9 9 8 9"></polyline>
           </svg>
-          现有科研动态 ({allNews.length})
+          科研动态列表 ({allNews.length})
         </button>
         <button class="menu-item" data-tab="tab-access">
           <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
@@ -56,7 +78,7 @@ allNews.sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).g
 
       <div class="sidebar-status">
         <span class="status-indicator"></span>
-        <span>已直连 GitHub 云端</span>
+        <span>已连接云端流水线</span>
       </div>
     </aside>
 
@@ -67,7 +89,7 @@ allNews.sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).g
       <section id="tab-overview" class="tab-pane active">
         <div class="section-title-bar">
           <h2>📊 课题组学术与运行总览</h2>
-          <span class="badge-online">实时运行状态良好</span>
+          <span class="badge-online">全天候在线运行</span>
         </div>
 
         <div class="stat-card-row">
@@ -79,7 +101,7 @@ allNews.sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).g
           <div class="stat-box">
             <div class="stat-number">63 <span class="unit">项</span></div>
             <div class="stat-name">国家知识产权局专利</div>
-            <div class="stat-sub">✔ 翡翠绿授权全景收录</div>
+            <div class="stat-sub">✔ 翡翠绿授权状态全景收录</div>
           </div>
           <div class="stat-box">
             <div class="stat-number">65 <span class="unit">位</span></div>
@@ -88,8 +110,8 @@ allNews.sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).g
           </div>
           <div class="stat-box">
             <div class="stat-number">{allNews.length} <span class="unit">篇</span></div>
-            <div class="stat-name">新闻动态与组会纪要</div>
-            <div class="stat-sub">支持分类与阅读权限隔离</div>
+            <div class="stat-name">科研成果与组会纪要</div>
+            <div class="stat-sub">分类与阅读权限已生效</div>
           </div>
         </div>
 
@@ -97,9 +119,9 @@ allNews.sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).g
           <h3 style="font-size: 16px; font-weight: 700; margin-bottom: 12px; color: #0f172a;">⚡ 常用管理快捷入口</h3>
           <p style="color: #64748b; font-size: 14px; line-height: 1.8;">
             欢迎使用课题组专属中台系统！您可以在左侧点击：<br>
-            • <strong>新建文章与动态</strong>：随时发布最新论文被权威期刊接收的捷报、组会纪要或招生通知，选择分类与阅读权限后一键秒级推送到全网；<br>
-            • <strong>现有科研动态</strong>：实时检索已发布的文章，支持随时撤销或重新排版；<br>
-            • <strong>组内阅读权限控制</strong>：利用 Cloudflare Zero Trust 免费为在籍师生配置阅读白名单。
+            • <strong>新建文章与动态</strong>：发布最新论文接收喜讯、组会日程安排或招生通知，支持分类与阅读权限设置；<br>
+            • <strong>科研动态列表</strong>：检索与管理现有文章；<br>
+            • <strong>组内阅读权限控制</strong>：利用 Cloudflare Zero Trust 为在籍师生配置专属访问白名单。
           </p>
         </div>
       </section>
@@ -179,9 +201,9 @@ allNews.sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).g
             </thead>
             <tbody id="articleTableBody">
               {allNews.map(item => (
-                <tr data-title={item.data.title.toLowerCase()}>
+                <tr data-title={(item.data.title || '').toLowerCase()}>
                   <td style="color: #64748b; font-size: 13px;">
-                    {new Date(item.data.date).toISOString().split('T')[0]}
+                    {formatSafeDate(item.data.date)}
                   </td>
                   <td style="font-weight: 600; color: #1e293b;">
                     <a href={`/news/${item.slug}`} target="_blank" style="color: #1e293b; text-decoration: none;">
@@ -627,6 +649,9 @@ allNews.sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).g
         const content = document.getElementById('postContent').value.trim();
 
         let token = localStorage.getItem('wxz_token') || localStorage.getItem('decap-cms-user');
+        if (token && typeof token === 'string' && token.startsWith('{')) {
+          try { token = JSON.parse(token).token; } catch(e){}
+        }
 
         const btn = document.getElementById('btnSubmit');
         btn.disabled = true;
@@ -659,7 +684,7 @@ ${content}
           });
 
           if (resp.ok) {
-            alert('🎉 发布成功！Cloudflare 将在 30 秒内完成全网自动编译上线！');
+            alert('发布成功！Cloudflare 将在 30 秒内完成全网自动编译上线！');
             articleForm.reset();
             document.getElementById('postDate').value = new Date().toISOString().split('T')[0];
             window.location.reload();

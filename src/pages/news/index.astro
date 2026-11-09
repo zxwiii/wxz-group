@@ -3,8 +3,29 @@ import Layout from '../../layouts/Layout.astro';
 import { getCollection } from 'astro:content';
 
 const allNews = await getCollection('news');
-// 按日期降序
-allNews.sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime());
+
+function getSafeTime(d: any) {
+  if (!d) return 0;
+  try {
+    const t = new Date(d).getTime();
+    return isNaN(t) ? 0 : t;
+  } catch (e) {
+    return 0;
+  }
+}
+
+function formatSafeDate(d: any) {
+  if (!d) return '2024-01-01';
+  try {
+    const dateObj = new Date(d);
+    if (isNaN(dateObj.getTime())) return String(d).slice(0, 10);
+    return dateObj.toISOString().split('T')[0];
+  } catch (e) {
+    return '2024-01-01';
+  }
+}
+
+allNews.sort((a, b) => getSafeTime(b.data.date) - getSafeTime(a.data.date));
 
 const categories = ['全部', '科研进展', '学术交流', '组会安排', '通知公告', '课题组快讯'];
 ---
@@ -45,7 +66,7 @@ const categories = ['全部', '科研进展', '学术交流', '组会安排', '�
       {allNews.map((item) => (
         <article 
           class="news-card" 
-          data-title={item.data.title.toLowerCase()}
+          data-title={(item.data.title || '').toLowerCase()}
           data-category={item.data.category || '课题组快讯'}
         >
           <div class="card-body">
@@ -57,7 +78,7 @@ const categories = ['全部', '科研进展', '学术交流', '组会安排', '�
                   <line x1="8" y1="2" x2="8" y2="6"></line>
                   <line x1="3" y1="10" x2="21" y2="10"></line>
                 </svg>
-                {new Date(item.data.date).toISOString().split('T')[0]}
+                {formatSafeDate(item.data.date)}
               </span>
               <div class="tag-group">
                 <span class={`cat-badge cat-${item.data.category || 'default'}`}>
@@ -207,7 +228,7 @@ const categories = ['全部', '科研进展', '学术交流', '组会安排', '�
       background: #ffffff;
       border: 1px solid #e2e8f0;
       border-radius: 12px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.02);
       transition: all 0.25s ease;
       display: flex;
       flex-direction: column;

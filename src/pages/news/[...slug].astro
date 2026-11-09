@@ -10,9 +10,21 @@ export async function getStaticPaths() {
   }));
 }
 
-const { entry } = { ...Astro.props };
+const { entry } = Astro.props;
 const { Content } = await entry.render();
-const formattedDate = new Date(entry.data.date).toISOString().split('T')[0];
+
+function formatSafeDate(d: any) {
+  if (!d) return '2024-01-01';
+  try {
+    const dateObj = new Date(d);
+    if (isNaN(dateObj.getTime())) return String(d).slice(0, 10);
+    return dateObj.toISOString().split('T')[0];
+  } catch (e) {
+    return '2024-01-01';
+  }
+}
+
+const formattedDate = formatSafeDate(entry.data.date);
 ---
 
 <Layout title={`${entry.data.title} - 王小治课题组`} activeNav="新闻动态">
@@ -26,7 +38,7 @@ const formattedDate = new Date(entry.data.date).toISOString().split('T')[0];
         返回新闻列表
       </a>
       <span class="sep">/</span>
-      <span class="curr-cat">组内动态</span>
+      <span class="curr-cat">{entry.data.category || '组内动态'}</span>
     </div>
 
     <!-- 文章主体头部 -->
@@ -43,12 +55,17 @@ const formattedDate = new Date(entry.data.date).toISOString().split('T')[0];
           发布时间：{formattedDate}
         </span>
         <span class="meta-item">
-          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-            <circle cx="12" cy="7" r="4"></circle>
-          </svg>
-          来源：扬州大学王小治课题组
+          <span class="badge-cat-detail">{entry.data.category || '组内动态'}</span>
         </span>
+        {entry.data.accessLevel === 'internal' && (
+          <span class="meta-item" style="color: #dc2626;">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+              <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+            </svg>
+            仅组内可见
+          </span>
+        )}
       </div>
     </header>
 
@@ -73,7 +90,7 @@ const formattedDate = new Date(entry.data.date).toISOString().split('T')[0];
     </footer>
   </div>
 
-  <style>
+  <style is:global>
     .article-wrapper {
       max-width: 900px;
       margin: 0 auto;
@@ -122,11 +139,20 @@ const formattedDate = new Date(entry.data.date).toISOString().split('T')[0];
       gap: 20px;
       font-size: 13px;
       color: #64748b;
+      align-items: center;
     }
     .meta-item {
       display: flex;
       align-items: center;
       gap: 6px;
+    }
+    .badge-cat-detail {
+      background: #eff6ff;
+      color: #1e40af;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 600;
     }
     .article-content {
       font-size: 16px;
@@ -134,12 +160,11 @@ const formattedDate = new Date(entry.data.date).toISOString().split('T')[0];
       color: #334155;
       min-height: 200px;
     }
-    /* 正文样式与富文本优化 */
-    .article-content :global(p) {
+    .article-content p {
       margin-bottom: 1.25em;
       text-align: justify;
     }
-    .article-content :global(img) {
+    .article-content img {
       max-width: 100% !important;
       height: auto !important;
       border-radius: 8px;
@@ -147,32 +172,11 @@ const formattedDate = new Date(entry.data.date).toISOString().split('T')[0];
       margin: 20px auto;
       display: block;
     }
-    .article-content :global(h2), .article-content :global(h3) {
+    .article-content h2, .article-content h3 {
       color: #185a9d;
       margin-top: 1.5em;
       margin-bottom: 0.8em;
       font-weight: 700;
-    }
-    .article-content :global(ul), .article-content :global(ol) {
-      padding-left: 24px;
-      margin-bottom: 1.25em;
-    }
-    .article-content :global(li) {
-      margin-bottom: 6px;
-    }
-    .article-content :global(table) {
-      width: 100%;
-      border-collapse: collapse;
-      margin: 20px 0;
-    }
-    .article-content :global(th), .article-content :global(td) {
-      border: 1px solid #e2e8f0;
-      padding: 10px 14px;
-      font-size: 14px;
-    }
-    .article-content :global(th) {
-      background: #f8fafc;
-      font-weight: 600;
     }
     .article-footer {
       margin-top: 50px;
@@ -203,11 +207,6 @@ const formattedDate = new Date(entry.data.date).toISOString().split('T')[0];
     }
     .btn-back:hover {
       background: #0f3d6b;
-    }
-    @media (max-width: 640px) {
-      .article-title {
-        font-size: 22px;
-      }
     }
   </style>
 </Layout>
