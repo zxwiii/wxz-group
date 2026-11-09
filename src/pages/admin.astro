@@ -198,7 +198,13 @@ const newsPayload = allNews.map(item => ({
             <div class="editor-wrapper">
               <div class="editor-tips-bar">
                 <span>📝 <strong>纯中文可视化排版模式</strong>：直接在下方打字、加粗、排版表格；点击工具栏“图片”图标即可一键插入电脑本地图片</span>
-                <button type="button" id="btnToggleHtmlSource" class="btn-source-toggle">查看 / 编辑 HTML 源代码</button>
+                <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                  <label for="attachmentUploadInput" class="btn-source-toggle" style="background: #0284c7; color: #fff; cursor: pointer;">
+                    📎 上传并插入附件 (PDF/Word/PPT/Zip)
+                  </label>
+                  <input type="file" id="attachmentUploadInput" style="display: none;" />
+                  <button type="button" id="btnToggleHtmlSource" class="btn-source-toggle">查看 / 编辑 HTML 源代码</button>
+                </div>
               </div>
 
               <!-- wangEditor 工具栏挂载点 -->
