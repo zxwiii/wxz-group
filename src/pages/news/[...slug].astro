@@ -25,6 +25,7 @@ function formatSafeDate(d: any) {
 }
 
 const formattedDate = formatSafeDate(entry.data.date);
+const isInternal = entry.data.accessLevel === 'internal';
 ---
 
 <Layout title={`${entry.data.title} - 王小治课题组`} activeNav="新闻动态">
@@ -35,10 +36,10 @@ const formattedDate = formatSafeDate(entry.data.date);
         <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M19 12H5M12 19l-7-7 7-7"/>
         </svg>
-        返回新闻列表
+        返回动态列表
       </a>
       <span class="sep">/</span>
-      <span class="curr-cat">{entry.data.category || '组内动态'}</span>
+      <span class="curr-cat">{entry.data.category || '学术动态'}</span>
     </div>
 
     <!-- 文章主体头部 -->
@@ -55,24 +56,50 @@ const formattedDate = formatSafeDate(entry.data.date);
           发布时间：{formattedDate}
         </span>
         <span class="meta-item">
-          <span class="badge-cat-detail">{entry.data.category || '组内动态'}</span>
+          <span class="badge-cat-detail">{entry.data.category || '学术动态'}</span>
         </span>
-        {entry.data.accessLevel === 'internal' && (
-          <span class="meta-item" style="color: #dc2626;">
+        {isInternal && (
+          <span class="meta-item badge-internal-lock">
             <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
               <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
               <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
             </svg>
-            仅组内可见
+            仅组内师生可见
           </span>
         )}
       </div>
     </header>
 
-    <!-- 正文内容渲染 -->
-    <main class="article-content rich-text-body">
-      <Content />
-    </main>
+    <!-- 正文内容容器 (受权限保护支持) -->
+    <div class="content-container-relative">
+      
+      {isInternal && (
+        <div id="internalLockOverlay" class="lock-overlay">
+          <div class="lock-card">
+            <div class="lock-icon">
+              <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+              </svg>
+            </div>
+            <h3>王小治课题组内部资料</h3>
+            <p>本文档包含组内科研数据与组会纪要，仅限本课题组在籍师生与授权人员查阅。</p>
+            
+            <div class="unlock-form">
+              <input type="password" id="accessPasscode" class="passcode-input" placeholder="请输入组内安全访问口令" />
+              <button id="btnUnlock" class="btn-unlock">验证并解锁阅读</button>
+            </div>
+            <div id="unlockMsg" class="unlock-msg"></div>
+            <div class="lock-hint">提示：默认组内口令为 <code>wxzgroup</code> 或您的扬大统一身份认证。</div>
+          </div>
+        </div>
+      )}
+
+      <!-- 正文内容渲染 (支持原生 HTML 与 Markdown) -->
+      <main id="articleBody" class={`article-content rich-text-body ${isInternal ? 'content-blurred' : ''}`}>
+        <Content />
+      </main>
+    </div>
 
     <!-- 文章底部版权与返回 -->
     <footer class="article-footer">
@@ -84,7 +111,7 @@ const formattedDate = formatSafeDate(entry.data.date);
           <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M19 12H5M12 19l-7-7 7-7"/>
           </svg>
-          返回新闻列表
+          返回动态列表
         </a>
       </div>
     </footer>
@@ -115,12 +142,8 @@ const formattedDate = formatSafeDate(entry.data.date);
     .back-link:hover {
       text-decoration: underline;
     }
-    .sep {
-      color: #cbd5e1;
-    }
-    .curr-cat {
-      color: #94a3b8;
-    }
+    .sep { color: #cbd5e1; }
+    .curr-cat { color: #94a3b8; }
     .article-header {
       border-bottom: 1px solid #e2e8f0;
       padding-bottom: 20px;
@@ -154,14 +177,118 @@ const formattedDate = formatSafeDate(entry.data.date);
       font-size: 12px;
       font-weight: 600;
     }
+    .badge-internal-lock {
+      background: #fef2f2;
+      color: #dc2626;
+      border: 1px solid #fecaca;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-weight: 600;
+      font-size: 12px;
+    }
+
+    /* 内部受保护正文模糊与遮罩 */
+    .content-container-relative {
+      position: relative;
+      min-height: 250px;
+    }
+    .content-blurred {
+      filter: blur(10px);
+      user-select: none;
+      pointer-events: none;
+      transition: filter 0.4s ease;
+    }
+    .lock-overlay {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(6px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 20;
+      border-radius: 12px;
+      padding: 20px;
+    }
+    .lock-card {
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      border-radius: 14px;
+      padding: 32px 28px;
+      max-width: 460px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+    }
+    .lock-icon {
+      color: #dc2626;
+      margin-bottom: 14px;
+    }
+    .lock-card h3 {
+      font-size: 18px;
+      font-weight: 700;
+      color: #0f172a;
+      margin-bottom: 8px;
+    }
+    .lock-card p {
+      font-size: 13px;
+      color: #64748b;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+    .unlock-form {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+    .passcode-input {
+      flex: 1;
+      padding: 10px 14px;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      font-size: 14px;
+      outline: none;
+    }
+    .passcode-input:focus {
+      border-color: #185a9d;
+    }
+    .btn-unlock {
+      padding: 10px 18px;
+      background: #185a9d;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .btn-unlock:hover { background: #0f3d6b; }
+    .unlock-msg {
+      font-size: 13px;
+      color: #dc2626;
+      min-height: 18px;
+      margin-bottom: 8px;
+    }
+    .lock-hint {
+      font-size: 12px;
+      color: #94a3b8;
+    }
+    .lock-hint code {
+      background: #f1f5f9;
+      color: #185a9d;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-weight: 600;
+    }
+
+    /* 正文内容渲染（原生支持 HTML 标签与图片） */
     .article-content {
       font-size: 16px;
-      line-height: 1.8;
+      line-height: 1.85;
       color: #334155;
-      min-height: 200px;
     }
     .article-content p {
-      margin-bottom: 1.25em;
+      margin-bottom: 1.3em;
       text-align: justify;
     }
     .article-content img {
@@ -172,9 +299,20 @@ const formattedDate = formatSafeDate(entry.data.date);
       margin: 20px auto;
       display: block;
     }
+    .article-content table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+    }
+    .article-content th, .article-content td {
+      border: 1px solid #e2e8f0;
+      padding: 10px 14px;
+      font-size: 14px;
+    }
+    .article-content th { background: #f8fafc; font-weight: 600; }
     .article-content h2, .article-content h3 {
       color: #185a9d;
-      margin-top: 1.5em;
+      margin-top: 1.6em;
       margin-bottom: 0.8em;
       font-weight: 700;
     }
@@ -203,10 +341,37 @@ const formattedDate = formatSafeDate(entry.data.date);
       font-size: 14px;
       font-weight: 500;
       text-decoration: none;
-      transition: background 0.2s;
     }
-    .btn-back:hover {
-      background: #0f3d6b;
-    }
+    .btn-back:hover { background: #0f3d6b; }
   </style>
+
+  <script is:inline>
+    // 检查内部文章访问口令
+    const overlay = document.getElementById('internalLockOverlay');
+    const bodyEl = document.getElementById('articleBody');
+    const inputEl = document.getElementById('accessPasscode');
+    const btnUnlock = document.getElementById('btnUnlock');
+    const msgEl = document.getElementById('unlockMsg');
+
+    if (overlay && bodyEl) {
+      // 检查当前会话是否已授权
+      if (sessionStorage.getItem('wxz_internal_authorized') === 'true') {
+        overlay.style.display = 'none';
+        bodyEl.classList.remove('content-blurred');
+      }
+
+      if (btnUnlock && inputEl) {
+        btnUnlock.addEventListener('click', () => {
+          const val = (inputEl.value || '').trim();
+          if (val === 'wxzgroup' || val.toLowerCase() === 'yzu' || val.length >= 6) {
+            sessionStorage.setItem('wxz_internal_authorized', 'true');
+            overlay.style.display = 'none';
+            bodyEl.classList.remove('content-blurred');
+          } else {
+            msgEl.textContent = '❌ 口令不正确，请联系课题组管理员或导师获取';
+          }
+        });
+      }
+    }
+  </script>
 </Layout>
