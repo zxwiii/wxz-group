@@ -5,6 +5,6 @@ export default defineConfig({
   site: 'https://wxz.zxw.ac.cn',
   output: 'static',
   build: {
-    format: 'file'
+    format: 'directory'
   }
 });
