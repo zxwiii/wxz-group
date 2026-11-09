@@ -154,7 +154,203 @@ const newsPayload = allNews.map(item => ({
           </div>
         </div>
 
-                <!-- 挂载全量数据供富文本编辑载入 -->
+<div class="panel-card">
+          <h3 style="font-size: 16px; font-weight: 700; margin-bottom: 12px; color: #0f172a;">⚡ 常用管理快捷入口</h3>
+          <p style="color: #64748b; font-size: 14px; line-height: 1.8;">
+            欢迎使用课题组专属科研中台！全新升级特性：<br>
+            • <strong>类似凡科/Word的可视化富文本编辑</strong>：像写 Word 和微信公众号一样直接打字排版，支持标题、字体颜色、居中、表格和图片拖拽缩放；<br>
+            • <strong>一键上传图片并在正文直接显示</strong>：所有图片安全保存在云端专属目录（<code>public/images/uploads/</code>），并可在“多媒体与附件中心”统一管理；<br>
+            • <strong>真实生效的 Microsoft 365 权限控制</strong>：内部文章自动放入 <code>/internal/news/*</code> 物理隔离路由，由 Cloudflare Zero Trust 与微软统一身份认证联动锁死，外网人员无法访问！
+          </p>
+        </div>
+      </section>
+
+      <!-- 2. 可视化富文本发布与编辑 -->
+      <section id="tab-publish" class="tab-pane">
+        <div class="section-title-bar">
+          <h2 id="formHeaderTitle">✍️ 可视化富文本排版与发布</h2>
+          
+          <div id="editingBadge" style="display: none;" class="badge-editing">
+            <span>✏️ 正在修改现有文章</span>
+            <button type="button" id="btnCancelEdit" class="btn-cancel-edit">取消修改，返回新建</button>
+          </div>
+        </div>
+
+        <div class="panel-card">
+          <form id="articleForm">
+            <input type="hidden" id="editingSlug" value="" />
+
+            <div class="form-row-2">
+              <div class="field-item">
+                <label>文章标题 *</label>
+                <input type="text" id="postTitle" class="form-input" placeholder="请输入成果或新闻标题 (如: 博士生周港华在CEJ发表最新高水平论文)" required />
+              </div>
+
+              <div class="field-item">
+                <label>发布日期 *</label>
+                <input type="date" id="postDate" class="form-input" required />
+              </div>
+            </div>
+
+            <div class="form-row-2">
+              <div class="field-item">
+                <label>文章分类 *</label>
+                <select id="postCategory" class="form-input">
+                  <option value="科研进展">科研进展 (学术论文、前沿突破)</option>
+                  <option value="组会安排">组会安排 (周报日程、汇报纪要)</option>
+                  <option value="学术交流">学术交流 (学术会议、专家来访)</option>
+                  <option value="通知公告">通知公告 (招聘、招生、制度)</option>
+                  <option value="课题组快讯">课题组快讯 (其他综合动态)</option>
+                </select>
+              </div>
+
+              <div class="field-item">
+                <label>阅读权限控制 (支持微软单点登录) *</label>
+                <select id="postAccess" class="form-input">
+                  <option value="public">🌐 全网公开 (所有外部访客均可自由阅读)</option>
+                  <option value="internal">🔒 仅组内可见 (归入 /internal 路由，由 Microsoft 365 / Zero Trust 物理拦截)</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- 可视化富文本编辑器容器 (wangEditor) -->
+            <div class="editor-wrapper">
+              <div class="editor-tips-bar">
+                <span>📝 <strong>纯中文可视化排版模式</strong>：直接在下方打字、加粗、排版表格；点击工具栏“图片”图标即可一键插入电脑本地图片</span>
+                <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                  <label for="attachmentUploadInput" class="btn-source-toggle" style="background: #0284c7; color: #fff; cursor: pointer;">
+                    📎 上传并插入附件 (PDF/Word/PPT/Zip)
+                  </label>
+                  <input type="file" id="attachmentUploadInput" style="display: none;" />
+                  <button type="button" id="btnToggleHtmlSource" class="btn-source-toggle">查看 / 编辑 HTML 源代码</button>
+                </div>
+              </div>
+
+              <!-- wangEditor 工具栏挂载点 -->
+              <div id="editor-toolbar-container" class="editor-toolbar-box"></div>
+
+              <!-- wangEditor 编辑区域挂载点 (所见即所得打字区) -->
+              <div id="editor-text-container" class="editor-text-box"></div>
+
+              <!-- HTML 源码备用编辑区 (默认隐藏，点击切换源码时展示) -->
+              <textarea id="rawHtmlTextarea" class="raw-html-box" style="display: none;" placeholder="在此可直接粘贴或修改原生 HTML 代码..."></textarea>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 24px;">
+              <div style="font-size: 13px; color: #64748b;">
+                💾 保存后由 Cloudflare 全球自动化流水线在 30 秒内秒级构建生效。
+              </div>
+              <button type="submit" id="btnSubmit" class="btn-publish-submit">
+                🚀 立即发布并全网同步上线
+              </button>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <!-- 3. 动态管理列表（修改、删除、搜索） -->
+      <section id="tab-news" class="tab-pane">
+        <div class="section-title-bar">
+          <h2>📰 科研动态与组会管理 ({allNews.length})</h2>
+          <input type="text" id="filterInput" class="form-input" style="width: 260px;" placeholder="检索文章标题关键词..." />
+        </div>
+
+        <div class="panel-card" style="padding: 0; overflow: hidden;">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>发布日期</th>
+                <th>文章标题</th>
+                <th>所属分类</th>
+                <th>阅读权限</th>
+                <th style="text-align: right; padding-right: 24px;">操作管理</th>
+              </tr>
+            </thead>
+            <tbody id="articleTableBody">
+              {allNews.map(item => (
+                <tr data-title={(item.data.title || '').toLowerCase()} data-slug={item.slug}>
+                  <td style="color: #64748b; font-size: 13px; white-space: nowrap;">
+                    {formatSafeDate(item.data.date)}
+                  </td>
+                  <td style="font-weight: 600; color: #1e293b;">
+                    <a href={item.data.accessLevel === 'internal' ? `/internal/news/${item.slug}` : `/news/${item.slug}`} target="_blank" style="color: #1e293b; text-decoration: none;">
+                      {item.data.title}
+                    </a>
+                  </td>
+                  <td>
+                    <span class="tag-cat">{item.data.category || '科研进展'}</span>
+                  </td>
+                  <td>
+                    {item.data.accessLevel === 'internal' ? (
+                      <span class="tag-internal">🔒 仅组内 (Microsoft保护)</span>
+                    ) : (
+                      <span class="tag-public">🌐 公开</span>
+                    )}
+                  </td>
+                  <td style="text-align: right; padding-right: 20px; white-space: nowrap;">
+                    <button type="button" class="btn-action-edit" data-slug={item.slug}>✏️ 修改</button>
+                    <a href={item.data.accessLevel === 'internal' ? `/internal/news/${item.slug}` : `/news/${item.slug}`} target="_blank" class="btn-action-view">查看</a>
+                    <button type="button" class="btn-action-delete" data-slug={item.slug} data-title={item.data.title}>🗑️ 删除</button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- 4. 课题组多媒体与附件中心（双库：图片 + 科研附件文档） -->
+      <section id="tab-gallery" class="tab-pane">
+        <div class="section-title-bar" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+          <div style="display: flex; gap: 10px; align-items: center;">
+            <button type="button" id="btnSubTabImages" class="subtab-btn active">🖼️ 云端图片库</button>
+            <button type="button" id="btnSubTabDocs" class="subtab-btn">📎 课题组文档与附件库</button>
+          </div>
+          <div id="mediaActionButtons">
+            <label for="directUploadInput" id="labelUploadImage" class="btn-direct-upload">
+              + 上传新图片到图库
+            </label>
+            <input type="file" id="directUploadInput" accept="image/*" style="display: none;" />
+
+            <label for="directUploadDocInput" id="labelUploadDoc" class="btn-direct-upload" style="background: #0284c7; display: none;">
+              + 上传新附件/文档 (PDF/Word/PPT/Zip)
+            </label>
+            <input type="file" id="directUploadDocInput" style="display: none;" />
+          </div>
+        </div>
+
+        <!-- 4.1 图片库面板 -->
+        <div id="panelImagesSubtab" class="panel-card">
+          <div style="background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 8px; padding: 14px 18px; margin-bottom: 20px; font-size: 13px; color: #1e40af; line-height: 1.6;">
+            <strong>📌 图片存储说明：</strong><br>
+            您在富文本编辑器中插入的所有图片均保存在 <code>public/images/uploads/</code> 目录，由 Cloudflare CDN 全球加速秒开。点击下方任意图片可直接复制永久链接！
+          </div>
+          <div id="mediaGrid" class="media-grid">
+            <div style="color: #94a3b8; font-size: 14px; padding: 20px;">正在载入云端图片库...</div>
+          </div>
+        </div>
+
+        <!-- 4.2 附件与文档库面板 -->
+        <div id="panelDocsSubtab" class="panel-card" style="display: none;">
+          <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 8px; padding: 14px 18px; margin-bottom: 20px; font-size: 13px; color: #166534; line-height: 1.6;">
+            <strong>🛡️ 附件下载权限与存储机制：</strong><br>
+            • <strong>全网公开附件</strong>保存在 <code>public/downloads/</code>，所有外部访客均可自由下载；<br>
+            • <strong>内部专享附件</strong>保存在 <code>public/internal/downloads/</code>，由 Microsoft 365 零信任门禁拦截保护，外部人员拿到了链接也绝对无法下载！<br>
+            • 点击下方任意附件即可【复制链接】、【下载测试】或【删除】。
+          </div>
+          <div id="docsListGrid" class="docs-list-grid">
+            <div style="color: #94a3b8; font-size: 14px; padding: 20px;">正在载入课题组文档与附件库...</div>
+          </div>
+        </div>
+      </section>
+
+      
+    
+    </div>
+
+    </main>
+
+    <!-- 挂载全量数据供富文本编辑载入 -->
   <script is:inline define:vars={{ newsPayload }}>
     window.ALL_ARTICLES_DATA = newsPayload;
   </script>
