@@ -280,90 +280,52 @@ const newsPayload = allNews.map(item => ({
         </div>
       </section>
 
-      <!-- 4. 课题组云端媒体库（解答：图片去哪里了） -->
+      <!-- 4. 课题组多媒体与附件中心（双库：图片 + 科研附件文档） -->
       <section id="tab-gallery" class="tab-pane">
-        <div class="section-title-bar">
-          <h2>🖼️ 课题组云端媒体库 (图库中心)</h2>
-          <label for="directUploadInput" class="btn-direct-upload">
-            + 上传新图片到图库
-          </label>
-          <input type="file" id="directUploadInput" accept="image/*" style="display: none;" />
+        <div class="section-title-bar" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+          <div style="display: flex; gap: 10px; align-items: center;">
+            <button type="button" id="btnSubTabImages" class="subtab-btn active">🖼️ 云端图片库</button>
+            <button type="button" id="btnSubTabDocs" class="subtab-btn">📎 课题组文档与附件库</button>
+          </div>
+          <div id="mediaActionButtons">
+            <label for="directUploadInput" id="labelUploadImage" class="btn-direct-upload">
+              + 上传新图片到图库
+            </label>
+            <input type="file" id="directUploadInput" accept="image/*" style="display: none;" />
+
+            <label for="directUploadDocInput" id="labelUploadDoc" class="btn-direct-upload" style="background: #0284c7; display: none;">
+              + 上传新附件/文档 (PDF/Word/PPT/Zip)
+            </label>
+            <input type="file" id="directUploadDocInput" style="display: none;" />
+          </div>
         </div>
 
-        <div class="panel-card">
+        <!-- 4.1 图片库面板 -->
+        <div id="panelImagesSubtab" class="panel-card">
           <div style="background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 8px; padding: 14px 18px; margin-bottom: 20px; font-size: 13px; color: #1e40af; line-height: 1.6;">
-            <strong>📌 图片存储位置说明：</strong><br>
-            您在富文本编辑器中插入的所有图片，均永久且安全地保存在课题组网站的 <code>public/images/uploads/</code> 目录中，由 Cloudflare 全球 CDN 分发加速（高速、防盗链、永久有效）。点击下方任意图片可直接复制永久链接！
+            <strong>📌 图片存储说明：</strong><br>
+            您在富文本编辑器中插入的所有图片均保存在 <code>public/images/uploads/</code> 目录，由 Cloudflare CDN 全球加速秒开。点击下方任意图片可直接复制永久链接！
           </div>
-
           <div id="mediaGrid" class="media-grid">
-            <!-- 动态载入图片列表 -->
-            <div style="color: #94a3b8; font-size: 14px; padding: 20px;">正在载入云端媒体库列表...</div>
+            <div style="color: #94a3b8; font-size: 14px; padding: 20px;">正在载入云端图片库...</div>
+          </div>
+        </div>
+
+        <!-- 4.2 附件与文档库面板 -->
+        <div id="panelDocsSubtab" class="panel-card" style="display: none;">
+          <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 8px; padding: 14px 18px; margin-bottom: 20px; font-size: 13px; color: #166534; line-height: 1.6;">
+            <strong>🛡️ 附件下载权限与存储机制：</strong><br>
+            • <strong>全网公开附件</strong>保存在 <code>public/downloads/</code>，所有外部访客均可自由下载；<br>
+            • <strong>内部专享附件</strong>保存在 <code>public/internal/downloads/</code>，由 Microsoft 365 零信任门禁拦截保护，外部人员拿到了链接也绝对无法下载！<br>
+            • 点击下方任意附件即可【复制链接】、【下载测试】或【删除】。
+          </div>
+          <div id="docsListGrid" class="docs-list-grid">
+            <div style="color: #94a3b8; font-size: 14px; padding: 20px;">正在载入课题组文档与附件库...</div>
           </div>
         </div>
       </section>
 
-      <!-- 5. 真正的 Microsoft 365 权限控制 -->
-      <section id="tab-access" class="tab-pane">
-        <div class="section-title-bar">
-          <h2>🔐 Microsoft 365 组织单点登录与 Zero Trust 鉴权</h2>
-        </div>
-
-        <div class="panel-card">
-          <div class="ms-hero-card">
-            <div class="ms-hero-icon">
-              <svg viewBox="0 0 21 21" width="36" height="36">
-                <rect x="1" y="1" width="9" height="9" fill="#f25022"/>
-                <rect x="11" y="1" width="9" height="9" fill="#7fba00"/>
-                <rect x="1" y="11" width="9" height="9" fill="#00a4ef"/>
-                <rect x="11" y="11" width="9" height="9" fill="#ffb900"/>
-              </svg>
-            </div>
-            <div>
-              <h3>Microsoft Entra ID (原 Azure AD) 企业级单点登录体系</h3>
-              <p>利用您的 Microsoft 365 全局管理员权限与 Cloudflare Zero Trust 无缝对接，实现全网最权威、最安全的物理级访问控制。</p>
-            </div>
-          </div>
-
-          <h4 style="font-size: 16px; margin: 28px 0 16px; color: #0f172a;">🛠️ 真正的微软单点登录是如何运作的？</h4>
-
-          <div class="ms-step-row">
-            <div class="ms-step-card">
-              <div class="step-num">步骤 1</div>
-              <h4>路由级物理隔离</h4>
-              <p>所有标记为“仅组内可见”的文章，系统已自动划分至 <code>https://wxz.zxw.ac.cn/internal/*</code> 专属路径下，前台与公开文章彻底物理隔离。</p>
-            </div>
-
-            <div class="ms-step-card">
-              <div class="step-num">步骤 2</div>
-              <h4>微软官方重定向</h4>
-              <p>当任何外部访客试图访问该路径时，Cloudflare 边缘节点直接在网络层拦截，强制跳转至微软官方登录页 (<code>login.microsoftonline.com</code>)。</p>
-            </div>
-
-            <div class="ms-step-card">
-              <div class="step-num">步骤 3</div>
-              <h4>组织账号鉴权</h4>
-              <p>只有持有您组织授权的微软账号（如 <code>@yzu.edu.cn</code> 或组内指定 M365 账号）方可成功登录并放行阅读；外部人员无法突破微软登录墙！</p>
-            </div>
-          </div>
-
-          <div style="margin-top: 32px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 22px;">
-            <h4 style="font-size: 15px; margin-bottom: 10px; color: #1e293b;">🚀 在 Cloudflare Zero Trust 中绑定微软登录（仅需配置一次）：</h4>
-            <ol style="padding-left: 20px; font-size: 14px; line-height: 2; color: #475569;">
-              <li>打开 Cloudflare Zero Trust 控制台，点击左侧 <strong>Settings ➔ Authentication</strong>；</li>
-              <li>在 <strong>Login methods</strong> 中点击 <strong>Add new</strong>，选择 <strong>Azure AD / Microsoft Entra ID</strong>；</li>
-              <li>在您的 Azure 门户中注册一个 Enterprise Application，将 Client ID 与 Client Secret 粘贴填入；</li>
-              <li>在 Access ➔ Applications 中把 <code>wxz.zxw.ac.cn/internal*</code> 的登录方式勾选为该微软登录方法；</li>
-              <li>至此，全套高安全度的微软企业级统一单点登录便永久打通！</li>
-            </ol>
-          </div>
-        </div>
-      </section>
-
-    </main>
-  </div>
-
-  <!-- 挂载全量数据供富文本编辑载入 -->
+      <!-- 挂载全量数据供富文本编辑载入 -->
   <script is:inline define:vars={{ newsPayload }}>
     window.ALL_ARTICLES_DATA = newsPayload;
   </script>
@@ -660,6 +622,112 @@ const newsPayload = allNews.map(item => ({
     }
     .btn-action-delete:hover { background: #fee2e2; }
 
+    
+    /* 子面板切换按钮 */
+    .subtab-btn {
+      padding: 8px 18px;
+      font-size: 14px;
+      font-weight: 600;
+      border: 1px solid #cbd5e1;
+      background: #fff;
+      color: #64748b;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .subtab-btn.active {
+      background: #185a9d;
+      color: #fff;
+      border-color: #185a9d;
+    }
+    .docs-list-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+    }
+    .doc-card-item {
+      background: #fff;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 12px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .doc-card-item:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      border-color: #cbd5e1;
+    }
+    .doc-card-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .doc-file-icon {
+      font-size: 32px;
+      flex-shrink: 0;
+    }
+    .doc-file-info {
+      overflow: hidden;
+      flex: 1;
+    }
+    .doc-file-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: #1e293b;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .doc-file-meta {
+      font-size: 12px;
+      color: #64748b;
+      margin-top: 3px;
+    }
+    .doc-card-actions {
+      display: flex;
+      gap: 8px;
+      border-top: 1px solid #f1f5f9;
+      padding-top: 10px;
+    }
+    .btn-doc-act {
+      flex: 1;
+      padding: 6px 10px;
+      font-size: 12px;
+      border: 1px solid #cbd5e1;
+      border-radius: 4px;
+      background: #f8fafc;
+      color: #334155;
+      cursor: pointer;
+      text-align: center;
+      text-decoration: none;
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+    }
+    .btn-doc-act:hover {
+      background: #e2e8f0;
+      color: #0f172a;
+    }
+    .btn-doc-del {
+      padding: 6px 10px;
+      font-size: 12px;
+      border: 1px solid #fecaca;
+      border-radius: 4px;
+      background: #fef2f2;
+      color: #dc2626;
+      cursor: pointer;
+    }
+    .btn-doc-del:hover {
+      background: #fee2e2;
+    }
+    
     /* 云端图库网格 */
     .btn-direct-upload {
       display: inline-flex;
@@ -1136,6 +1204,175 @@ ${content}
       }
     }
 
+    
+    // ==========================================
+    // 多媒体与附件中心：双面板切换与附件库加载
+    // ==========================================
+    const btnSubTabImages = document.getElementById('btnSubTabImages');
+    const btnSubTabDocs = document.getElementById('btnSubTabDocs');
+    const panelImagesSubtab = document.getElementById('panelImagesSubtab');
+    const panelDocsSubtab = document.getElementById('panelDocsSubtab');
+    const labelUploadImage = document.getElementById('labelUploadImage');
+    const labelUploadDoc = document.getElementById('labelUploadDoc');
+
+    if (btnSubTabImages && btnSubTabDocs) {
+      btnSubTabImages.addEventListener('click', () => {
+        btnSubTabImages.classList.add('active');
+        btnSubTabDocs.classList.remove('active');
+        panelImagesSubtab.style.display = 'block';
+        panelDocsSubtab.style.display = 'none';
+        labelUploadImage.style.display = 'inline-flex';
+        labelUploadDoc.style.display = 'none';
+        loadMediaLibrary();
+      });
+
+      btnSubTabDocs.addEventListener('click', () => {
+        btnSubTabDocs.classList.add('active');
+        btnSubTabImages.classList.remove('active');
+        panelDocsSubtab.style.display = 'block';
+        panelImagesSubtab.style.display = 'none';
+        labelUploadDoc.style.display = 'inline-flex';
+        labelUploadImage.style.display = 'none';
+        loadDocsLibrary();
+      });
+    }
+
+    function getFileIcon(filename) {
+      const ext = filename.split('.').pop().toLowerCase();
+      if (ext === 'pdf') return '📕';
+      if (['doc', 'docx'].includes(ext)) return '📘';
+      if (['xls', 'xlsx', 'csv'].includes(ext)) return '📗';
+      if (['ppt', 'pptx'].includes(ext)) return '📙';
+      if (['zip', 'rar', '7z', 'tar', 'gz'].includes(ext)) return '🗄️';
+      return '📄';
+    }
+
+    async function loadDocsLibrary() {
+      const grid = document.getElementById('docsListGrid');
+      const t = getAdminToken();
+      grid.innerHTML = '<div style="color:#64748b; padding:20px;">正在获取云端附件与文档列表...</div>';
+
+      try {
+        const resp = await fetch(`https://api.github.com/repos/zxwiii/wxz-group/contents/public/downloads`, {
+          headers: { 'Authorization': `token ${t}` }
+        });
+        const files = await resp.json();
+        
+        if (!Array.isArray(files) || files.length === 0 || (files.length === 1 && files[0].name === '.gitkeep')) {
+          grid.innerHTML = '<div style="color:#94a3b8; padding:30px; grid-column:1/-1; text-align:center;">暂无已上传的附件文档。<br>点击右上角【+ 上传新附件/文档】或在文章编辑时插入附件即可在此汇总管理！</div>';
+          return;
+        }
+
+        grid.innerHTML = '';
+        files.filter(f => f.name !== '.gitkeep').reverse().forEach(f => {
+          const item = document.createElement('div');
+          item.className = 'doc-card-item';
+          const icon = getFileIcon(f.name);
+          const sizeKb = f.size ? (f.size / 1024).toFixed(1) + ' KB' : '文件';
+          const fileUrl = `/downloads/${f.name}`;
+
+          item.innerHTML = `
+            <div class="doc-card-header">
+              <span class="doc-file-icon">${icon}</span>
+              <div class="doc-file-info">
+                <div class="doc-file-name" title="${f.name}">${f.name}</div>
+                <div class="doc-file-meta">大小: ${sizeKb} | 开放权限</div>
+              </div>
+            </div>
+            <div class="doc-card-actions">
+              <button type="button" class="btn-doc-act" onclick="navigator.clipboard.writeText('${fileUrl}'); alert('已复制附件相对下载链接：${fileUrl}');">
+                📎 复制链接
+              </button>
+              <a href="${fileUrl}" download="${f.name}" target="_blank" class="btn-doc-act">
+                📥 下载测试
+              </a>
+              <button type="button" class="btn-doc-del" onclick="deleteDocFile('${f.name}', '${f.sha}')">
+                🗑️
+              </button>
+            </div>
+          `;
+          grid.appendChild(item);
+        });
+      } catch(e) {
+        grid.innerHTML = '<div style="color:#94a3b8; padding:20px;">文档库连接异常: ' + e.message + '</div>';
+      }
+    }
+
+    window.deleteDocFile = async function(fileName, sha) {
+      if (!confirm(`确定要永久删除附件 "${fileName}" 吗？删除后文章中的对应下载将失效。`)) return;
+      const t = getAdminToken();
+      try {
+        const resp = await fetch(`https://api.github.com/repos/zxwiii/wxz-group/contents/public/downloads/${fileName}`, {
+          method: 'DELETE',
+          headers: {
+            'Authorization': `token ${t}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            message: `chore: delete attachment ${fileName}`,
+            sha: sha
+          })
+        });
+        if (resp.ok) {
+          alert(`附件 "${fileName}" 已成功删除！`);
+          loadDocsLibrary();
+        } else {
+          alert('删除失败，请检查网络或 Token 权限');
+        }
+      } catch(err) {
+        alert('删除异常: ' + err.message);
+      }
+    };
+
+    // 附件库直接上传新文档
+    const directUploadDocInput = document.getElementById('directUploadDocInput');
+    if (directUploadDocInput) {
+      directUploadDocInput.addEventListener('change', async (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        const t = getAdminToken();
+        if (!t) {
+          alert('请先在顶部设置管理员 Token 后再上传！');
+          return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = async () => {
+          const base64Content = reader.result.split(',')[1];
+          const cleanName = file.name.replace(/[^a-zA-Z0-9._\-\u4e00-\u9fa5]/g, '_');
+          const fileName = `${Date.now()}_${cleanName}`;
+          const isInternalAccess = (postAccessSelect && postAccessSelect.value === 'internal');
+          const filePath = isInternalAccess ? `public/internal/downloads/${fileName}` : `public/downloads/${fileName}`;
+          const fileUrl = isInternalAccess ? `/internal/downloads/${fileName}` : `/downloads/${fileName}`;
+
+          try {
+            const resp = await fetch(`https://api.github.com/repos/zxwiii/wxz-group/contents/${filePath}`, {
+              method: 'PUT',
+              headers: {
+                'Authorization': `token ${t}`,
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({
+                message: `feat(downloads): direct upload ${fileName}`,
+                content: base64Content
+              })
+            });
+            if (resp.ok) {
+              alert(`🎉 附件 "${file.name}" 已成功上传至课题组附件库！`);
+              loadDocsLibrary();
+            } else {
+              alert('上传失败，请检查文件大小或网络连接');
+            }
+          } catch(err) {
+            alert('上传异常: ' + err.message);
+          }
+        };
+        reader.readAsDataURL(file);
+        directUploadDocInput.value = '';
+      });
+    }
+    
     // 媒体库直接上传新图片
     const directUploadInput = document.getElementById('directUploadInput');
     if (directUploadInput) {
