@@ -1115,20 +1115,13 @@ const newsPayload = allNews.map(item => ({
 
     updateSidebarTokenStatus();
 
-    // 凭据读取（内置最新课题组官方授权凭据，自动热装载与故障自愈）
-    const BUILTIN_DEFAULT_TOKEN = ['ghp', '_8DV3dAX', 'dla3Jdb', 'fxfCeuQWPVem', 'XE7O32UoKx'].join('');
-
+    // 凭据读取
     function getAdminToken() {
-      let t = localStorage.getItem('wxz_token');
-      // 当本地无 token 或为失效旧 token 时，自动静默无缝纠偏为最新有效凭据
-      if (!t || t.length < 20 || t !== BUILTIN_DEFAULT_TOKEN) {
-        t = BUILTIN_DEFAULT_TOKEN;
-        try {
-          localStorage.setItem('wxz_token', t);
-          localStorage.setItem('decap-cms-user', JSON.stringify({ backendName: 'github', token: t }));
-        } catch(e){}
+      let t = localStorage.getItem('wxz_token') || localStorage.getItem('decap-cms-user');
+      if (t && typeof t === 'string' && t.startsWith('{')) {
+        try { t = JSON.parse(t).token; } catch(e){}
       }
-      return t || BUILTIN_DEFAULT_TOKEN;
+      return t || '';
     }
 
     const token = getAdminToken();
