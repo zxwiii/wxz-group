@@ -91,7 +91,7 @@ const newsPayload = allNews.map(item => ({
       </nav>
 
             <div class="sidebar-token-section" style="margin-top: 15px; padding-top: 15px; border-top: 1px solid #334155;">
-        <button type="button" id="btnSidebarToken" class="btn-sidebar-token" style="width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 9px 12px; background: rgba(30, 41, 59, 0.8); color: #cbd5e1; border: 1px solid #475569; border-radius: 6px; font-size: 13px; font-weight: 500; cursor: pointer; transition: all 0.2s;">
+        <button type="button" id="btnSidebarToken" class="btn-sidebar-token" onclick="openTokenConfig()" style="width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 9px 12px; background: rgba(30, 41, 59, 0.8); color: #cbd5e1; border: 1px solid #475569; border-radius: 6px; font-size: 13px; font-weight: 500; cursor: pointer; transition: all 0.2s;">
           <span style="display: flex; align-items: center; gap: 8px;">
             <span id="sidebarTokenDot" style="width: 8px; height: 8px; border-radius: 50%; background: #ef4444;"></span>
             <span id="sidebarTokenText">GitHub 密钥: 待设置</span>
@@ -164,12 +164,12 @@ const newsPayload = allNews.map(item => ({
             <div style="display: flex; gap: 10px; flex-wrap: wrap;">
               <div style="position: relative; flex: 1; min-width: 280px;">
                 <input type="text" id="cardInputGithubToken" placeholder="在此直接粘贴 ghp_ 开头的 GitHub Token 密钥..." style="width: 100%; padding: 11px 40px 11px 14px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 14px; font-family: monospace; outline: none; box-sizing: border-box; background: #fff;" />
-                <button type="button" id="cardBtnClearToken" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; font-size: 16px; color: #94a3b8;" title="清空输入框">✕</button>
+                <button type="button" id="cardBtnClearToken" onclick="clearCardToken()" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; font-size: 16px; color: #94a3b8;" title="清空输入框">✕</button>
               </div>
-              <button type="button" id="cardBtnTestToken" style="padding: 11px 20px; border: 1px solid #cbd5e1; border-radius: 6px; background: #fff; color: #334155; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s;">
+              <button type="button" id="cardBtnTestToken" onclick="testCardToken()" style="padding: 11px 20px; border: 1px solid #cbd5e1; border-radius: 6px; background: #fff; color: #334155; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s;">
                 🔍 测试连接
               </button>
-              <button type="button" id="cardBtnSaveToken" style="padding: 11px 24px; border: none; border-radius: 6px; background: #185a9d; color: #fff; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s;">
+              <button type="button" id="cardBtnSaveToken" onclick="saveCardToken()" style="padding: 11px 24px; border: none; border-radius: 6px; background: #185a9d; color: #fff; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s;">
                 💾 保存并立即生效
               </button>
             </div>
@@ -958,6 +958,191 @@ const newsPayload = allNews.map(item => ({
   </style>
 
   <script is:inline>
+    // ==========================================
+    // 常驻卡片式 GitHub Token 密钥交互逻辑 (全响应支持)
+    // ==========================================
+    window.openTokenConfig = function() {
+      if (typeof switchTab === 'function') {
+        switchTab('tab-overview');
+      }
+      const card = document.getElementById('tokenConfigCard');
+      if (card) {
+        card.scrollIntoView({ behavior: 'smooth' });
+        card.style.boxShadow = '0 0 0 4px rgba(59, 130, 246, 0.5)';
+        setTimeout(() => { card.style.boxShadow = ''; }, 2500);
+      }
+      const input = document.getElementById('cardInputGithubToken');
+      if (input) {
+        input.focus();
+      }
+    };
+
+    window.clearCardToken = function() {
+      const input = document.getElementById('cardInputGithubToken');
+      if (input) {
+        input.value = '';
+        input.focus();
+      }
+    };
+
+    window.testCardToken = async function() {
+      const input = document.getElementById('cardInputGithubToken');
+      const alertBox = document.getElementById('cardTokenAlert');
+      const btn = document.getElementById('cardBtnTestToken');
+      const tokenVal = input ? input.value.trim() : '';
+
+      if (!tokenVal) {
+        alert('请先在输入框中粘贴您的 GitHub Token（以 ghp_ 开头）！');
+        if (input) input.focus();
+        return;
+      }
+
+      if (btn) {
+        btn.disabled = true;
+        btn.textContent = '⏳ 测试中...';
+      }
+      if (alertBox) {
+        alertBox.style.display = 'block';
+        alertBox.style.background = '#eff6ff';
+        alertBox.style.border = '1px solid #bfdbfe';
+        alertBox.style.color = '#1d4ed8';
+        alertBox.innerHTML = '正在向 GitHub 官方服务器验证密钥有效性，请稍候...';
+      }
+
+      try {
+        const resp = await fetch('https://api.github.com/repos/zxwiii/wxz-group', {
+          headers: { 'Authorization': `token ${tokenVal}` }
+        });
+        if (btn) {
+          btn.disabled = false;
+          btn.textContent = '🔍 测试连接';
+        }
+
+        if (resp.ok) {
+          const repo = await resp.json();
+          if (alertBox) {
+            alertBox.style.background = '#f0fdf4';
+            alertBox.style.border = '1px solid #bbf7d0';
+            alertBox.style.color = '#15803d';
+            alertBox.innerHTML = `<strong>✅ 校验通过！</strong> 成功连接到课题组仓库 <code>${repo.full_name}</code>，具备完整文章发布与附件上传权限。请点击右侧【保存并立即生效】！`;
+          }
+        } else if (resp.status === 401) {
+          if (alertBox) {
+            alertBox.style.background = '#fef2f2';
+            alertBox.style.border = '1px solid #fecaca';
+            alertBox.style.color = '#b91c1c';
+            alertBox.innerHTML = `<strong>❌ 校验失败 (401 Bad credentials)：</strong> 该 Token 无效或已过期，请重新在 GitHub 生成新的 Token 粘贴！`;
+          }
+        } else {
+          if (alertBox) {
+            alertBox.style.background = '#fef2f2';
+            alertBox.style.border = '1px solid #fecaca';
+            alertBox.style.color = '#b91c1c';
+            alertBox.innerHTML = `<strong>❌ 校验未通过：</strong> HTTP ${resp.status}，请确认是否勾选了 repo 读写权限。`;
+          }
+        }
+      } catch (err) {
+        if (btn) {
+          btn.disabled = false;
+          btn.textContent = '🔍 测试连接';
+        }
+        if (alertBox) {
+          alertBox.style.background = '#fef2f2';
+          alertBox.style.border = '1px solid #fecaca';
+          alertBox.style.color = '#b91c1c';
+          alertBox.innerHTML = `<strong>❌ 网络连接异常：</strong> ${err.message}`;
+        }
+      }
+    };
+
+    window.saveCardToken = async function() {
+      const input = document.getElementById('cardInputGithubToken');
+      const alertBox = document.getElementById('cardTokenAlert');
+      const btn = document.getElementById('cardBtnSaveToken');
+      const tokenVal = input ? input.value.trim() : '';
+
+      if (!tokenVal) {
+        alert('请先输入有效的 GitHub Token！');
+        if (input) input.focus();
+        return;
+      }
+
+      if (btn) {
+        btn.disabled = true;
+        btn.textContent = '⏳ 正在保存...';
+      }
+
+      try {
+        const resp = await fetch('https://api.github.com/repos/zxwiii/wxz-group', {
+          headers: { 'Authorization': `token ${tokenVal}` }
+        });
+        if (btn) {
+          btn.disabled = false;
+          btn.textContent = '💾 保存并立即生效';
+        }
+
+        if (resp.ok) {
+          localStorage.setItem('wxz_token', tokenVal);
+          localStorage.setItem('decap-cms-user', JSON.stringify({ backendName: 'github', token: tokenVal }));
+          if (alertBox) {
+            alertBox.style.display = 'block';
+            alertBox.style.background = '#f0fdf4';
+            alertBox.style.border = '1px solid #bbf7d0';
+            alertBox.style.color = '#15803d';
+            alertBox.innerHTML = '<strong>🎉 保存成功！</strong> 密钥已安全锁存在您当前的浏览器本地中。全部云端发布功能已恢复！';
+          }
+          alert('🎉 GitHub 访问密钥已成功保存并立即生效！文章发布、图片与附件上传已全部恢复。');
+          window.location.reload();
+        } else {
+          if (alertBox) {
+            alertBox.style.display = 'block';
+            alertBox.style.background = '#fef2f2';
+            alertBox.style.border = '1px solid #fecaca';
+            alertBox.style.color = '#b91c1c';
+            alertBox.innerHTML = '<strong>❌ 无法保存：</strong> Token 校验失败 (HTTP ' + resp.status + ')，请重新复制粘贴有效 Token！';
+          }
+          alert('无法保存：Token 校验未通过，请检查是否完整复制！');
+        }
+      } catch (err) {
+        if (btn) {
+          btn.disabled = false;
+          btn.textContent = '💾 保存并立即生效';
+        }
+        alert('保存异常: ' + err.message);
+      }
+    };
+
+    // 页面载入时自动回显与状态同步
+    function syncCardTokenOnLoad() {
+      const t = localStorage.getItem('wxz_token') || '';
+      const cardInput = document.getElementById('cardInputGithubToken');
+      const statusBadge = document.getElementById('cardTokenStatusBadge');
+      const sidebarDot = document.getElementById('sidebarTokenDot');
+      const sidebarText = document.getElementById('sidebarTokenText');
+
+      if (cardInput && t) {
+        cardInput.value = t;
+      }
+      if (t && t.length > 15) {
+        if (statusBadge) {
+          statusBadge.style.background = '#f0fdf4';
+          statusBadge.style.color = '#16a34a';
+          statusBadge.style.border = '1px solid #bbf7d0';
+          statusBadge.innerHTML = '<span style="width:8px;height:8px;border-radius:50%;background:#16a34a;"></span><span>密钥已配置 (就绪)</span>';
+        }
+        if (sidebarDot && sidebarText) {
+          sidebarDot.style.background = '#22c55e';
+          sidebarText.textContent = 'GitHub 密钥: 正常';
+        }
+      }
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', syncCardTokenOnLoad);
+    } else {
+      syncCardTokenOnLoad();
+    }
+
     
     // ==========================================
     // GitHub Token 密钥管理器与智能异常捕获
