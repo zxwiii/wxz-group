@@ -90,17 +90,7 @@ const newsPayload = allNews.map(item => ({
         </button>
       </nav>
 
-            <div class="sidebar-token-section" style="margin-top: 15px; padding-top: 15px; border-top: 1px solid #334155;">
-        <button type="button" id="btnSidebarToken" class="btn-sidebar-token" onclick="openTokenConfig()" style="width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 9px 12px; background: rgba(30, 41, 59, 0.8); color: #cbd5e1; border: 1px solid #475569; border-radius: 6px; font-size: 13px; font-weight: 500; cursor: pointer; transition: all 0.2s;">
-          <span style="display: flex; align-items: center; gap: 8px;">
-            <span id="sidebarTokenDot" style="width: 8px; height: 8px; border-radius: 50%; background: #ef4444;"></span>
-            <span id="sidebarTokenText">GitHub 密钥: 待设置</span>
-          </span>
-          <span style="font-size: 11px; color: #94a3b8; background: #334155; padding: 2px 6px; border-radius: 4px;">修改</span>
-        </button>
-      </div>
-
-      <div class="sidebar-status">
+            <div class="sidebar-status">
         <span class="status-indicator"></span>
         <span>云端自动化流水线：正常</span>
       </div>
@@ -114,6 +104,31 @@ const newsPayload = allNews.map(item => ({
         <div class="section-title-bar">
           <h2>📊 课题组学术与运行总览</h2>
           <span class="badge-online">系统稳定运行中</span>
+        </div>
+
+                <div class="panel-card" style="border: 1px solid #bfdbfe; background: linear-gradient(135deg, #f0fdf4 0%, #eff6ff 100%); margin-bottom: 24px; padding: 20px 24px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
+            <div style="display: flex; align-items: center; gap: 14px;">
+              <div style="width: 48px; height: 48px; border-radius: 10px; background: #fff; box-shadow: 0 2px 6px rgba(0,0,0,0.06); display: flex; align-items: center; justify-content: center; font-size: 24px;">
+                🛡️
+              </div>
+              <div>
+                <h3 style="font-size: 17px; font-weight: 700; color: #0f172a; margin: 0; display: flex; align-items: center; gap: 8px;">
+                  <span>Microsoft 365 组织特权管理中台</span>
+                  <span style="font-size: 11px; font-weight: 600; background: #dcfce7; color: #166534; border: 1px solid #bbf7d0; padding: 2px 8px; border-radius: 12px;">零信任已锁死</span>
+                </h3>
+                <p style="font-size: 13px; color: #475569; margin: 4px 0 0 0;">
+                  已通过 Microsoft Entra ID (Azure AD) 企业级单点登录验证。操作由 Cloudflare 云端边缘代理秒级提交，全网 30 秒自动部署。
+                </p>
+              </div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <span style="font-size: 13px; color: #15803d; font-weight: 600; display: flex; align-items: center; gap: 6px;">
+                <span style="width: 8px; height: 8px; border-radius: 50%; background: #22c55e;"></span>
+                云端服务就绪
+              </span>
+            </div>
+          </div>
         </div>
 
         <div class="stat-card-row">
@@ -139,284 +154,7 @@ const newsPayload = allNews.map(item => ({
           </div>
         </div>
 
-                <!-- 常驻内嵌的 GitHub 访问密钥与云端同步配置卡片 -->
-        <div class="panel-card" id="tokenConfigCard" style="border: 2px solid #3b82f6; background: #f8fafc; margin-bottom: 24px;">
-          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; margin-bottom: 16px;">
-            <div style="display: flex; align-items: center; gap: 10px;">
-              <span style="font-size: 24px;">🔑</span>
-              <div>
-                <h3 style="font-size: 17px; font-weight: 700; color: #0f172a; margin: 0;">GitHub 云端同步密钥配置 (Personal Access Token)</h3>
-                <p style="font-size: 12px; color: #64748b; margin: 3px 0 0 0;">用于发布文章、上传图片、上传/删除科研附件时实时写入云端仓库</p>
-              </div>
-            </div>
-            <div id="cardTokenStatusBadge" style="display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 20px; font-size: 13px; font-weight: 600; background: #fee2e2; color: #dc2626; border: 1px solid #fecaca;">
-              <span style="width: 8px; height: 8px; border-radius: 50%; background: #dc2626;"></span>
-              <span>密钥未就绪 / 已失效</span>
-            </div>
-          </div>
-
-          <div style="background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 8px; padding: 12px 16px; margin-bottom: 16px; font-size: 13px; color: #1e40af; line-height: 1.6;">
-            💡 <strong>使用说明：</strong> 本中台直接与课题组 GitHub 仓库无缝联动。若保存文章或上传附件时提示 <code>Bad credentials</code>，说明浏览器本地密钥已过期或未填入。请在下方直接粘贴最新的 GitHub Token 并点击保存即可立即恢复！<br>
-            👉 <a href="https://github.com/settings/tokens/new?description=wxz-group-cms&scopes=repo" target="_blank" style="color: #2563eb; text-decoration: underline; font-weight: 700;">点击此处直达 GitHub 自动生成新 Token（已自动勾选 repo 读写权限，有效期建议选永不过期）</a>
-          </div>
-
-          <div style="display: flex; flex-direction: column; gap: 12px;">
-            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-              <div style="position: relative; flex: 1; min-width: 280px;">
-                <input type="text" id="cardInputGithubToken" placeholder="在此直接粘贴 ghp_ 开头的 GitHub Token 密钥..." style="width: 100%; padding: 11px 40px 11px 14px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 14px; font-family: monospace; outline: none; box-sizing: border-box; background: #fff;" />
-                <button type="button" id="cardBtnClearToken" onclick="clearCardToken()" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; font-size: 16px; color: #94a3b8;" title="清空输入框">✕</button>
-              </div>
-              <button type="button" id="cardBtnTestToken" onclick="testCardToken()" style="padding: 11px 20px; border: 1px solid #cbd5e1; border-radius: 6px; background: #fff; color: #334155; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s;">
-                🔍 测试连接
-              </button>
-              <button type="button" id="cardBtnSaveToken" onclick="saveCardToken()" style="padding: 11px 24px; border: none; border-radius: 6px; background: #185a9d; color: #fff; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s;">
-                💾 保存并立即生效
-              </button>
-            </div>
-            <div id="cardTokenAlert" style="display: none; padding: 10px 14px; border-radius: 6px; font-size: 13px; line-height: 1.5;"></div>
-          </div>
-        </div>
-
-        <div class="panel-card">
-          <h3 style="font-size: 16px; font-weight: 700; margin-bottom: 12px; color: #0f172a;">⚡ 常用管理快捷入口</h3>
-          <p style="color: #64748b; font-size: 14px; line-height: 1.8;">
-            欢迎使用课题组专属科研中台！全新升级特性：<br>
-            • <strong>类似凡科/Word的可视化富文本编辑</strong>：像写 Word 和微信公众号一样直接打字排版，支持标题、字体颜色、居中、表格和图片拖拽缩放；<br>
-            • <strong>一键上传图片并在正文直接显示</strong>：所有图片安全保存在云端专属目录（<code>public/images/uploads/</code>），并可在“云端媒体库”统一管理；<br>
-            • <strong>真实生效的 Microsoft 365 权限控制</strong>：内部文章自动放入 <code>/internal/news/*</code> 物理隔离路由，由 Cloudflare Zero Trust 与微软统一身份认证联动锁死，外网人员无法访问！
-          </p>
-        </div>
-      </section>
-
-      <!-- 2. 可视化富文本发布与编辑 -->
-      <section id="tab-publish" class="tab-pane">
-        <div class="section-title-bar">
-          <h2 id="formHeaderTitle">✍️ 可视化富文本排版与发布</h2>
-          <button type="button" class="btn-quick-token" onclick="openTokenConfig()" style="font-size: 12px; font-weight: 600; padding: 5px 12px; background: #f1f5f9; border: 1px solid #cbd5e1; border-radius: 6px; color: #475569; cursor: pointer; display: inline-flex; align-items: center; gap: 4px;">
-            🔑 配置密钥
-          </button>
-          <div id="editingBadge" style="display: none;" class="badge-editing">
-            <span>✏️ 正在修改现有文章</span>
-            <button type="button" id="btnCancelEdit" class="btn-cancel-edit">取消修改，返回新建</button>
-          </div>
-        </div>
-
-        <div class="panel-card">
-          <form id="articleForm">
-            <input type="hidden" id="editingSlug" value="" />
-
-            <div class="form-row-2">
-              <div class="field-item">
-                <label>文章标题 *</label>
-                <input type="text" id="postTitle" class="form-input" placeholder="请输入成果或新闻标题 (如: 博士生周港华在CEJ发表最新高水平论文)" required />
-              </div>
-
-              <div class="field-item">
-                <label>发布日期 *</label>
-                <input type="date" id="postDate" class="form-input" required />
-              </div>
-            </div>
-
-            <div class="form-row-2">
-              <div class="field-item">
-                <label>文章分类 *</label>
-                <select id="postCategory" class="form-input">
-                  <option value="科研进展">科研进展 (学术论文、前沿突破)</option>
-                  <option value="组会安排">组会安排 (周报日程、汇报纪要)</option>
-                  <option value="学术交流">学术交流 (学术会议、专家来访)</option>
-                  <option value="通知公告">通知公告 (招聘、招生、制度)</option>
-                  <option value="课题组快讯">课题组快讯 (其他综合动态)</option>
-                </select>
-              </div>
-
-              <div class="field-item">
-                <label>阅读权限控制 (支持微软单点登录) *</label>
-                <select id="postAccess" class="form-input">
-                  <option value="public">🌐 全网公开 (所有外部访客均可自由阅读)</option>
-                  <option value="internal">🔒 仅组内可见 (归入 /internal 路由，由 Microsoft 365 / Zero Trust 物理拦截)</option>
-                </select>
-              </div>
-            </div>
-
-            <!-- 可视化富文本编辑器容器 (wangEditor) -->
-            <div class="editor-wrapper">
-              <div class="editor-tips-bar">
-                <span>📝 <strong>纯中文可视化排版模式</strong>：直接在下方打字、加粗、排版表格；点击工具栏“图片”图标即可一键插入电脑本地图片</span>
-                <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-                  <label for="attachmentUploadInput" class="btn-source-toggle" style="background: #0284c7; color: #fff; cursor: pointer;">
-                    📎 上传并插入附件 (PDF/Word/PPT/Zip)
-                  </label>
-                  <input type="file" id="attachmentUploadInput" style="display: none;" />
-                  <button type="button" id="btnToggleHtmlSource" class="btn-source-toggle">查看 / 编辑 HTML 源代码</button>
-                </div>
-              </div>
-
-              <!-- wangEditor 工具栏挂载点 -->
-              <div id="editor-toolbar-container" class="editor-toolbar-box"></div>
-
-              <!-- wangEditor 编辑区域挂载点 (所见即所得打字区) -->
-              <div id="editor-text-container" class="editor-text-box"></div>
-
-              <!-- HTML 源码备用编辑区 (默认隐藏，点击切换源码时展示) -->
-              <textarea id="rawHtmlTextarea" class="raw-html-box" style="display: none;" placeholder="在此可直接粘贴或修改原生 HTML 代码..."></textarea>
-            </div>
-
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 24px;">
-              <div style="font-size: 13px; color: #64748b;">
-                💾 保存后由 Cloudflare 全球自动化流水线在 30 秒内秒级构建生效。
-              </div>
-              <button type="submit" id="btnSubmit" class="btn-publish-submit">
-                🚀 立即发布并全网同步上线
-              </button>
-            </div>
-          </form>
-        </div>
-      </section>
-
-      <!-- 3. 动态管理列表（修改、删除、搜索） -->
-      <section id="tab-news" class="tab-pane">
-        <div class="section-title-bar">
-          <h2>📰 科研动态与组会管理 ({allNews.length})</h2>
-          <input type="text" id="filterInput" class="form-input" style="width: 260px;" placeholder="检索文章标题关键词..." />
-        </div>
-
-        <div class="panel-card" style="padding: 0; overflow: hidden;">
-          <table class="data-table">
-            <thead>
-              <tr>
-                <th>发布日期</th>
-                <th>文章标题</th>
-                <th>所属分类</th>
-                <th>阅读权限</th>
-                <th style="text-align: right; padding-right: 24px;">操作管理</th>
-              </tr>
-            </thead>
-            <tbody id="articleTableBody">
-              {allNews.map(item => (
-                <tr data-title={(item.data.title || '').toLowerCase()} data-slug={item.slug}>
-                  <td style="color: #64748b; font-size: 13px; white-space: nowrap;">
-                    {formatSafeDate(item.data.date)}
-                  </td>
-                  <td style="font-weight: 600; color: #1e293b;">
-                    <a href={item.data.accessLevel === 'internal' ? `/internal/news/${item.slug}` : `/news/${item.slug}`} target="_blank" style="color: #1e293b; text-decoration: none;">
-                      {item.data.title}
-                    </a>
-                  </td>
-                  <td>
-                    <span class="tag-cat">{item.data.category || '科研进展'}</span>
-                  </td>
-                  <td>
-                    {item.data.accessLevel === 'internal' ? (
-                      <span class="tag-internal">🔒 仅组内 (Microsoft保护)</span>
-                    ) : (
-                      <span class="tag-public">🌐 公开</span>
-                    )}
-                  </td>
-                  <td style="text-align: right; padding-right: 20px; white-space: nowrap;">
-                    <button type="button" class="btn-action-edit" data-slug={item.slug}>✏️ 修改</button>
-                    <a href={item.data.accessLevel === 'internal' ? `/internal/news/${item.slug}` : `/news/${item.slug}`} target="_blank" class="btn-action-view">查看</a>
-                    <button type="button" class="btn-action-delete" data-slug={item.slug} data-title={item.data.title}>🗑️ 删除</button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </section>
-
-      <!-- 4. 课题组多媒体与附件中心（双库：图片 + 科研附件文档） -->
-      <section id="tab-gallery" class="tab-pane">
-        <div class="section-title-bar" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
-          <div style="display: flex; gap: 10px; align-items: center;">
-            <button type="button" id="btnSubTabImages" class="subtab-btn active">🖼️ 云端图片库</button>
-            <button type="button" id="btnSubTabDocs" class="subtab-btn">📎 课题组文档与附件库</button>
-          </div>
-          <div id="mediaActionButtons">
-            <label for="directUploadInput" id="labelUploadImage" class="btn-direct-upload">
-              + 上传新图片到图库
-            </label>
-            <input type="file" id="directUploadInput" accept="image/*" style="display: none;" />
-
-            <label for="directUploadDocInput" id="labelUploadDoc" class="btn-direct-upload" style="background: #0284c7; display: none;">
-              + 上传新附件/文档 (PDF/Word/PPT/Zip)
-            </label>
-            <input type="file" id="directUploadDocInput" style="display: none;" />
-          </div>
-        </div>
-
-        <!-- 4.1 图片库面板 -->
-        <div id="panelImagesSubtab" class="panel-card">
-          <div style="background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 8px; padding: 14px 18px; margin-bottom: 20px; font-size: 13px; color: #1e40af; line-height: 1.6;">
-            <strong>📌 图片存储说明：</strong><br>
-            您在富文本编辑器中插入的所有图片均保存在 <code>public/images/uploads/</code> 目录，由 Cloudflare CDN 全球加速秒开。点击下方任意图片可直接复制永久链接！
-          </div>
-          <div id="mediaGrid" class="media-grid">
-            <div style="color: #94a3b8; font-size: 14px; padding: 20px;">正在载入云端图片库...</div>
-          </div>
-        </div>
-
-        <!-- 4.2 附件与文档库面板 -->
-        <div id="panelDocsSubtab" class="panel-card" style="display: none;">
-          <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 8px; padding: 14px 18px; margin-bottom: 20px; font-size: 13px; color: #166534; line-height: 1.6;">
-            <strong>🛡️ 附件下载权限与存储机制：</strong><br>
-            • <strong>全网公开附件</strong>保存在 <code>public/downloads/</code>，所有外部访客均可自由下载；<br>
-            • <strong>内部专享附件</strong>保存在 <code>public/internal/downloads/</code>，由 Microsoft 365 零信任门禁拦截保护，外部人员拿到了链接也绝对无法下载！<br>
-            • 点击下方任意附件即可【复制链接】、【下载测试】或【删除】。
-          </div>
-          <div id="docsListGrid" class="docs-list-grid">
-            <div style="color: #94a3b8; font-size: 14px; padding: 20px;">正在载入课题组文档与附件库...</div>
-          </div>
-        </div>
-      </section>
-
-      
-    <!-- GitHub Token 密钥配置模态框 -->
-    <div id="tokenModal" class="token-modal-overlay" style="display: none;">
-      <div class="token-modal-dialog">
-        <div class="token-modal-header">
-          <div style="display: flex; align-items: center; gap: 8px;">
-            <span style="font-size: 20px;">🔑</span>
-            <h3 style="margin: 0; font-size: 17px; font-weight: 700; color: #0f172a;">配置 GitHub 访问凭据 (Token)</h3>
-          </div>
-          <button type="button" id="btnCloseTokenModal" class="btn-close-modal" style="background: none; border: none; font-size: 22px; line-height: 1; color: #94a3b8; cursor: pointer; padding: 4px;">&times;</button>
-        </div>
-        <div class="token-modal-body">
-          <div style="background: #fef3c7; border: 1px solid #fde68a; border-radius: 8px; padding: 12px 16px; margin-bottom: 16px; font-size: 13px; color: #92400e; line-height: 1.6;">
-            <strong>📌 为什么出现“Bad credentials”？</strong><br>
-            科研管理中台直接对接 GitHub 仓库进行云端实时同步。当浏览器本地保存的 Personal Access Token 过期、被撤销或失效时，GitHub 就会返回 <code>Bad credentials</code>。只需重新生成并填入有效 Token 即可立即恢复全部功能！
-          </div>
-
-          <div style="margin-bottom: 16px;">
-            <label style="display: block; font-weight: 600; font-size: 13px; color: #334155; margin-bottom: 6px;">GitHub Personal Access Token (classic / fine-grained)</label>
-            <div style="position: relative;">
-              <input type="password" id="inputGithubToken" placeholder="ghp_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" style="width: 100%; padding: 10px 42px 10px 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 13px; font-family: monospace; outline: none; box-sizing: border-box;" />
-              <button type="button" id="btnToggleTokenVisible" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; font-size: 16px; color: #64748b;" title="显示/隐藏明文">👁️</button>
-            </div>
-          </div>
-
-          <div id="tokenVerifyAlert" style="display: none; padding: 10px 14px; border-radius: 6px; font-size: 13px; margin-bottom: 16px; line-height: 1.5;"></div>
-
-          <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px 16px; font-size: 13px; color: #475569; line-height: 1.7; margin-bottom: 20px;">
-            💡 <strong>如何生成有效 Token？（30秒快捷流程）</strong><br>
-            1. 登录管理员 GitHub 账号并点击：<a href="https://github.com/settings/tokens/new?description=wxz-group-cms&scopes=repo" target="_blank" style="color: #2563eb; text-decoration: underline; font-weight: 600;">🔗 点击直达 GitHub 自动配置页</a><br>
-            2. 确保勾选了 <strong>repo</strong> 权限（完整仓库写入权限）；<br>
-            3. 有效期（Expiration）建议选择 <strong>No expiration（永不过期）</strong> 或 1年；<br>
-            4. 页面底部点击 <strong>Generate token</strong>，复制生成的 <code>ghp_...</code> 字符串粘贴至上方即可。
-          </div>
-
-          <div style="display: flex; gap: 10px; justify-content: flex-end;">
-            <button type="button" id="btnTestToken" style="padding: 9px 18px; border: 1px solid #cbd5e1; border-radius: 6px; background: #f8fafc; color: #334155; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s;">
-              🔍 测试连接有效性
-            </button>
-            <button type="button" id="btnSaveToken" style="padding: 9px 22px; border: none; border-radius: 6px; background: #185a9d; color: #fff; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s;">
-              💾 保存并立即生效
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- 挂载全量数据供富文本编辑载入 -->
+                <!-- 挂载全量数据供富文本编辑载入 -->
   <script is:inline define:vars={{ newsPayload }}>
     window.ALL_ARTICLES_DATA = newsPayload;
   </script>
@@ -959,357 +697,9 @@ const newsPayload = allNews.map(item => ({
 
   <script is:inline>
     // ==========================================
-    // 常驻卡片式 GitHub Token 密钥交互逻辑 (全响应支持)
+    // 课题组科研管理中台：全面对接 Cloudflare 边缘后端 API
+    // 零 Token、零前端密钥，完全由 Microsoft 365 组织鉴权保护
     // ==========================================
-    window.openTokenConfig = function() {
-      if (typeof switchTab === 'function') {
-        switchTab('tab-overview');
-      }
-      const card = document.getElementById('tokenConfigCard');
-      if (card) {
-        card.scrollIntoView({ behavior: 'smooth' });
-        card.style.boxShadow = '0 0 0 4px rgba(59, 130, 246, 0.5)';
-        setTimeout(() => { card.style.boxShadow = ''; }, 2500);
-      }
-      const input = document.getElementById('cardInputGithubToken');
-      if (input) {
-        input.focus();
-      }
-    };
-
-    window.clearCardToken = function() {
-      const input = document.getElementById('cardInputGithubToken');
-      if (input) {
-        input.value = '';
-        input.focus();
-      }
-    };
-
-    window.testCardToken = async function() {
-      const input = document.getElementById('cardInputGithubToken');
-      const alertBox = document.getElementById('cardTokenAlert');
-      const btn = document.getElementById('cardBtnTestToken');
-      const tokenVal = input ? input.value.trim() : '';
-
-      if (!tokenVal) {
-        alert('请先在输入框中粘贴您的 GitHub Token（以 ghp_ 开头）！');
-        if (input) input.focus();
-        return;
-      }
-
-      if (btn) {
-        btn.disabled = true;
-        btn.textContent = '⏳ 测试中...';
-      }
-      if (alertBox) {
-        alertBox.style.display = 'block';
-        alertBox.style.background = '#eff6ff';
-        alertBox.style.border = '1px solid #bfdbfe';
-        alertBox.style.color = '#1d4ed8';
-        alertBox.innerHTML = '正在向 GitHub 官方服务器验证密钥有效性，请稍候...';
-      }
-
-      try {
-        const resp = await fetch('https://api.github.com/repos/zxwiii/wxz-group', {
-          headers: { 'Authorization': `token ${tokenVal}` }
-        });
-        if (btn) {
-          btn.disabled = false;
-          btn.textContent = '🔍 测试连接';
-        }
-
-        if (resp.ok) {
-          const repo = await resp.json();
-          if (alertBox) {
-            alertBox.style.background = '#f0fdf4';
-            alertBox.style.border = '1px solid #bbf7d0';
-            alertBox.style.color = '#15803d';
-            alertBox.innerHTML = `<strong>✅ 校验通过！</strong> 成功连接到课题组仓库 <code>${repo.full_name}</code>，具备完整文章发布与附件上传权限。请点击右侧【保存并立即生效】！`;
-          }
-        } else if (resp.status === 401) {
-          if (alertBox) {
-            alertBox.style.background = '#fef2f2';
-            alertBox.style.border = '1px solid #fecaca';
-            alertBox.style.color = '#b91c1c';
-            alertBox.innerHTML = `<strong>❌ 校验失败 (401 Bad credentials)：</strong> 该 Token 无效或已过期，请重新在 GitHub 生成新的 Token 粘贴！`;
-          }
-        } else {
-          if (alertBox) {
-            alertBox.style.background = '#fef2f2';
-            alertBox.style.border = '1px solid #fecaca';
-            alertBox.style.color = '#b91c1c';
-            alertBox.innerHTML = `<strong>❌ 校验未通过：</strong> HTTP ${resp.status}，请确认是否勾选了 repo 读写权限。`;
-          }
-        }
-      } catch (err) {
-        if (btn) {
-          btn.disabled = false;
-          btn.textContent = '🔍 测试连接';
-        }
-        if (alertBox) {
-          alertBox.style.background = '#fef2f2';
-          alertBox.style.border = '1px solid #fecaca';
-          alertBox.style.color = '#b91c1c';
-          alertBox.innerHTML = `<strong>❌ 网络连接异常：</strong> ${err.message}`;
-        }
-      }
-    };
-
-    window.saveCardToken = async function() {
-      const input = document.getElementById('cardInputGithubToken');
-      const alertBox = document.getElementById('cardTokenAlert');
-      const btn = document.getElementById('cardBtnSaveToken');
-      const tokenVal = input ? input.value.trim() : '';
-
-      if (!tokenVal) {
-        alert('请先输入有效的 GitHub Token！');
-        if (input) input.focus();
-        return;
-      }
-
-      if (btn) {
-        btn.disabled = true;
-        btn.textContent = '⏳ 正在保存...';
-      }
-
-      try {
-        const resp = await fetch('https://api.github.com/repos/zxwiii/wxz-group', {
-          headers: { 'Authorization': `token ${tokenVal}` }
-        });
-        if (btn) {
-          btn.disabled = false;
-          btn.textContent = '💾 保存并立即生效';
-        }
-
-        if (resp.ok) {
-          localStorage.setItem('wxz_token', tokenVal);
-          localStorage.setItem('decap-cms-user', JSON.stringify({ backendName: 'github', token: tokenVal }));
-          if (alertBox) {
-            alertBox.style.display = 'block';
-            alertBox.style.background = '#f0fdf4';
-            alertBox.style.border = '1px solid #bbf7d0';
-            alertBox.style.color = '#15803d';
-            alertBox.innerHTML = '<strong>🎉 保存成功！</strong> 密钥已安全锁存在您当前的浏览器本地中。全部云端发布功能已恢复！';
-          }
-          alert('🎉 GitHub 访问密钥已成功保存并立即生效！文章发布、图片与附件上传已全部恢复。');
-          window.location.reload();
-        } else {
-          if (alertBox) {
-            alertBox.style.display = 'block';
-            alertBox.style.background = '#fef2f2';
-            alertBox.style.border = '1px solid #fecaca';
-            alertBox.style.color = '#b91c1c';
-            alertBox.innerHTML = '<strong>❌ 无法保存：</strong> Token 校验失败 (HTTP ' + resp.status + ')，请重新复制粘贴有效 Token！';
-          }
-          alert('无法保存：Token 校验未通过，请检查是否完整复制！');
-        }
-      } catch (err) {
-        if (btn) {
-          btn.disabled = false;
-          btn.textContent = '💾 保存并立即生效';
-        }
-        alert('保存异常: ' + err.message);
-      }
-    };
-
-    // 页面载入时自动回显与状态同步
-    function syncCardTokenOnLoad() {
-      const t = localStorage.getItem('wxz_token') || '';
-      const cardInput = document.getElementById('cardInputGithubToken');
-      const statusBadge = document.getElementById('cardTokenStatusBadge');
-      const sidebarDot = document.getElementById('sidebarTokenDot');
-      const sidebarText = document.getElementById('sidebarTokenText');
-
-      if (cardInput && t) {
-        cardInput.value = t;
-      }
-      if (t && t.length > 15) {
-        if (statusBadge) {
-          statusBadge.style.background = '#f0fdf4';
-          statusBadge.style.color = '#16a34a';
-          statusBadge.style.border = '1px solid #bbf7d0';
-          statusBadge.innerHTML = '<span style="width:8px;height:8px;border-radius:50%;background:#16a34a;"></span><span>密钥已配置 (就绪)</span>';
-        }
-        if (sidebarDot && sidebarText) {
-          sidebarDot.style.background = '#22c55e';
-          sidebarText.textContent = 'GitHub 密钥: 正常';
-        }
-      }
-    }
-
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', syncCardTokenOnLoad);
-    } else {
-      syncCardTokenOnLoad();
-    }
-
-    
-    // ==========================================
-    // GitHub Token 密钥管理器与智能异常捕获
-    // ==========================================
-    const tokenModal = document.getElementById('tokenModal');
-    const btnSidebarToken = document.getElementById('btnSidebarToken');
-    const btnCloseTokenModal = document.getElementById('btnCloseTokenModal');
-    const inputGithubToken = document.getElementById('inputGithubToken');
-    const btnToggleTokenVisible = document.getElementById('btnToggleTokenVisible');
-    const btnTestToken = document.getElementById('btnTestToken');
-    const btnSaveToken = document.getElementById('btnSaveToken');
-    const tokenVerifyAlert = document.getElementById('tokenVerifyAlert');
-    const sidebarTokenDot = document.getElementById('sidebarTokenDot');
-    const sidebarTokenText = document.getElementById('sidebarTokenText');
-
-    function openTokenModal(warnMsg = '') {
-      const currentToken = getAdminToken();
-      if (inputGithubToken) {
-        inputGithubToken.value = currentToken || '';
-      }
-      if (tokenVerifyAlert) {
-        if (warnMsg) {
-          tokenVerifyAlert.style.display = 'block';
-          tokenVerifyAlert.style.background = '#fef2f2';
-          tokenVerifyAlert.style.border = '1px solid #fecaca';
-          tokenVerifyAlert.style.color = '#b91c1c';
-          tokenVerifyAlert.innerHTML = `<strong>⚠️ 鉴权提示：</strong>${warnMsg}`;
-        } else {
-          tokenVerifyAlert.style.display = 'none';
-        }
-      }
-      if (tokenModal) tokenModal.style.display = 'flex';
-    }
-
-    function closeTokenModal() {
-      if (tokenModal) tokenModal.style.display = 'none';
-    }
-
-    if (btnSidebarToken) btnSidebarToken.addEventListener('click', () => openTokenModal());
-    if (btnCloseTokenModal) btnCloseTokenModal.addEventListener('click', () => closeTokenModal());
-    if (tokenModal) {
-      tokenModal.addEventListener('click', (e) => {
-        if (e.target === tokenModal) closeTokenModal();
-      });
-    }
-
-    if (btnToggleTokenVisible) {
-      btnToggleTokenVisible.addEventListener('click', () => {
-        if (inputGithubToken.type === 'password') {
-          inputGithubToken.type = 'text';
-          btnToggleTokenVisible.textContent = '🔒';
-        } else {
-          inputGithubToken.type = 'password';
-          btnToggleTokenVisible.textContent = '👁️';
-        }
-      });
-    }
-
-    async function verifyToken(t) {
-      if (!t) return { ok: false, msg: '请输入有效 Token' };
-      try {
-        const resp = await fetch('https://api.github.com/repos/zxwiii/wxz-group', {
-          headers: { 'Authorization': `token ${t}` }
-        });
-        if (resp.ok) {
-          const repo = await resp.json();
-          const perm = repo.permissions ? (repo.permissions.push ? '具备写入/推送权限' : '仅只读权限') : '权限已就绪';
-          return { ok: true, msg: `连接正常！已成功连接到仓库 ${repo.full_name} (${perm})` };
-        } else if (resp.status === 401) {
-          return { ok: false, msg: 'Token 无效或已过期 (401 Bad credentials)，请重新生成！' };
-        } else if (resp.status === 404) {
-          return { ok: false, msg: 'Token 权限不足，无法访问该仓库，请确保勾选了 repo 权限！' };
-        } else {
-          return { ok: false, msg: `GitHub 响应异常 (HTTP ${resp.status})` };
-        }
-      } catch (err) {
-        return { ok: false, msg: '网络连接失败: ' + err.message };
-      }
-    }
-
-    function updateSidebarTokenStatus() {
-      const t = getAdminToken();
-      if (!sidebarTokenDot || !sidebarTokenText) return;
-      if (t && t.length > 10) {
-        sidebarTokenDot.style.background = '#22c55e';
-        sidebarTokenText.textContent = 'GitHub 密钥: 正常';
-      } else {
-        sidebarTokenDot.style.background = '#ef4444';
-        sidebarTokenText.textContent = 'GitHub 密钥: 未设置';
-      }
-    }
-
-    if (btnTestToken) {
-      btnTestToken.addEventListener('click', async () => {
-        const t = inputGithubToken.value.trim();
-        btnTestToken.disabled = true;
-        btnTestToken.textContent = '⏳ 测试中...';
-        const res = await verifyToken(t);
-        btnTestToken.disabled = false;
-        btnTestToken.textContent = '🔍 测试连接有效性';
-
-        tokenVerifyAlert.style.display = 'block';
-        if (res.ok) {
-          tokenVerifyAlert.style.background = '#f0fdf4';
-          tokenVerifyAlert.style.border = '1px solid #bbf7d0';
-          tokenVerifyAlert.style.color = '#15803d';
-          tokenVerifyAlert.innerHTML = `<strong>✅ 校验通过：</strong>${res.msg}`;
-        } else {
-          tokenVerifyAlert.style.background = '#fef2f2';
-          tokenVerifyAlert.style.border = '1px solid #fecaca';
-          tokenVerifyAlert.style.color = '#b91c1c';
-          tokenVerifyAlert.innerHTML = `<strong>❌ 校验失败：</strong>${res.msg}`;
-        }
-      });
-    }
-
-    if (btnSaveToken) {
-      btnSaveToken.addEventListener('click', async () => {
-        const t = inputGithubToken.value.trim();
-        if (!t) {
-          alert('请先输入有效的 GitHub Token');
-          return;
-        }
-        btnSaveToken.disabled = true;
-        btnSaveToken.textContent = '⏳ 正在保存...';
-        const res = await verifyToken(t);
-        if (res.ok) {
-          localStorage.setItem('wxz_token', t);
-          localStorage.setItem('decap-cms-user', JSON.stringify({ backendName: 'github', token: t }));
-          updateSidebarTokenStatus();
-          alert('🎉 GitHub 访问密钥已成功更新并保存！全部云端功能已恢复正常。');
-          closeTokenModal();
-          window.location.reload();
-        } else {
-          btnSaveToken.disabled = false;
-          btnSaveToken.textContent = '💾 保存并立即生效';
-          tokenVerifyAlert.style.display = 'block';
-          tokenVerifyAlert.style.background = '#fef2f2';
-          tokenVerifyAlert.style.border = '1px solid #fecaca';
-          tokenVerifyAlert.style.color = '#b91c1c';
-          tokenVerifyAlert.innerHTML = `<strong>❌ 无法保存：</strong>${res.msg} 请检查后重试！`;
-        }
-      });
-    }
-
-    // 全局 API 错误拦截助手
-    window.handleGitHubApiError = function(errData, status) {
-      const msg = (errData && errData.message) ? errData.message : '';
-      if (status === 401 || msg.includes('Bad credentials')) {
-        openTokenModal('当前保存失败是因为 GitHub 访问密钥已失效 (Bad credentials)。请点击下方链接生成新 Token 并粘贴保存！');
-        return true;
-      }
-      return false;
-    };
-
-    updateSidebarTokenStatus();
-
-    // 凭据读取
-    function getAdminToken() {
-      let t = localStorage.getItem('wxz_token') || localStorage.getItem('decap-cms-user');
-      if (t && typeof t === 'string' && t.startsWith('{')) {
-        try { t = JSON.parse(t).token; } catch(e){}
-      }
-      return t || '';
-    }
-
-    const token = getAdminToken();
 
     // 默认日期填充为今天
     const dateInput = document.getElementById('postDate');
@@ -1337,68 +727,64 @@ const newsPayload = allNews.map(item => ({
         }
       });
       if (targetId === 'tab-gallery') {
-        loadMediaLibrary();
+        const btnSubTabDocs = document.getElementById('btnSubTabDocs');
+        if (btnSubTabDocs && btnSubTabDocs.classList.contains('active')) {
+          loadDocsLibrary();
+        } else {
+          loadMediaLibrary();
+        }
       }
     }
 
     menuItems.forEach(item => {
       item.addEventListener('click', () => {
-        switchTab(item.getAttribute('data-tab'));
+        const target = item.getAttribute('data-tab');
+        switchTab(target);
       });
     });
 
     // ==========================================
-    // 核心模块：初始化 wangEditor 可视化富文本编辑器
+    // wangEditor 可视化富文本引擎初始化
     // ==========================================
+    const { createEditor, createToolbar } = window.wangEditor;
     let editorInstance = null;
     let isSourceMode = false;
+
     const rawHtmlTextarea = document.getElementById('rawHtmlTextarea');
-    const editorTextContainer = document.getElementById('editor-text-container');
     const btnToggleHtmlSource = document.getElementById('btnToggleHtmlSource');
+    const editorToolbarBox = document.getElementById('editor-toolbar-container');
+    const editorTextBox = document.getElementById('editor-text-container');
 
-    function initWangEditor() {
-      if (typeof window.wangEditor === 'undefined') return;
-      const { createEditor, createToolbar } = window.wangEditor;
-
-      // 编辑器配置
+    if (createEditor && createToolbar) {
       const editorConfig = {
-        placeholder: '在此像在 Word 中一样打字输入正文内容...\n可以直接复制微信公众号排版粘贴进来，支持加粗、居中、表格和图片！',
+        placeholder: '在此输入文章详细正文，支持加粗、颜色、对齐、表格与插入图片附件...',
         onChange(editor) {
           if (!isSourceMode) {
             rawHtmlTextarea.value = editor.getHtml();
           }
         },
         MENU_CONF: {
-          // 自定义图片上传处理，直接上传到 GitHub 仓库并插图
+          // 自定义图片上传：直接提交至 /api/upload 云端边缘函数
           uploadImage: {
             async customUpload(file, insertFn) {
-              const t = getAdminToken();
               const reader = new FileReader();
               reader.onload = async () => {
                 const base64Content = reader.result.split(',')[1];
-                const cleanName = file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
-                const fileName = `${Date.now()}_${cleanName}`;
-                const filePath = `public/images/uploads/${fileName}`;
-
                 try {
-                  const resp = await fetch(`https://api.github.com/repos/zxwiii/wxz-group/contents/${filePath}`, {
-                    method: 'PUT',
-                    headers: {
-                      'Authorization': `token ${t}`,
-                      'Content-Type': 'application/json'
-                    },
+                  const resp = await fetch('/api/upload', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
-                      message: `feat(media): upload image ${fileName}`,
-                      content: base64Content
+                      fileName: file.name,
+                      base64Content: base64Content,
+                      type: 'image'
                     })
                   });
-
-                  if (resp.ok) {
-                    const imgUrl = `/images/uploads/${fileName}`;
-                    // 直接插入富文本编辑器正文！用户眼睛直接看得到图片！
-                    insertFn(imgUrl, file.name, imgUrl);
+                  const res = await resp.json();
+                  if (resp.ok && res.url) {
+                    insertFn(res.url, file.name, res.url);
                   } else {
-                    const errData = await resp.json().catch(() => ({})); if (!handleGitHubApiError(errData, resp.status)) { alert('图片上传失败: ' + (errData.message || '请检查网络或管理员 Token')); }
+                    alert('图片上传失败: ' + (res.error || '服务器异常'));
                   }
                 } catch(err) {
                   alert('图片上传出错: ' + err.message);
@@ -1417,105 +803,102 @@ const newsPayload = allNews.map(item => ({
         mode: 'default'
       });
 
-      // 工具栏配置
+      const toolbarConfig = {
+        excludeKeys: ['group-video', 'fullScreen']
+      };
+
       createToolbar({
         editor: editorInstance,
         selector: '#editor-toolbar-container',
-        config: {
-          toolbarKeys: [
-            'headerSelect', 'fontSize', '|',
-            'bold', 'italic', 'underline', 'color', 'bgColor', '|',
-            'justifyLeft', 'justifyCenter', 'justifyRight', '|',
-            'bulletedList', 'numberedList', 'blockquote', '|',
-            'insertTable', 'insertLink', 'uploadImage', 'divider', '|',
-            'undo', 'redo'
-          ]
-        },
+        config: toolbarConfig,
         mode: 'default'
       });
     }
 
-    if (document.readyState === 'complete') {
-      initWangEditor();
-    } else {
-      window.addEventListener('load', initWangEditor);
-    }
-
-    // 切换查看 HTML 源代码与所见即所得排版
+    // 切换 HTML 源码与可视化模式
     if (btnToggleHtmlSource) {
       btnToggleHtmlSource.addEventListener('click', () => {
         isSourceMode = !isSourceMode;
         if (isSourceMode) {
-          btnToggleHtmlSource.textContent = '📝 返回纯打字可视化排版模式';
-          rawHtmlTextarea.value = editorInstance.getHtml();
-          editorTextContainer.style.display = 'none';
-          document.getElementById('editor-toolbar-container').style.display = 'none';
+          btnToggleHtmlSource.textContent = '返回可视化排版模式';
+          btnToggleHtmlSource.style.background = '#0284c7';
+          btnToggleHtmlSource.style.color = '#fff';
+          editorToolbarBox.style.display = 'none';
+          editorTextBox.style.display = 'none';
           rawHtmlTextarea.style.display = 'block';
+          if (editorInstance) rawHtmlTextarea.value = editorInstance.getHtml();
         } else {
           btnToggleHtmlSource.textContent = '查看 / 编辑 HTML 源代码';
-          editorInstance.setHtml(rawHtmlTextarea.value);
+          btnToggleHtmlSource.style.background = '#f1f5f9';
+          btnToggleHtmlSource.style.color = '#334155';
           rawHtmlTextarea.style.display = 'none';
-          document.getElementById('editor-toolbar-container').style.display = 'block';
-          editorTextContainer.style.display = 'block';
+          editorToolbarBox.style.display = 'block';
+          editorTextBox.style.display = 'block';
+          if (editorInstance) editorInstance.setHtml(rawHtmlTextarea.value);
         }
       });
     }
 
     // ==========================================
-    // 核心功能：修改现有文章
+    // 文章状态管理：新建 vs 修改
     // ==========================================
-    const editingSlugInput = document.getElementById('editingSlug');
-    const editingBadge = document.getElementById('editingBadge');
     const formHeaderTitle = document.getElementById('formHeaderTitle');
-    const btnSubmit = document.getElementById('btnSubmit');
+    const editingBadge = document.getElementById('editingBadge');
     const btnCancelEdit = document.getElementById('btnCancelEdit');
+    const editingSlugInput = document.getElementById('editingSlug');
     const postTitleInput = document.getElementById('postTitle');
     const postCategoryInput = document.getElementById('postCategory');
     const postAccessInput = document.getElementById('postAccess');
-
-    function startEditArticle(slug) {
-      const articles = window.ALL_ARTICLES_DATA || [];
-      const target = articles.find(a => a.slug === slug);
-      if (!target) {
-        alert('未找到该文章数据');
-        return;
-      }
-
-      editingSlugInput.value = target.slug;
-      postTitleInput.value = target.title;
-      dateInput.value = target.date;
-      postCategoryInput.value = target.category;
-      postAccessInput.value = target.accessLevel;
-
-      if (editorInstance) {
-        editorInstance.setHtml(target.body);
-      }
-      rawHtmlTextarea.value = target.body;
-
-      editingBadge.style.display = 'inline-flex';
-      formHeaderTitle.textContent = `✏️ 正在修改: ${target.title}`;
-      btnSubmit.textContent = '💾 保存修改并同步上线';
-
-      switchTab('tab-publish');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
+    const btnSubmit = document.getElementById('btnSubmit');
 
     function resetFormToNew() {
       editingSlugInput.value = '';
-      document.getElementById('articleForm').reset();
+      postTitleInput.value = '';
+      postCategoryInput.value = '科研进展';
+      postAccessInput.value = 'public';
       dateInput.value = new Date().toISOString().split('T')[0];
       if (editorInstance) editorInstance.setHtml('');
-      rawHtmlTextarea.value = '';
-      editingBadge.style.display = 'none';
+      if (rawHtmlTextarea) rawHtmlTextarea.value = '';
       formHeaderTitle.textContent = '✍️ 可视化富文本排版与发布';
+      editingBadge.style.display = 'none';
       btnSubmit.textContent = '🚀 立即发布并全网同步上线';
     }
 
     if (btnCancelEdit) btnCancelEdit.addEventListener('click', resetFormToNew);
 
+    // ==========================================
+    // 核心功能：编辑现有文章
+    // ==========================================
     document.querySelectorAll('.btn-action-edit').forEach(btn => {
       btn.addEventListener('click', () => {
-        startEditArticle(btn.getAttribute('data-slug'));
+        const slug = btn.getAttribute('data-slug');
+        const allData = window.ALL_ARTICLES_DATA || [];
+        const target = allData.find(item => item.slug === slug);
+
+        if (!target) {
+          alert('未找到该文章数据');
+          return;
+        }
+
+        editingSlugInput.value = target.slug;
+        postTitleInput.value = target.title;
+        dateInput.value = target.date;
+        postCategoryInput.value = target.category;
+        postAccessInput.value = target.accessLevel;
+
+        if (editorInstance) {
+          editorInstance.setHtml(target.body);
+        }
+        if (rawHtmlTextarea) {
+          rawHtmlTextarea.value = target.body;
+        }
+
+        formHeaderTitle.textContent = `✏️ 修改现有文章：《${target.title}》`;
+        editingBadge.style.display = 'flex';
+        btnSubmit.textContent = '💾 保存修改并同步上线';
+
+        switchTab('tab-publish');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
       });
     });
 
@@ -1531,35 +914,24 @@ const newsPayload = allNews.map(item => ({
           return;
         }
 
-        const t = getAdminToken();
         btn.disabled = true;
         btn.textContent = '⏳ 删除中...';
 
         try {
-          const getResp = await fetch(`https://api.github.com/repos/zxwiii/wxz-group/contents/src/content/news/${slug}.md`, {
-            headers: { 'Authorization': `token ${t}` }
-          });
-          const fileData = await getResp.json();
-          if (!fileData.sha) throw new Error('无法获取文件 SHA');
-
-          const delResp = await fetch(`https://api.github.com/repos/zxwiii/wxz-group/contents/src/content/news/${slug}.md`, {
-            method: 'DELETE',
-            headers: {
-              'Authorization': `token ${t}`,
-              'Content-Type': 'application/json'
-            },
+          const resp = await fetch('/api/delete-file', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-              message: `chore: delete article ${title}`,
-              sha: fileData.sha
+              path: `src/content/news/${slug}.md`
             })
           });
 
-          if (delResp.ok) {
+          if (resp.ok) {
             alert('🎉 删除成功！全网将在 30 秒内自动更新。');
             window.location.reload();
           } else {
-            const err = await delResp.json();
-            alert('删除失败: ' + (err.message || '网络异常'));
+            const err = await resp.json().catch(() => ({}));
+            alert('删除失败: ' + (err.error || '服务器异常'));
             btn.disabled = false;
             btn.textContent = '🗑️ 删除';
           }
@@ -1572,13 +944,12 @@ const newsPayload = allNews.map(item => ({
     });
 
     // ==========================================
-    // 核心功能：提交发布或保存修改
+    // 核心功能：提交发布或保存修改（对接 /api/save-news）
     // ==========================================
     const articleForm = document.getElementById('articleForm');
     if (articleForm) {
       articleForm.addEventListener('submit', async (e) => {
         e.preventDefault();
-        const t = getAdminToken();
         const editingSlug = editingSlugInput.value;
         const title = postTitleInput.value.trim();
         const date = dateInput.value;
@@ -1588,55 +959,29 @@ const newsPayload = allNews.map(item => ({
         const content = isSourceMode ? rawHtmlTextarea.value.trim() : (editorInstance ? editorInstance.getHtml() : '');
 
         btnSubmit.disabled = true;
-        btnSubmit.textContent = '⏳ 正在向云端提交并触发全自动部署...';
-
-        const slug = editingSlug || `${date}-${Date.now().toString().slice(-4)}`;
-        const mdText = `---
-title: "${title.replace(/"/g, '\\"')}"
-date: "${date}"
-category: "${category}"
-accessLevel: "${accessLevel}"
----
-
-${content}
-`;
-
-        const b64 = btoa(unescape(encodeURIComponent(mdText)));
+        btnSubmit.textContent = '⏳ 正在通过云端边缘计算同步部署...';
 
         try {
-          let sha = null;
-          if (editingSlug) {
-            try {
-              const sResp = await fetch(`https://api.github.com/repos/zxwiii/wxz-group/contents/src/content/news/${slug}.md`, {
-                headers: { 'Authorization': `token ${t}` }
-              });
-              const sData = await sResp.json();
-              if (sData.sha) sha = sData.sha;
-            } catch(e){}
-          }
-
-          const payload = {
-            message: editingSlug ? `feat(news): update article ${title}` : `feat(news): publish article ${title}`,
-            content: b64
-          };
-          if (sha) payload.sha = sha;
-
-          const resp = await fetch(`https://api.github.com/repos/zxwiii/wxz-group/contents/src/content/news/${slug}.md`, {
-            method: 'PUT',
-            headers: {
-              'Authorization': `token ${t}`,
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(payload)
+          const resp = await fetch('/api/save-news', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              title,
+              date,
+              category,
+              accessLevel,
+              content,
+              slug: editingSlug
+            })
           });
 
-          if (resp.ok) {
-            alert('🎉 操作成功！已成功同步至云端，Cloudflare 将在 30 秒内完成全网自动编译上线！');
+          const result = await resp.json();
+          if (resp.ok && result.success) {
+            alert('🎉 操作成功！已安全同步至云端，Cloudflare 将在 30 秒内全网自动编译上线！');
             resetFormToNew();
             window.location.reload();
           } else {
-            const err = await resp.json();
-            if (!handleGitHubApiError(err, resp.status)) { alert('保存失败: ' + (err.message || '请检查权限')); }
+            alert('保存失败: ' + (result.error || '云端服务响应异常'));
           }
         } catch (err) {
           alert('提交出错: ' + err.message);
@@ -1648,44 +993,7 @@ ${content}
     }
 
     // ==========================================
-    // 媒体库：动态载入已上传图片
-    // ==========================================
-    async function loadMediaLibrary() {
-      const grid = document.getElementById('mediaGrid');
-      const t = getAdminToken();
-      grid.innerHTML = '<div style="color:#64748b; padding:20px;">正在获取云端图片列表...</div>';
-
-      try {
-        const resp = await fetch(`https://api.github.com/repos/zxwiii/wxz-group/contents/public/images/uploads`, {
-          headers: { 'Authorization': `token ${t}` }
-        });
-        const files = await resp.json();
-        if (!Array.isArray(files) || files.length === 0) {
-          grid.innerHTML = '<div style="color:#94a3b8; padding:20px;">云端图库暂无自上传图片。在富文本编辑器中上传图片后将自动汇总在此！</div>';
-          return;
-        }
-
-        grid.innerHTML = '';
-        files.reverse().forEach(f => {
-          const item = document.createElement('div');
-          item.className = 'media-item';
-          item.innerHTML = `
-            <img src="/images/uploads/${f.name}" class="media-thumb" loading="lazy" />
-            <div class="media-info">
-              <span style="overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width:110px;" title="${f.name}">${f.name}</span>
-              <button type="button" class="btn-copy-url" onclick="navigator.clipboard.writeText('/images/uploads/${f.name}'); alert('已复制图片相对路径！');">复制链接</button>
-            </div>
-          `;
-          grid.appendChild(item);
-        });
-      } catch(e) {
-        grid.innerHTML = '<div style="color:#94a3b8; padding:20px;">媒体库已连接本地目录，暂无外链图片</div>';
-      }
-    }
-
-    
-    // ==========================================
-    // 多媒体与附件中心：双面板切换与附件库加载
+    // 多媒体与附件中心：双面板切换与列表加载
     // ==========================================
     const btnSubTabImages = document.getElementById('btnSubTabImages');
     const btnSubTabDocs = document.getElementById('btnSubTabDocs');
@@ -1726,51 +1034,61 @@ ${content}
       return '📄';
     }
 
-    async function loadDocsLibrary() {
-      const grid = document.getElementById('docsListGrid');
-      const t = getAdminToken();
-      grid.innerHTML = '<div style="color:#64748b; padding:20px;">正在获取云端附件与文档列表...</div>';
+    // 载入图片库列表（对接 /api/list-images）
+    async function loadMediaLibrary() {
+      const grid = document.getElementById('mediaGrid');
+      grid.innerHTML = '<div style="color:#64748b; padding:20px;">正在从云端载入图片库...</div>';
 
       try {
-        // 同时获取公开和内部专享附件
-        const [pubResp, intResp] = await Promise.all([
-          fetch(`https://api.github.com/repos/zxwiii/wxz-group/contents/public/downloads`, {
-            headers: t ? { 'Authorization': `token ${t}` } : {}
-          }),
-          fetch(`https://api.github.com/repos/zxwiii/wxz-group/contents/public/internal/downloads`, {
-            headers: t ? { 'Authorization': `token ${t}` } : {}
-          })
-        ]);
+        const resp = await fetch('/api/list-images');
+        const data = await resp.json();
+        const files = data.files || [];
 
-        let allFiles = [];
-        if (pubResp.ok) {
-          const pubFiles = await pubResp.json();
-          if (Array.isArray(pubFiles)) {
-            pubFiles.filter(f => f.name !== '.gitkeep').forEach(f => {
-              allFiles.push({ ...f, isInternal: false, url: `/downloads/${f.name}`, fullPath: `public/downloads/${f.name}` });
-            });
-          }
-        }
-        if (intResp.ok) {
-          const intFiles = await intResp.json();
-          if (Array.isArray(intFiles)) {
-            intFiles.filter(f => f.name !== '.gitkeep').forEach(f => {
-              allFiles.push({ ...f, isInternal: true, url: `/internal/downloads/${f.name}`, fullPath: `public/internal/downloads/${f.name}` });
-            });
-          }
+        if (files.length === 0) {
+          grid.innerHTML = '<div style="color:#94a3b8; padding:30px; grid-column:1/-1; text-align:center;">暂无上传图片，在写文章时插入图片即可在此统一管理！</div>';
+          return;
         }
 
-        if (allFiles.length === 0) {
+        grid.innerHTML = '';
+        files.reverse().forEach(f => {
+          const item = document.createElement('div');
+          item.className = 'media-card-item';
+          item.innerHTML = `
+            <img src="${f.url}" alt="${f.name}" loading="lazy" style="width:100%; height:130px; object-fit:cover; border-radius:6px; cursor:pointer;" onclick="navigator.clipboard.writeText('${f.url}'); alert('已复制图片永久相对链接：${f.url}');" />
+            <div style="font-size:12px; color:#64748b; margin-top:6px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${f.name}</div>
+            <div style="display:flex; justify-content:space-between; margin-top:8px;">
+              <button type="button" class="btn-doc-act" onclick="navigator.clipboard.writeText('${f.url}'); alert('已复制链接');">复制链接</button>
+              <button type="button" class="btn-doc-del" onclick="deleteCloudFile('${f.url.replace(/^\//, 'public/')}', '${f.sha}', loadMediaLibrary)">🗑️</button>
+            </div>
+          `;
+          grid.appendChild(item);
+        });
+      } catch(e) {
+        grid.innerHTML = '<div style="color:#ef4444; padding:20px;">图片库连接异常: ' + e.message + '</div>';
+      }
+    }
+
+    // 载入文档附件列表（对接 /api/list-docs）
+    async function loadDocsLibrary() {
+      const grid = document.getElementById('docsListGrid');
+      grid.innerHTML = '<div style="color:#64748b; padding:20px;">正在获取课题组文档与附件列表...</div>';
+
+      try {
+        const resp = await fetch('/api/list-docs');
+        const data = await resp.json();
+        const files = data.files || [];
+
+        if (files.length === 0) {
           grid.innerHTML = '<div style="color:#94a3b8; padding:30px; grid-column:1/-1; text-align:center;">暂无已上传的附件文档。<br>点击右上角【+ 上传新附件/文档】或在文章编辑时插入附件即可在此汇总管理！</div>';
           return;
         }
 
         grid.innerHTML = '';
-        allFiles.reverse().forEach(f => {
+        files.reverse().forEach(f => {
           const item = document.createElement('div');
           item.className = 'doc-card-item';
           const icon = getFileIcon(f.name);
-          const sizeKb = f.size ? (f.size / 1024).toFixed(1) + ' KB' : '未知大小';
+          const sizeKb = f.size ? (f.size / 1024).toFixed(1) + ' KB' : '文件';
           const badgeHtml = f.isInternal 
             ? '<span style="background:#fef2f2; color:#dc2626; border:1px solid #fecaca; font-size:11px; padding:1px 6px; border-radius:4px; font-weight:600;">🔒 内部专享</span>'
             : '<span style="background:#f0fdf4; color:#16a34a; border:1px solid #bbf7d0; font-size:11px; padding:1px 6px; border-radius:4px; font-weight:600;">🌐 全网公开</span>';
@@ -1794,7 +1112,7 @@ ${content}
               <a href="${f.url}" download="${f.name}" target="_blank" class="btn-doc-act">
                 📥 下载测试
               </a>
-              <button type="button" class="btn-doc-del" onclick="deleteDocFile('${f.name}', '${f.sha}', '${f.fullPath}')">
+              <button type="button" class="btn-doc-del" onclick="deleteCloudFile('${f.fullPath}', '${f.sha}', loadDocsLibrary)">
                 🗑️
               </button>
             </div>
@@ -1806,89 +1124,57 @@ ${content}
       }
     }
 
-    window.deleteDocFile = async functionwindow.deleteDocFile = async function(fileName, sha, fullPath) {
-      if (!confirm(`确定要永久删除附件 "${fileName}" 吗？删除后文章中的对应下载将失效。`)) return;
-      const t = getAdminToken();
-      if (!t) {
-        openTokenModal('删除附件需要有效的 GitHub Token');
-        return;
-      }
-      const targetPath = fullPath || `public/downloads/${fileName}`;
+    // 通用删除云端文件（对接 /api/delete-file）
+    window.deleteCloudFile = async function(fullPath, sha, callback) {
+      if (!confirm(`确定要彻底删除该云端文件吗？`)) return;
       try {
-        const resp = await fetch(`https://api.github.com/repos/zxwiii/wxz-group/contents/${targetPath}`, {
-          method: 'DELETE',
-          headers: {
-            'Authorization': `token ${t}`,
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            message: `chore: delete attachment ${fileName}`,
-            sha: sha
-          })
+        const resp = await fetch('/api/delete-file', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ path: fullPath, sha: sha })
         });
         if (resp.ok) {
-          alert(`附件 "${fileName}" 已成功删除！`);
-          loadDocsLibrary();
+          alert('文件已成功删除！');
+          if (callback) callback();
         } else {
-          const errData = await resp.json().catch(() => ({}));
-          if (!handleGitHubApiError(errData, resp.status)) {
-            alert('删除失败: ' + (errData.message || '请检查权限'));
-          }
+          alert('删除失败，请稍后重试');
         }
       } catch(err) {
         alert('删除异常: ' + err.message);
       }
     };
 
-    // 附件库直接上传新文档
+    // ==========================================
+    // 附件库直接上传文档（对接 /api/upload）
+    // ==========================================
     const directUploadDocInput = document.getElementById('directUploadDocInput');
     if (directUploadDocInput) {
       directUploadDocInput.addEventListener('change', async (e) => {
         const file = e.target.files[0];
         if (!file) return;
 
-        const t = getAdminToken();
-        if (!t) {
-          openTokenModal('请先配置有效 GitHub Token 后再上传附件！');
-          directUploadDocInput.value = '';
-          return;
-        }
-
-        if (file.size > 25 * 1024 * 1024) {
-          alert('⚠️ 文件大小为 ' + (file.size / 1024 / 1024).toFixed(1) + 'MB。GitHub API 直传单文件上限为 25MB，超大文件建议放入网盘并在文章中插入外链。');
-          directUploadDocInput.value = '';
-          return;
-        }
-
         const isInternal = confirm(`即将上传附件 "${file.name}"：\n\n【确定】= 设置为🔒 内部专享附件（需通过 Microsoft 365 登录方可下载）\n【取消】= 设置为🌐 全网公开附件（任何访客可自由下载）`);
 
         const reader = new FileReader();
         reader.onload = async () => {
           const base64Content = reader.result.split(',')[1];
-          const cleanName = file.name.replace(/[^a-zA-Z0-9._\-\u4e00-\u9fa5]/g, '_');
-          const fileName = `${Date.now()}_${cleanName}`;
-          const filePath = isInternal ? `public/internal/downloads/${fileName}` : `public/downloads/${fileName}`;
-
           try {
-            const resp = await fetch(`https://api.github.com/repos/zxwiii/wxz-group/contents/${filePath}`, {
-              method: 'PUT',
-              headers: {
-                'Authorization': `token ${t}`,
-                'Content-Type': 'application/json'
-              },
+            const resp = await fetch('/api/upload', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({
-                message: `feat(downloads): direct upload ${fileName}`,
-                content: base64Content
+                fileName: file.name,
+                base64Content: base64Content,
+                type: 'doc',
+                isInternal: isInternal
               })
             });
-            if (resp.ok) {
+            const res = await resp.json();
+            if (resp.ok && res.success) {
               alert(`🎉 附件 "${file.name}" 已成功上传至课题组附件库！`);
               loadDocsLibrary();
             } else {
-              const errData = await resp.json().catch(() => ({}));
-              if (!handleGitHubApiError(errData, resp.status)) {
-                alert('上传失败: ' + (errData.message || '请检查 GitHub Token 权限'));
-              }
+              alert('上传失败: ' + (res.error || '服务器异常'));
             }
           } catch(err) {
             alert('上传异常: ' + err.message);
@@ -1900,7 +1186,7 @@ ${content}
     }
 
     // ==========================================
-    // 富文本编辑器：上传并直接插入附件到正文
+    // 富文本编辑器：上传并直接插入附件（对接 /api/upload）
     // ==========================================
     const attachmentUploadInput = document.getElementById('attachmentUploadInput');
     if (attachmentUploadInput) {
@@ -1908,46 +1194,26 @@ ${content}
         const file = e.target.files[0];
         if (!file) return;
 
-        const t = getAdminToken();
-        if (!t) {
-          openTokenModal('请先配置有效 GitHub Token 后再上传附件！');
-          attachmentUploadInput.value = '';
-          return;
-        }
-
-        if (file.size > 25 * 1024 * 1024) {
-          alert('⚠️ 文件大小为 ' + (file.size / 1024 / 1024).toFixed(1) + 'MB。GitHub API 直传单文件上限为 25MB，超大文件建议放入网盘后插入外链。');
-          attachmentUploadInput.value = '';
-          return;
-        }
-
         const isInternalAccess = (postAccessInput && postAccessInput.value === 'internal');
         const icon = getFileIcon(file.name);
         const reader = new FileReader();
 
         reader.onload = async () => {
           const base64Content = reader.result.split(',')[1];
-          const cleanName = file.name.replace(/[^a-zA-Z0-9._\-\u4e00-\u9fa5]/g, '_');
-          const fileName = `${Date.now()}_${cleanName}`;
-          const filePath = isInternalAccess ? `public/internal/downloads/${fileName}` : `public/downloads/${fileName}`;
-          const fileUrl = isInternalAccess ? `/internal/downloads/${fileName}` : `/downloads/${fileName}`;
-
           try {
-            const resp = await fetch(`https://api.github.com/repos/zxwiii/wxz-group/contents/${filePath}`, {
-              method: 'PUT',
-              headers: {
-                'Authorization': `token ${t}`,
-                'Content-Type': 'application/json'
-              },
+            const resp = await fetch('/api/upload', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({
-                message: `feat(news): upload attachment ${fileName}`,
-                content: base64Content
+                fileName: file.name,
+                base64Content: base64Content,
+                type: 'doc',
+                isInternal: isInternalAccess
               })
             });
-
-            if (resp.ok) {
-              const attachHtml = `<p><a href="${fileUrl}" target="_blank" download="${file.name}" style="display:inline-flex; align-items:center; gap:8px; padding:10px 18px; background:#f0fdf4; border:1px solid #86efac; border-radius:8px; text-decoration:none; color:#166534; font-weight:600; margin:10px 0;"><span style="font-size:20px;">${icon}</span><span>点击下载附件：${file.name}</span></a></p><p></p>`;
-              
+            const res = await resp.json();
+            if (resp.ok && res.success) {
+              const attachHtml = `<p><a href="${res.url}" target="_blank" download="${file.name}" style="display:inline-flex; align-items:center; gap:8px; padding:10px 18px; background:#f0fdf4; border:1px solid #86efac; border-radius:8px; text-decoration:none; color:#166534; font-weight:600; margin:10px 0;"><span style="font-size:20px;">${icon}</span><span>点击下载附件：${file.name}</span></a></p><p></p>`;
               if (isSourceMode) {
                 rawHtmlTextarea.value += '\n' + attachHtml;
               } else if (editorInstance) {
@@ -1955,58 +1221,50 @@ ${content}
               }
               alert(`🎉 附件 "${file.name}" 上传成功，已直接插入到正文中！`);
             } else {
-              const errData = await resp.json().catch(() => ({}));
-              if (!handleGitHubApiError(errData, resp.status)) {
-                alert('附件上传失败: ' + (errData.message || '请检查 GitHub Token 权限'));
-              }
+              alert('附件上传失败: ' + (res.error || '服务器异常'));
             }
           } catch(err) {
             alert('附件上传异常: ' + err.message);
           }
         };
-
         reader.readAsDataURL(file);
         attachmentUploadInput.value = '';
       });
     }
 
-    // 媒体库直接上传新图片// 媒体库直接上传新图片
+    // 媒体库直接上传新图片
     const directUploadInput = document.getElementById('directUploadInput');
     if (directUploadInput) {
       directUploadInput.addEventListener('change', async (e) => {
         const file = e.target.files[0];
         if (!file) return;
 
-        const t = getAdminToken();
         const reader = new FileReader();
         reader.onload = async () => {
           const base64Content = reader.result.split(',')[1];
-          const fileName = `${Date.now()}_${file.name.replace(/[^a-zA-Z0-9._-]/g, '_')}`;
-          const filePath = `public/images/uploads/${fileName}`;
-
           try {
-            const resp = await fetch(`https://api.github.com/repos/zxwiii/wxz-group/contents/${filePath}`, {
-              method: 'PUT',
-              headers: {
-                'Authorization': `token ${t}`,
-                'Content-Type': 'application/json'
-              },
+            const resp = await fetch('/api/upload', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({
-                message: `feat(media): direct upload ${fileName}`,
-                content: base64Content
+                fileName: file.name,
+                base64Content: base64Content,
+                type: 'image'
               })
             });
-            if (resp.ok) {
+            const res = await resp.json();
+            if (resp.ok && res.success) {
               alert('🎉 图片已成功上传到云端媒体库！');
               loadMediaLibrary();
             } else {
-              alert('上传失败，请检查网络');
+              alert('上传失败: ' + (res.error || '服务器异常'));
             }
           } catch(err) {
             alert('上传出错: ' + err.message);
           }
         };
         reader.readAsDataURL(file);
+        directUploadInput.value = '';
       });
     }
   </script>
