@@ -139,6 +139,44 @@ const newsPayload = allNews.map(item => ({
           </div>
         </div>
 
+                <!-- 常驻内嵌的 GitHub 访问密钥与云端同步配置卡片 -->
+        <div class="panel-card" id="tokenConfigCard" style="border: 2px solid #3b82f6; background: #f8fafc; margin-bottom: 24px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; margin-bottom: 16px;">
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <span style="font-size: 24px;">🔑</span>
+              <div>
+                <h3 style="font-size: 17px; font-weight: 700; color: #0f172a; margin: 0;">GitHub 云端同步密钥配置 (Personal Access Token)</h3>
+                <p style="font-size: 12px; color: #64748b; margin: 3px 0 0 0;">用于发布文章、上传图片、上传/删除科研附件时实时写入云端仓库</p>
+              </div>
+            </div>
+            <div id="cardTokenStatusBadge" style="display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 20px; font-size: 13px; font-weight: 600; background: #fee2e2; color: #dc2626; border: 1px solid #fecaca;">
+              <span style="width: 8px; height: 8px; border-radius: 50%; background: #dc2626;"></span>
+              <span>密钥未就绪 / 已失效</span>
+            </div>
+          </div>
+
+          <div style="background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 8px; padding: 12px 16px; margin-bottom: 16px; font-size: 13px; color: #1e40af; line-height: 1.6;">
+            💡 <strong>使用说明：</strong> 本中台直接与课题组 GitHub 仓库无缝联动。若保存文章或上传附件时提示 <code>Bad credentials</code>，说明浏览器本地密钥已过期或未填入。请在下方直接粘贴最新的 GitHub Token 并点击保存即可立即恢复！<br>
+            👉 <a href="https://github.com/settings/tokens/new?description=wxz-group-cms&scopes=repo" target="_blank" style="color: #2563eb; text-decoration: underline; font-weight: 700;">点击此处直达 GitHub 自动生成新 Token（已自动勾选 repo 读写权限，有效期建议选永不过期）</a>
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: 12px;">
+            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+              <div style="position: relative; flex: 1; min-width: 280px;">
+                <input type="text" id="cardInputGithubToken" placeholder="在此直接粘贴 ghp_ 开头的 GitHub Token 密钥..." style="width: 100%; padding: 11px 40px 11px 14px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 14px; font-family: monospace; outline: none; box-sizing: border-box; background: #fff;" />
+                <button type="button" id="cardBtnClearToken" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; font-size: 16px; color: #94a3b8;" title="清空输入框">✕</button>
+              </div>
+              <button type="button" id="cardBtnTestToken" style="padding: 11px 20px; border: 1px solid #cbd5e1; border-radius: 6px; background: #fff; color: #334155; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s;">
+                🔍 测试连接
+              </button>
+              <button type="button" id="cardBtnSaveToken" style="padding: 11px 24px; border: none; border-radius: 6px; background: #185a9d; color: #fff; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s;">
+                💾 保存并立即生效
+              </button>
+            </div>
+            <div id="cardTokenAlert" style="display: none; padding: 10px 14px; border-radius: 6px; font-size: 13px; line-height: 1.5;"></div>
+          </div>
+        </div>
+
         <div class="panel-card">
           <h3 style="font-size: 16px; font-weight: 700; margin-bottom: 12px; color: #0f172a;">⚡ 常用管理快捷入口</h3>
           <p style="color: #64748b; font-size: 14px; line-height: 1.8;">
@@ -154,6 +192,9 @@ const newsPayload = allNews.map(item => ({
       <section id="tab-publish" class="tab-pane">
         <div class="section-title-bar">
           <h2 id="formHeaderTitle">✍️ 可视化富文本排版与发布</h2>
+          <button type="button" class="btn-quick-token" onclick="openTokenConfig()" style="font-size: 12px; font-weight: 600; padding: 5px 12px; background: #f1f5f9; border: 1px solid #cbd5e1; border-radius: 6px; color: #475569; cursor: pointer; display: inline-flex; align-items: center; gap: 4px;">
+            🔑 配置密钥
+          </button>
           <div id="editingBadge" style="display: none;" class="badge-editing">
             <span>✏️ 正在修改现有文章</span>
             <button type="button" id="btnCancelEdit" class="btn-cancel-edit">取消修改，返回新建</button>
