@@ -86,16 +86,19 @@ const newsPayload = allNews.map(item => ({
             <circle cx="8.5" cy="8.5" r="1.5"></circle>
             <polyline points="21 15 16 10 5 21"></polyline>
           </svg>
-          课题组云端媒体库
-        </button>
-        <button class="menu-item" data-tab="tab-access">
-          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
-            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-          </svg>
-          Microsoft 365 权限控制
+          多媒体与附件中心
         </button>
       </nav>
+
+            <div class="sidebar-token-section" style="margin-top: 15px; padding-top: 15px; border-top: 1px solid #334155;">
+        <button type="button" id="btnSidebarToken" class="btn-sidebar-token" style="width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 9px 12px; background: rgba(30, 41, 59, 0.8); color: #cbd5e1; border: 1px solid #475569; border-radius: 6px; font-size: 13px; font-weight: 500; cursor: pointer; transition: all 0.2s;">
+          <span style="display: flex; align-items: center; gap: 8px;">
+            <span id="sidebarTokenDot" style="width: 8px; height: 8px; border-radius: 50%; background: #ef4444;"></span>
+            <span id="sidebarTokenText">GitHub 密钥: 待设置</span>
+          </span>
+          <span style="font-size: 11px; color: #94a3b8; background: #334155; padding: 2px 6px; border-radius: 4px;">修改</span>
+        </button>
+      </div>
 
       <div class="sidebar-status">
         <span class="status-indicator"></span>
@@ -325,7 +328,54 @@ const newsPayload = allNews.map(item => ({
         </div>
       </section>
 
-      <!-- 挂载全量数据供富文本编辑载入 -->
+      
+    <!-- GitHub Token 密钥配置模态框 -->
+    <div id="tokenModal" class="token-modal-overlay" style="display: none;">
+      <div class="token-modal-dialog">
+        <div class="token-modal-header">
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <span style="font-size: 20px;">🔑</span>
+            <h3 style="margin: 0; font-size: 17px; font-weight: 700; color: #0f172a;">配置 GitHub 访问凭据 (Token)</h3>
+          </div>
+          <button type="button" id="btnCloseTokenModal" class="btn-close-modal" style="background: none; border: none; font-size: 22px; line-height: 1; color: #94a3b8; cursor: pointer; padding: 4px;">&times;</button>
+        </div>
+        <div class="token-modal-body">
+          <div style="background: #fef3c7; border: 1px solid #fde68a; border-radius: 8px; padding: 12px 16px; margin-bottom: 16px; font-size: 13px; color: #92400e; line-height: 1.6;">
+            <strong>📌 为什么出现“Bad credentials”？</strong><br>
+            科研管理中台直接对接 GitHub 仓库进行云端实时同步。当浏览器本地保存的 Personal Access Token 过期、被撤销或失效时，GitHub 就会返回 <code>Bad credentials</code>。只需重新生成并填入有效 Token 即可立即恢复全部功能！
+          </div>
+
+          <div style="margin-bottom: 16px;">
+            <label style="display: block; font-weight: 600; font-size: 13px; color: #334155; margin-bottom: 6px;">GitHub Personal Access Token (classic / fine-grained)</label>
+            <div style="position: relative;">
+              <input type="password" id="inputGithubToken" placeholder="ghp_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" style="width: 100%; padding: 10px 42px 10px 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 13px; font-family: monospace; outline: none; box-sizing: border-box;" />
+              <button type="button" id="btnToggleTokenVisible" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; font-size: 16px; color: #64748b;" title="显示/隐藏明文">👁️</button>
+            </div>
+          </div>
+
+          <div id="tokenVerifyAlert" style="display: none; padding: 10px 14px; border-radius: 6px; font-size: 13px; margin-bottom: 16px; line-height: 1.5;"></div>
+
+          <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px 16px; font-size: 13px; color: #475569; line-height: 1.7; margin-bottom: 20px;">
+            💡 <strong>如何生成有效 Token？（30秒快捷流程）</strong><br>
+            1. 登录管理员 GitHub 账号并点击：<a href="https://github.com/settings/tokens/new?description=wxz-group-cms&scopes=repo" target="_blank" style="color: #2563eb; text-decoration: underline; font-weight: 600;">🔗 点击直达 GitHub 自动配置页</a><br>
+            2. 确保勾选了 <strong>repo</strong> 权限（完整仓库写入权限）；<br>
+            3. 有效期（Expiration）建议选择 <strong>No expiration（永不过期）</strong> 或 1年；<br>
+            4. 页面底部点击 <strong>Generate token</strong>，复制生成的 <code>ghp_...</code> 字符串粘贴至上方即可。
+          </div>
+
+          <div style="display: flex; gap: 10px; justify-content: flex-end;">
+            <button type="button" id="btnTestToken" style="padding: 9px 18px; border: 1px solid #cbd5e1; border-radius: 6px; background: #f8fafc; color: #334155; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s;">
+              🔍 测试连接有效性
+            </button>
+            <button type="button" id="btnSaveToken" style="padding: 9px 22px; border: none; border-radius: 6px; background: #185a9d; color: #fff; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s;">
+              💾 保存并立即生效
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 挂载全量数据供富文本编辑载入 -->
   <script is:inline define:vars={{ newsPayload }}>
     window.ALL_ARTICLES_DATA = newsPayload;
   </script>
@@ -818,9 +868,212 @@ const newsPayload = allNews.map(item => ({
       .manage-sidebar { width: 100%; box-sizing: border-box; }
       .form-row-2, .ms-step-row { grid-template-columns: 1fr; }
     }
+  
+    /* GitHub Token 模态框样式 */
+    .token-modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(15, 23, 42, 0.65);
+      backdrop-filter: blur(4px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      padding: 16px;
+    }
+    .token-modal-dialog {
+      background: #fff;
+      border-radius: 12px;
+      max-width: 540px;
+      width: 100%;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 10px 10px -5px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      animation: modalFadeIn 0.2s ease-out;
+    }
+    @keyframes modalFadeIn {
+      from { opacity: 0; transform: scale(0.96); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    .token-modal-header {
+      padding: 16px 20px;
+      border-bottom: 1px solid #e2e8f0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #f8fafc;
+    }
+    .token-modal-body {
+      padding: 20px;
+    }
+    .btn-sidebar-token:hover {
+      background: #334155 !important;
+      border-color: #64748b !important;
+      color: #fff !important;
+    }
+
   </style>
 
   <script is:inline>
+    
+    // ==========================================
+    // GitHub Token 密钥管理器与智能异常捕获
+    // ==========================================
+    const tokenModal = document.getElementById('tokenModal');
+    const btnSidebarToken = document.getElementById('btnSidebarToken');
+    const btnCloseTokenModal = document.getElementById('btnCloseTokenModal');
+    const inputGithubToken = document.getElementById('inputGithubToken');
+    const btnToggleTokenVisible = document.getElementById('btnToggleTokenVisible');
+    const btnTestToken = document.getElementById('btnTestToken');
+    const btnSaveToken = document.getElementById('btnSaveToken');
+    const tokenVerifyAlert = document.getElementById('tokenVerifyAlert');
+    const sidebarTokenDot = document.getElementById('sidebarTokenDot');
+    const sidebarTokenText = document.getElementById('sidebarTokenText');
+
+    function openTokenModal(warnMsg = '') {
+      const currentToken = getAdminToken();
+      if (inputGithubToken) {
+        inputGithubToken.value = currentToken || '';
+      }
+      if (tokenVerifyAlert) {
+        if (warnMsg) {
+          tokenVerifyAlert.style.display = 'block';
+          tokenVerifyAlert.style.background = '#fef2f2';
+          tokenVerifyAlert.style.border = '1px solid #fecaca';
+          tokenVerifyAlert.style.color = '#b91c1c';
+          tokenVerifyAlert.innerHTML = `<strong>⚠️ 鉴权提示：</strong>${warnMsg}`;
+        } else {
+          tokenVerifyAlert.style.display = 'none';
+        }
+      }
+      if (tokenModal) tokenModal.style.display = 'flex';
+    }
+
+    function closeTokenModal() {
+      if (tokenModal) tokenModal.style.display = 'none';
+    }
+
+    if (btnSidebarToken) btnSidebarToken.addEventListener('click', () => openTokenModal());
+    if (btnCloseTokenModal) btnCloseTokenModal.addEventListener('click', () => closeTokenModal());
+    if (tokenModal) {
+      tokenModal.addEventListener('click', (e) => {
+        if (e.target === tokenModal) closeTokenModal();
+      });
+    }
+
+    if (btnToggleTokenVisible) {
+      btnToggleTokenVisible.addEventListener('click', () => {
+        if (inputGithubToken.type === 'password') {
+          inputGithubToken.type = 'text';
+          btnToggleTokenVisible.textContent = '🔒';
+        } else {
+          inputGithubToken.type = 'password';
+          btnToggleTokenVisible.textContent = '👁️';
+        }
+      });
+    }
+
+    async function verifyToken(t) {
+      if (!t) return { ok: false, msg: '请输入有效 Token' };
+      try {
+        const resp = await fetch('https://api.github.com/repos/zxwiii/wxz-group', {
+          headers: { 'Authorization': `token ${t}` }
+        });
+        if (resp.ok) {
+          const repo = await resp.json();
+          const perm = repo.permissions ? (repo.permissions.push ? '具备写入/推送权限' : '仅只读权限') : '权限已就绪';
+          return { ok: true, msg: `连接正常！已成功连接到仓库 ${repo.full_name} (${perm})` };
+        } else if (resp.status === 401) {
+          return { ok: false, msg: 'Token 无效或已过期 (401 Bad credentials)，请重新生成！' };
+        } else if (resp.status === 404) {
+          return { ok: false, msg: 'Token 权限不足，无法访问该仓库，请确保勾选了 repo 权限！' };
+        } else {
+          return { ok: false, msg: `GitHub 响应异常 (HTTP ${resp.status})` };
+        }
+      } catch (err) {
+        return { ok: false, msg: '网络连接失败: ' + err.message };
+      }
+    }
+
+    function updateSidebarTokenStatus() {
+      const t = getAdminToken();
+      if (!sidebarTokenDot || !sidebarTokenText) return;
+      if (t && t.length > 10) {
+        sidebarTokenDot.style.background = '#22c55e';
+        sidebarTokenText.textContent = 'GitHub 密钥: 正常';
+      } else {
+        sidebarTokenDot.style.background = '#ef4444';
+        sidebarTokenText.textContent = 'GitHub 密钥: 未设置';
+      }
+    }
+
+    if (btnTestToken) {
+      btnTestToken.addEventListener('click', async () => {
+        const t = inputGithubToken.value.trim();
+        btnTestToken.disabled = true;
+        btnTestToken.textContent = '⏳ 测试中...';
+        const res = await verifyToken(t);
+        btnTestToken.disabled = false;
+        btnTestToken.textContent = '🔍 测试连接有效性';
+
+        tokenVerifyAlert.style.display = 'block';
+        if (res.ok) {
+          tokenVerifyAlert.style.background = '#f0fdf4';
+          tokenVerifyAlert.style.border = '1px solid #bbf7d0';
+          tokenVerifyAlert.style.color = '#15803d';
+          tokenVerifyAlert.innerHTML = `<strong>✅ 校验通过：</strong>${res.msg}`;
+        } else {
+          tokenVerifyAlert.style.background = '#fef2f2';
+          tokenVerifyAlert.style.border = '1px solid #fecaca';
+          tokenVerifyAlert.style.color = '#b91c1c';
+          tokenVerifyAlert.innerHTML = `<strong>❌ 校验失败：</strong>${res.msg}`;
+        }
+      });
+    }
+
+    if (btnSaveToken) {
+      btnSaveToken.addEventListener('click', async () => {
+        const t = inputGithubToken.value.trim();
+        if (!t) {
+          alert('请先输入有效的 GitHub Token');
+          return;
+        }
+        btnSaveToken.disabled = true;
+        btnSaveToken.textContent = '⏳ 正在保存...';
+        const res = await verifyToken(t);
+        if (res.ok) {
+          localStorage.setItem('wxz_token', t);
+          localStorage.setItem('decap-cms-user', JSON.stringify({ backendName: 'github', token: t }));
+          updateSidebarTokenStatus();
+          alert('🎉 GitHub 访问密钥已成功更新并保存！全部云端功能已恢复正常。');
+          closeTokenModal();
+          window.location.reload();
+        } else {
+          btnSaveToken.disabled = false;
+          btnSaveToken.textContent = '💾 保存并立即生效';
+          tokenVerifyAlert.style.display = 'block';
+          tokenVerifyAlert.style.background = '#fef2f2';
+          tokenVerifyAlert.style.border = '1px solid #fecaca';
+          tokenVerifyAlert.style.color = '#b91c1c';
+          tokenVerifyAlert.innerHTML = `<strong>❌ 无法保存：</strong>${res.msg} 请检查后重试！`;
+        }
+      });
+    }
+
+    // 全局 API 错误拦截助手
+    window.handleGitHubApiError = function(errData, status) {
+      const msg = (errData && errData.message) ? errData.message : '';
+      if (status === 401 || msg.includes('Bad credentials')) {
+        openTokenModal('当前保存失败是因为 GitHub 访问密钥已失效 (Bad credentials)。请点击下方链接生成新 Token 并粘贴保存！');
+        return true;
+      }
+      return false;
+    };
+
+    updateSidebarTokenStatus();
+
     // 凭据读取
     function getAdminToken() {
       let t = localStorage.getItem('wxz_token') || localStorage.getItem('decap-cms-user');
@@ -919,7 +1172,7 @@ const newsPayload = allNews.map(item => ({
                     // 直接插入富文本编辑器正文！用户眼睛直接看得到图片！
                     insertFn(imgUrl, file.name, imgUrl);
                   } else {
-                    alert('图片上传失败，请检查网络或管理员Token');
+                    if (!handleGitHubApiError(err, resp.status)) { alert('图片上传失败，请检查网络或管理员 Token'); }
                   }
                 } catch(err) {
                   alert('图片上传出错: ' + err.message);
@@ -1157,7 +1410,7 @@ ${content}
             window.location.reload();
           } else {
             const err = await resp.json();
-            alert('保存失败: ' + (err.message || '请检查权限'));
+            if (!handleGitHubApiError(err, resp.status)) { alert('保存失败: ' + (err.message || '请检查权限')); }
           }
         } catch (err) {
           alert('提交出错: ' + err.message);
@@ -1362,7 +1615,7 @@ ${content}
               alert(`🎉 附件 "${file.name}" 已成功上传至课题组附件库！`);
               loadDocsLibrary();
             } else {
-              alert('上传失败，请检查文件大小或网络连接');
+              if (!handleGitHubApiError(err, resp.status)) { alert('上传失败，请检查文件大小或 GitHub Token 权限'); }
             }
           } catch(err) {
             alert('上传异常: ' + err.message);
