@@ -27,7 +27,7 @@ function formatSafeDate(d: any) {
 
 allNews.sort((a, b) => getSafeTime(b.data.date) - getSafeTime(a.data.date));
 
-// 将全部文章结构化导出供前端编辑使用
+// 将全部文章结构化导出供前端富文本编辑使用
 const newsPayload = allNews.map(item => ({
   slug: item.slug,
   title: item.data.title || '',
@@ -39,6 +39,9 @@ const newsPayload = allNews.map(item => ({
 ---
 
 <Layout title="科研与实验室管理中台 - 王小治课题组" activeNav="管理后台">
+  <!-- 引入本地化的现代化富文本编辑器样式 -->
+  <link rel="stylesheet" href="/admin/wangeditor/style.css" />
+
   <div class="manage-layout">
     <!-- 侧边栏导航 -->
     <aside class="manage-sidebar">
@@ -65,7 +68,7 @@ const newsPayload = allNews.map(item => ({
             <path d="M12 20h9"></path>
             <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
           </svg>
-          <span id="publishMenuText">发布 / 编辑文章</span>
+          <span id="publishMenuText">可视化富文本发布</span>
         </button>
         <button class="menu-item" data-tab="tab-news">
           <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
@@ -77,18 +80,26 @@ const newsPayload = allNews.map(item => ({
           </svg>
           科研动态管理 ({allNews.length})
         </button>
+        <button class="menu-item" data-tab="tab-gallery">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+            <circle cx="8.5" cy="8.5" r="1.5"></circle>
+            <polyline points="21 15 16 10 5 21"></polyline>
+          </svg>
+          课题组云端媒体库
+        </button>
         <button class="menu-item" data-tab="tab-access">
           <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
             <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
             <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
           </svg>
-          组内阅读权限控制
+          Microsoft 365 权限控制
         </button>
       </nav>
 
       <div class="sidebar-status">
         <span class="status-indicator"></span>
-        <span>云端直连：正常</span>
+        <span>云端自动化流水线：正常</span>
       </div>
     </aside>
 
@@ -99,7 +110,7 @@ const newsPayload = allNews.map(item => ({
       <section id="tab-overview" class="tab-pane active">
         <div class="section-title-bar">
           <h2>📊 课题组学术与运行总览</h2>
-          <span class="badge-online">全天候在线运行</span>
+          <span class="badge-online">系统稳定运行中</span>
         </div>
 
         <div class="stat-card-row">
@@ -120,27 +131,26 @@ const newsPayload = allNews.map(item => ({
           </div>
           <div class="stat-box">
             <div class="stat-number">{allNews.length} <span class="unit">篇</span></div>
-            <div class="stat-name">科研成果与组会纪要</div>
-            <div class="stat-sub">支持分类与阅读权限隔离</div>
+            <div class="stat-name">重大科研进展与组会</div>
+            <div class="stat-sub">支持分类与微软权限隔离</div>
           </div>
         </div>
 
         <div class="panel-card">
           <h3 style="font-size: 16px; font-weight: 700; margin-bottom: 12px; color: #0f172a;">⚡ 常用管理快捷入口</h3>
           <p style="color: #64748b; font-size: 14px; line-height: 1.8;">
-            欢迎使用课题组专属中台系统！全新升级功能：<br>
-            • <strong>文章修改与删除</strong>：在“科研动态管理”中可随时点击【修改】调取历史文章重新编辑，或点击【删除】一键从全网下线；<br>
-            • <strong>插入本地图片</strong>：在文章编辑器点击【上传并插入图片】，自动上传至云端并生成 HTML 图片标签；<br>
-            • <strong>嵌入 HTML 代码</strong>：编辑器 100% 原生支持直接粘贴任何 HTML 排版代码、表格与外链视频，并支持【实时预览】；<br>
-            • <strong>仅组内可见真实防护</strong>：标记为内部的文章已加装安全模糊锁屏，非课题组成员无法阅读正文。
+            欢迎使用课题组专属科研中台！全新升级特性：<br>
+            • <strong>类似凡科/Word的可视化富文本编辑</strong>：像写 Word 和微信公众号一样直接打字排版，支持标题、字体颜色、居中、表格和图片拖拽缩放；<br>
+            • <strong>一键上传图片并在正文直接显示</strong>：所有图片安全保存在云端专属目录（<code>public/images/uploads/</code>），并可在“云端媒体库”统一管理；<br>
+            • <strong>真实生效的 Microsoft 365 权限控制</strong>：内部文章自动放入 <code>/internal/news/*</code> 物理隔离路由，由 Cloudflare Zero Trust 与微软统一身份认证联动锁死，外网人员无法访问！
           </p>
         </div>
       </section>
 
-      <!-- 2. 发布与编辑文章 -->
+      <!-- 2. 可视化富文本发布与编辑 -->
       <section id="tab-publish" class="tab-pane">
         <div class="section-title-bar">
-          <h2 id="formHeaderTitle">✍️ 发布新动态 / 成果简讯</h2>
+          <h2 id="formHeaderTitle">✍️ 可视化富文本排版与发布</h2>
           <div id="editingBadge" style="display: none;" class="badge-editing">
             <span>✏️ 正在修改现有文章</span>
             <button type="button" id="btnCancelEdit" class="btn-cancel-edit">取消修改，返回新建</button>
@@ -149,13 +159,12 @@ const newsPayload = allNews.map(item => ({
 
         <div class="panel-card">
           <form id="articleForm">
-            <!-- 隐藏域记录正在编辑的文章 slug -->
             <input type="hidden" id="editingSlug" value="" />
 
             <div class="form-row-2">
               <div class="field-item">
                 <label>文章标题 *</label>
-                <input type="text" id="postTitle" class="form-input" placeholder="请输入成果或新闻标题 (如: 课题组在CEJ发表最新高水平成果)" required />
+                <input type="text" id="postTitle" class="form-input" placeholder="请输入成果或新闻标题 (如: 博士生周港华在CEJ发表最新高水平论文)" required />
               </div>
 
               <div class="field-item">
@@ -177,47 +186,35 @@ const newsPayload = allNews.map(item => ({
               </div>
 
               <div class="field-item">
-                <label>阅读权限控制 *</label>
+                <label>阅读权限控制 (支持微软单点登录) *</label>
                 <select id="postAccess" class="form-input">
                   <option value="public">🌐 全网公开 (所有外部访客均可自由阅读)</option>
-                  <option value="internal">🔒 仅组内可见 (开启安全模糊锁屏，需口令解锁)</option>
+                  <option value="internal">🔒 仅组内可见 (归入 /internal 路由，由 Microsoft 365 / Zero Trust 物理拦截)</option>
                 </select>
               </div>
             </div>
 
-            <!-- 编辑器工具栏：插入图片、嵌入HTML、实时预览 -->
-            <div class="editor-toolbar">
-              <div class="toolbar-left">
-                <label for="imageFileInput" class="btn-tool btn-tool-upload">
-                  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
-                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-                    <circle cx="8.5" cy="8.5" r="1.5"></circle>
-                    <polyline points="21 15 16 10 5 21"></polyline>
-                  </svg>
-                  <span>上传并插入本地图片</span>
-                </label>
-                <input type="file" id="imageFileInput" accept="image/*" style="display: none;" />
-
-                <span class="tool-tip">💡 原生支持直接粘贴任何 HTML 代码 (如表格、样式段落、视频)</span>
+            <!-- 可视化富文本编辑器容器 (wangEditor) -->
+            <div class="editor-wrapper">
+              <div class="editor-tips-bar">
+                <span>📝 <strong>纯中文可视化排版模式</strong>：直接在下方打字、加粗、排版表格；点击工具栏“图片”图标即可一键插入电脑本地图片</span>
+                <button type="button" id="btnToggleHtmlSource" class="btn-source-toggle">查看 / 编辑 HTML 源代码</button>
               </div>
 
-              <div class="toolbar-right">
-                <button type="button" id="btnTogglePreview" class="btn-tool">
-                  👁️ 实时预览排版效果
-                </button>
+              <!-- wangEditor 工具栏挂载点 -->
+              <div id="editor-toolbar-container" class="editor-toolbar-box"></div>
+
+              <!-- wangEditor 编辑区域挂载点 (所见即所得打字区) -->
+              <div id="editor-text-container" class="editor-text-box"></div>
+
+              <!-- HTML 源码备用编辑区 (默认隐藏，点击切换源码时展示) -->
+              <textarea id="rawHtmlTextarea" class="raw-html-box" style="display: none;" placeholder="在此可直接粘贴或修改原生 HTML 代码..."></textarea>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 24px;">
+              <div style="font-size: 13px; color: #64748b;">
+                💾 保存后由 Cloudflare 全球自动化流水线在 30 秒内秒级构建生效。
               </div>
-            </div>
-
-            <div id="uploadStatusMsg" class="upload-status-bar" style="display:none;"></div>
-
-            <!-- 正文编辑框与预览区 -->
-            <div class="editor-container">
-              <textarea id="postContent" class="form-textarea" placeholder="在此输入文章正文...&#10;1. 原生支持 Markdown 排版 (如 # 标题、**加粗**、- 列表)&#10;2. 100% 支持嵌入任何 HTML 代码 (如 <p style='...'>、<table>、<div> 等)&#10;3. 点击上方【上传并插入本地图片】即可一键插入配图"></textarea>
-              
-              <div id="previewArea" class="preview-box" style="display: none;"></div>
-            </div>
-
-            <div style="display: flex; justify-content: flex-end; margin-top: 20px;">
               <button type="submit" id="btnSubmit" class="btn-publish-submit">
                 🚀 立即发布并全网同步上线
               </button>
@@ -226,7 +223,7 @@ const newsPayload = allNews.map(item => ({
         </div>
       </section>
 
-      <!-- 3. 动态列表与管理（修改、删除、搜索） -->
+      <!-- 3. 动态管理列表（修改、删除、搜索） -->
       <section id="tab-news" class="tab-pane">
         <div class="section-title-bar">
           <h2>📰 科研动态与组会管理 ({allNews.length})</h2>
@@ -251,7 +248,7 @@ const newsPayload = allNews.map(item => ({
                     {formatSafeDate(item.data.date)}
                   </td>
                   <td style="font-weight: 600; color: #1e293b;">
-                    <a href={`/news/${item.slug}`} target="_blank" style="color: #1e293b; text-decoration: none;">
+                    <a href={item.data.accessLevel === 'internal' ? `/internal/news/${item.slug}` : `/news/${item.slug}`} target="_blank" style="color: #1e293b; text-decoration: none;">
                       {item.data.title}
                     </a>
                   </td>
@@ -260,14 +257,14 @@ const newsPayload = allNews.map(item => ({
                   </td>
                   <td>
                     {item.data.accessLevel === 'internal' ? (
-                      <span class="tag-internal">🔒 仅组内</span>
+                      <span class="tag-internal">🔒 仅组内 (Microsoft保护)</span>
                     ) : (
                       <span class="tag-public">🌐 公开</span>
                     )}
                   </td>
                   <td style="text-align: right; padding-right: 20px; white-space: nowrap;">
                     <button type="button" class="btn-action-edit" data-slug={item.slug}>✏️ 修改</button>
-                    <a href={`/news/${item.slug}`} target="_blank" class="btn-action-view">查看</a>
+                    <a href={item.data.accessLevel === 'internal' ? `/internal/news/${item.slug}` : `/news/${item.slug}`} target="_blank" class="btn-action-view">查看</a>
                     <button type="button" class="btn-action-delete" data-slug={item.slug} data-title={item.data.title}>🗑️ 删除</button>
                   </td>
                 </tr>
@@ -277,32 +274,82 @@ const newsPayload = allNews.map(item => ({
         </div>
       </section>
 
-      <!-- 4. 组内阅读权限控制 -->
-      <section id="tab-access" class="tab-pane">
+      <!-- 4. 课题组云端媒体库（解答：图片去哪里了） -->
+      <section id="tab-gallery" class="tab-pane">
         <div class="section-title-bar">
-          <h2>🔐 组内阅读权限与安全访问体系</h2>
+          <h2>🖼️ 课题组云端媒体库 (图库中心)</h2>
+          <label for="directUploadInput" class="btn-direct-upload">
+            + 上传新图片到图库
+          </label>
+          <input type="file" id="directUploadInput" accept="image/*" style="display: none;" />
         </div>
 
         <div class="panel-card">
-          <div class="security-intro">
-            <h3>🛡️ “仅组内可见”已正式启用真实安全防御</h3>
-            <p>
-              现在，所有在后台被标记为 <strong>🔒 仅组内可见</strong> 的文章，访问时正文均会被<strong>高斯模糊物理阻隔</strong>，并弹出安全密码门禁！外部人员无法阅读任何正文，只有输入合法通行口令（默认口令 <code>wxzgroup</code> 或通过扬大认证）才能解锁阅读！
-            </p>
+          <div style="background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 8px; padding: 14px 18px; margin-bottom: 20px; font-size: 13px; color: #1e40af; line-height: 1.6;">
+            <strong>📌 图片存储位置说明：</strong><br>
+            您在富文本编辑器中插入的所有图片，均永久且安全地保存在课题组网站的 <code>public/images/uploads/</code> 目录中，由 Cloudflare 全球 CDN 分发加速（高速、防盗链、永久有效）。点击下方任意图片可直接复制永久链接！
           </div>
 
-          <h4 style="font-size: 15px; margin: 24px 0 12px; color: #0f172a;">📋 两种双重保障机制：</h4>
-          
-          <div class="access-mode-grid">
-            <div class="mode-box">
-              <div class="mode-title">机制一：文章安全锁屏门禁（开箱即用）</div>
-              <p>所有内部文章自动携带安全锁屏，师生在浏览器中输入一次通行口令 <code>wxzgroup</code> 即可解锁当前会话的所有内部资料；外部访客一律无法查看！</p>
+          <div id="mediaGrid" class="media-grid">
+            <!-- 动态载入图片列表 -->
+            <div style="color: #94a3b8; font-size: 14px; padding: 20px;">正在载入云端媒体库列表...</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 5. 真正的 Microsoft 365 权限控制 -->
+      <section id="tab-access" class="tab-pane">
+        <div class="section-title-bar">
+          <h2>🔐 Microsoft 365 组织单点登录与 Zero Trust 鉴权</h2>
+        </div>
+
+        <div class="panel-card">
+          <div class="ms-hero-card">
+            <div class="ms-hero-icon">
+              <svg viewBox="0 0 21 21" width="36" height="36">
+                <rect x="1" y="1" width="9" height="9" fill="#f25022"/>
+                <rect x="11" y="1" width="9" height="9" fill="#7fba00"/>
+                <rect x="1" y="11" width="9" height="9" fill="#00a4ef"/>
+                <rect x="11" y="11" width="9" height="9" fill="#ffb900"/>
+              </svg>
+            </div>
+            <div>
+              <h3>Microsoft Entra ID (原 Azure AD) 企业级单点登录体系</h3>
+              <p>利用您的 Microsoft 365 全局管理员权限与 Cloudflare Zero Trust 无缝对接，实现全网最权威、最安全的物理级访问控制。</p>
+            </div>
+          </div>
+
+          <h4 style="font-size: 16px; margin: 28px 0 16px; color: #0f172a;">🛠️ 真正的微软单点登录是如何运作的？</h4>
+
+          <div class="ms-step-row">
+            <div class="ms-step-card">
+              <div class="step-num">步骤 1</div>
+              <h4>路由级物理隔离</h4>
+              <p>所有标记为“仅组内可见”的文章，系统已自动划分至 <code>https://wxz.zxw.ac.cn/internal/*</code> 专属路径下，前台与公开文章彻底物理隔离。</p>
             </div>
 
-            <div class="mode-box">
-              <div class="mode-title">机制二：Cloudflare Zero Trust 域名级拦截</div>
-              <p>在 Cloudflare Access 策略中添加规则：<code>Emails ending in: @yzu.edu.cn</code>，可在 CDN 边缘网络直接阻断非扬大邮箱访客，双重物理防御！</p>
+            <div class="ms-step-card">
+              <div class="step-num">步骤 2</div>
+              <h4>微软官方重定向</h4>
+              <p>当任何外部访客试图访问该路径时，Cloudflare 边缘节点直接在网络层拦截，强制跳转至微软官方登录页 (<code>login.microsoftonline.com</code>)。</p>
             </div>
+
+            <div class="ms-step-card">
+              <div class="step-num">步骤 3</div>
+              <h4>组织账号鉴权</h4>
+              <p>只有持有您组织授权的微软账号（如 <code>@yzu.edu.cn</code> 或组内指定 M365 账号）方可成功登录并放行阅读；外部人员无法突破微软登录墙！</p>
+            </div>
+          </div>
+
+          <div style="margin-top: 32px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 22px;">
+            <h4 style="font-size: 15px; margin-bottom: 10px; color: #1e293b;">🚀 在 Cloudflare Zero Trust 中绑定微软登录（仅需配置一次）：</h4>
+            <ol style="padding-left: 20px; font-size: 14px; line-height: 2; color: #475569;">
+              <li>打开 Cloudflare Zero Trust 控制台，点击左侧 <strong>Settings ➔ Authentication</strong>；</li>
+              <li>在 <strong>Login methods</strong> 中点击 <strong>Add new</strong>，选择 <strong>Azure AD / Microsoft Entra ID</strong>；</li>
+              <li>在您的 Azure 门户中注册一个 Enterprise Application，将 Client ID 与 Client Secret 粘贴填入；</li>
+              <li>在 Access ➔ Applications 中把 <code>wxz.zxw.ac.cn/internal*</code> 的登录方式勾选为该微软登录方法；</li>
+              <li>至此，全套高安全度的微软企业级统一单点登录便永久打通！</li>
+            </ol>
           </div>
         </div>
       </section>
@@ -310,10 +357,13 @@ const newsPayload = allNews.map(item => ({
     </main>
   </div>
 
-  <!-- 将文章全量数据挂载在全局变量中供编辑快速载入 -->
+  <!-- 挂载全量数据供富文本编辑载入 -->
   <script is:inline define:vars={{ newsPayload }}>
     window.ALL_ARTICLES_DATA = newsPayload;
   </script>
+
+  <!-- 引入本地化的 wangEditor 核心 JS 引擎 -->
+  <script is:inline src="/admin/wangeditor/index.min.js"></script>
 
   <style is:global>
     .manage-layout {
@@ -353,21 +403,9 @@ const newsPayload = allNews.map(item => ({
       font-weight: 800;
       font-size: 20px;
     }
-    .brand-title h2 {
-      font-size: 15px;
-      font-weight: 700;
-      color: #f8fafc;
-    }
-    .brand-title p {
-      font-size: 11px;
-      color: #94a3b8;
-    }
-    .sidebar-menu {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      flex: 1;
-    }
+    .brand-title h2 { font-size: 15px; font-weight: 700; color: #f8fafc; }
+    .brand-title p { font-size: 11px; color: #94a3b8; }
+    .sidebar-menu { display: flex; flex-direction: column; gap: 6px; flex: 1; }
     .menu-item {
       display: flex;
       align-items: center;
@@ -383,10 +421,7 @@ const newsPayload = allNews.map(item => ({
       text-align: left;
       transition: all 0.2s;
     }
-    .menu-item:hover {
-      background: rgba(255,255,255,0.06);
-      color: #fff;
-    }
+    .menu-item:hover { background: rgba(255,255,255,0.06); color: #fff; }
     .menu-item.active {
       background: #185a9d;
       color: #fff;
@@ -410,7 +445,7 @@ const newsPayload = allNews.map(item => ({
       box-shadow: 0 0 6px #10b981;
     }
 
-    /* 右侧主体 */
+    /* 主操作区 */
     .manage-main {
       flex: 1;
       padding: 32px 40px;
@@ -424,11 +459,7 @@ const newsPayload = allNews.map(item => ({
       align-items: center;
       margin-bottom: 24px;
     }
-    .section-title-bar h2 {
-      font-size: 22px;
-      font-weight: 800;
-      color: #0f172a;
-    }
+    .section-title-bar h2 { font-size: 22px; font-weight: 800; color: #0f172a; }
     .badge-online {
       font-size: 12px;
       font-weight: 600;
@@ -460,7 +491,7 @@ const newsPayload = allNews.map(item => ({
       cursor: pointer;
     }
 
-    /* 数据盒子 */
+    /* 数据统计 */
     .stat-card-row {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
@@ -481,20 +512,11 @@ const newsPayload = allNews.map(item => ({
       line-height: 1;
       margin-bottom: 8px;
     }
-    .stat-number .unit {
-      font-size: 14px;
-      font-weight: 500;
-      color: #64748b;
-    }
-    .stat-name {
-      font-size: 14px;
-      font-weight: 600;
-      color: #334155;
-      margin-bottom: 6px;
-    }
+    .stat-number .unit { font-size: 14px; font-weight: 500; color: #64748b; }
+    .stat-name { font-size: 14px; font-weight: 600; color: #334155; margin-bottom: 6px; }
     .stat-sub { font-size: 12px; color: #059669; }
 
-    /* 表单与面板卡片 */
+    /* 表单与面板 */
     .panel-card {
       background: #fff;
       border: 1px solid #e2e8f0;
@@ -509,16 +531,8 @@ const newsPayload = allNews.map(item => ({
       gap: 20px;
       margin-bottom: 16px;
     }
-    .field-item {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-    .field-item label {
-      font-size: 13px;
-      font-weight: 600;
-      color: #334155;
-    }
+    .field-item { display: flex; flex-direction: column; gap: 8px; }
+    .field-item label { font-size: 13px; font-weight: 600; color: #334155; }
     .form-input {
       padding: 10px 14px;
       border: 1px solid #cbd5e1;
@@ -532,96 +546,60 @@ const newsPayload = allNews.map(item => ({
       box-shadow: 0 0 0 3px rgba(24, 90, 157, 0.1);
     }
 
-    /* 编辑器工具栏 */
-    .editor-toolbar {
+    /* wangEditor 可视化富文本样式定制 (类似凡科/Word) */
+    .editor-wrapper {
+      margin-top: 16px;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      overflow: hidden;
+      background: #fff;
+    }
+    .editor-tips-bar {
       display: flex;
       justify-content: space-between;
       align-items: center;
       background: #f8fafc;
-      border: 1px solid #cbd5e1;
-      border-bottom: none;
-      border-radius: 8px 8px 0 0;
       padding: 10px 14px;
-      margin-top: 14px;
+      border-bottom: 1px solid #e2e8f0;
+      font-size: 13px;
+      color: #475569;
     }
-    .toolbar-left {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
-    .btn-tool {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 6px 14px;
+    .btn-source-toggle {
       background: #fff;
       border: 1px solid #cbd5e1;
+      padding: 4px 10px;
       border-radius: 6px;
-      font-size: 13px;
-      font-weight: 600;
-      color: #334155;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-    .btn-tool:hover {
-      background: #f1f5f9;
-      color: #185a9d;
-      border-color: #185a9d;
-    }
-    .btn-tool-upload {
-      background: #eff6ff;
-      border-color: #bfdbfe;
-      color: #1e40af;
-    }
-    .tool-tip {
       font-size: 12px;
-      color: #64748b;
+      font-weight: 600;
+      color: #185a9d;
+      cursor: pointer;
     }
-    .upload-status-bar {
-      padding: 8px 14px;
-      background: #f0fdf4;
-      border: 1px solid #bbf7d0;
-      color: #15803d;
-      font-size: 13px;
-      font-weight: 500;
+    .btn-source-toggle:hover { background: #eff6ff; }
+    .editor-toolbar-box {
+      border-bottom: 1px solid #e2e8f0;
+      background: #ffffff;
     }
-
-    /* 正文编辑与预览 */
-    .editor-container {
-      position: relative;
+    .editor-text-box {
+      height: 420px;
+      overflow-y: hidden;
     }
-    .form-textarea {
+    .raw-html-box {
       width: 100%;
-      height: 340px;
+      height: 420px;
       padding: 16px;
-      border: 1px solid #cbd5e1;
-      border-radius: 0 0 8px 8px;
-      font-size: 14px;
-      line-height: 1.7;
+      border: none;
+      font-family: Consolas, Monaco, monospace;
+      font-size: 13px;
+      line-height: 1.6;
+      box-sizing: border-box;
       outline: none;
-      box-sizing: border-box;
       resize: vertical;
-      font-family: Consolas, Monaco, "PingFang SC", monospace;
+      background: #1e293b;
+      color: #f8fafc;
     }
-    .form-textarea:focus {
-      border-color: #185a9d;
-    }
-    .preview-box {
-      width: 100%;
-      min-height: 340px;
-      padding: 20px;
-      border: 1px solid #cbd5e1;
-      border-radius: 0 0 8px 8px;
-      background: #fff;
-      box-sizing: border-box;
-      overflow-y: auto;
-      line-height: 1.8;
-    }
-    .preview-box p { margin-bottom: 1.2em; }
-    .preview-box img { max-width: 100%; border-radius: 8px; }
 
     .btn-publish-submit {
-      padding: 12px 28px;
+      padding: 12px 32px;
       background: #185a9d;
       color: #fff;
       border: none;
@@ -635,41 +613,12 @@ const newsPayload = allNews.map(item => ({
     .btn-publish-submit:disabled { opacity: 0.6; cursor: not-allowed; }
 
     /* 表格与操作 */
-    .data-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 14px;
-    }
-    .data-table th, .data-table td {
-      padding: 14px 18px;
-      text-align: left;
-      border-bottom: 1px solid #e2e8f0;
-    }
+    .data-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    .data-table th, .data-table td { padding: 14px 18px; text-align: left; border-bottom: 1px solid #e2e8f0; }
     .data-table th { background: #f8fafc; font-weight: 600; color: #475569; }
-    .tag-cat {
-      background: #eff6ff;
-      color: #1e40af;
-      padding: 3px 8px;
-      border-radius: 4px;
-      font-size: 12px;
-      font-weight: 500;
-    }
-    .tag-public {
-      background: #ecfdf5;
-      color: #047857;
-      padding: 3px 8px;
-      border-radius: 4px;
-      font-size: 12px;
-      font-weight: 500;
-    }
-    .tag-internal {
-      background: #fef2f2;
-      color: #b91c1c;
-      padding: 3px 8px;
-      border-radius: 4px;
-      font-size: 12px;
-      font-weight: 500;
-    }
+    .tag-cat { background: #eff6ff; color: #1e40af; padding: 3px 8px; border-radius: 4px; font-size: 12px; font-weight: 500; }
+    .tag-public { background: #ecfdf5; color: #047857; padding: 3px 8px; border-radius: 4px; font-size: 12px; font-weight: 500; }
+    .tag-internal { background: #fef2f2; color: #b91c1c; padding: 3px 8px; border-radius: 4px; font-size: 12px; font-weight: 500; }
     .btn-action-edit {
       padding: 4px 10px;
       background: #eff6ff;
@@ -705,30 +654,100 @@ const newsPayload = allNews.map(item => ({
     }
     .btn-action-delete:hover { background: #fee2e2; }
 
-    /* 权限控制卡片 */
-    .security-intro {
-      background: #f0fdf4;
-      border: 1px solid #bbf7d0;
-      border-radius: 8px;
-      padding: 18px 20px;
-      margin-bottom: 24px;
+    /* 云端图库网格 */
+    .btn-direct-upload {
+      display: inline-flex;
+      align-items: center;
+      padding: 8px 16px;
+      background: #185a9d;
+      color: #fff;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
     }
-    .security-intro h3 { font-size: 16px; color: #166534; margin-bottom: 6px; }
-    .security-intro p { font-size: 14px; color: #15803d; margin: 0; line-height: 1.6; }
-    .access-mode-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-    .mode-box { border: 1px solid #e2e8f0; border-radius: 8px; padding: 20px; background: #f8fafc; }
-    .mode-title { font-size: 15px; font-weight: 700; color: #1e293b; margin-bottom: 8px; }
-    .mode-box p { font-size: 13px; color: #64748b; line-height: 1.7; }
+    .btn-direct-upload:hover { background: #0f3d6b; }
+    .media-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 16px;
+    }
+    .media-item {
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      overflow: hidden;
+      background: #f8fafc;
+      display: flex;
+      flex-direction: column;
+    }
+    .media-thumb {
+      width: 100%;
+      height: 130px;
+      object-fit: cover;
+      background: #e2e8f0;
+    }
+    .media-info {
+      padding: 8px 10px;
+      font-size: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .btn-copy-url {
+      color: #185a9d;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    /* 微软横幅与卡片 */
+    .ms-hero-card {
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      border-radius: 10px;
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+    .ms-hero-icon { flex-shrink: 0; }
+    .ms-hero-card h3 { font-size: 17px; font-weight: 700; color: #1e3a8a; margin-bottom: 4px; }
+    .ms-hero-card p { font-size: 14px; color: #1e40af; margin: 0; }
+    .ms-step-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+    }
+    .ms-step-card {
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 22px;
+      background: #ffffff;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+    }
+    .step-num {
+      display: inline-block;
+      padding: 2px 8px;
+      background: #e0f2fe;
+      color: #0369a1;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+    .ms-step-card h4 { font-size: 15px; font-weight: 700; color: #0f172a; margin-bottom: 8px; }
+    .ms-step-card p { font-size: 13px; color: #64748b; line-height: 1.6; }
 
     @media (max-width: 900px) {
       .manage-layout { flex-direction: column; }
       .manage-sidebar { width: 100%; box-sizing: border-box; }
-      .form-row-2, .access-mode-grid { grid-template-columns: 1fr; }
+      .form-row-2, .ms-step-row { grid-template-columns: 1fr; }
     }
   </style>
 
   <script is:inline>
-    // 获取全局认证凭据
+    // 凭据读取
     function getAdminToken() {
       let t = localStorage.getItem('wxz_token') || localStorage.getItem('decap-cms-user');
       if (t && typeof t === 'string' && t.startsWith('{')) {
@@ -764,6 +783,9 @@ const newsPayload = allNews.map(item => ({
           p.classList.remove('active');
         }
       });
+      if (targetId === 'tab-gallery') {
+        loadMediaLibrary();
+      }
     }
 
     menuItems.forEach(item => {
@@ -772,21 +794,122 @@ const newsPayload = allNews.map(item => ({
       });
     });
 
-    // 列表搜索过滤
-    const filterInput = document.getElementById('filterInput');
-    if (filterInput) {
-      filterInput.addEventListener('input', (e) => {
-        const q = (e.target.value || '').trim().toLowerCase();
-        const rows = document.querySelectorAll('#articleTableBody tr');
-        rows.forEach(r => {
-          const t = r.getAttribute('data-title') || '';
-          r.style.display = (!q || t.includes(q)) ? '' : 'none';
-        });
+    // ==========================================
+    // 核心模块：初始化 wangEditor 可视化富文本编辑器
+    // ==========================================
+    let editorInstance = null;
+    let isSourceMode = false;
+    const rawHtmlTextarea = document.getElementById('rawHtmlTextarea');
+    const editorTextContainer = document.getElementById('editor-text-container');
+    const btnToggleHtmlSource = document.getElementById('btnToggleHtmlSource');
+
+    function initWangEditor() {
+      if (typeof window.wangEditor === 'undefined') return;
+      const { createEditor, createToolbar } = window.wangEditor;
+
+      // 编辑器配置
+      const editorConfig = {
+        placeholder: '在此像在 Word 中一样打字输入正文内容...\n可以直接复制微信公众号排版粘贴进来，支持加粗、居中、表格和图片！',
+        onChange(editor) {
+          if (!isSourceMode) {
+            rawHtmlTextarea.value = editor.getHtml();
+          }
+        },
+        MENU_CONF: {
+          // 自定义图片上传处理，直接上传到 GitHub 仓库并插图
+          uploadImage: {
+            async customUpload(file, insertFn) {
+              const t = getAdminToken();
+              const reader = new FileReader();
+              reader.onload = async () => {
+                const base64Content = reader.result.split(',')[1];
+                const cleanName = file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
+                const fileName = `${Date.now()}_${cleanName}`;
+                const filePath = `public/images/uploads/${fileName}`;
+
+                try {
+                  const resp = await fetch(`https://api.github.com/repos/zxwiii/wxz-group/contents/${filePath}`, {
+                    method: 'PUT',
+                    headers: {
+                      'Authorization': `token ${t}`,
+                      'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                      message: `feat(media): upload image ${fileName}`,
+                      content: base64Content
+                    })
+                  });
+
+                  if (resp.ok) {
+                    const imgUrl = `/images/uploads/${fileName}`;
+                    // 直接插入富文本编辑器正文！用户眼睛直接看得到图片！
+                    insertFn(imgUrl, file.name, imgUrl);
+                  } else {
+                    alert('图片上传失败，请检查网络或管理员Token');
+                  }
+                } catch(err) {
+                  alert('图片上传出错: ' + err.message);
+                }
+              };
+              reader.readAsDataURL(file);
+            }
+          }
+        }
+      };
+
+      editorInstance = createEditor({
+        selector: '#editor-text-container',
+        html: '',
+        config: editorConfig,
+        mode: 'default'
+      });
+
+      // 工具栏配置
+      createToolbar({
+        editor: editorInstance,
+        selector: '#editor-toolbar-container',
+        config: {
+          toolbarKeys: [
+            'headerSelect', 'fontSize', '|',
+            'bold', 'italic', 'underline', 'color', 'bgColor', '|',
+            'justifyLeft', 'justifyCenter', 'justifyRight', '|',
+            'bulletedList', 'numberedList', 'blockquote', '|',
+            'insertTable', 'insertLink', 'uploadImage', 'divider', '|',
+            'undo', 'redo'
+          ]
+        },
+        mode: 'default'
+      });
+    }
+
+    if (document.readyState === 'complete') {
+      initWangEditor();
+    } else {
+      window.addEventListener('load', initWangEditor);
+    }
+
+    // 切换查看 HTML 源代码与所见即所得排版
+    if (btnToggleHtmlSource) {
+      btnToggleHtmlSource.addEventListener('click', () => {
+        isSourceMode = !isSourceMode;
+        if (isSourceMode) {
+          btnToggleHtmlSource.textContent = '📝 返回纯打字可视化排版模式';
+          rawHtmlTextarea.value = editorInstance.getHtml();
+          editorTextContainer.style.display = 'none';
+          document.getElementById('editor-toolbar-container').style.display = 'none';
+          rawHtmlTextarea.style.display = 'block';
+        } else {
+          btnToggleHtmlSource.textContent = '查看 / 编辑 HTML 源代码';
+          editorInstance.setHtml(rawHtmlTextarea.value);
+          rawHtmlTextarea.style.display = 'none';
+          document.getElementById('editor-toolbar-container').style.display = 'block';
+          editorTextContainer.style.display = 'block';
+        }
       });
     }
 
     // ==========================================
-    // 核心功能一：修改（编辑）现有文章
+    // 核心功能：修改现有文章
     // ==========================================
     const editingSlugInput = document.getElementById('editingSlug');
     const editingBadge = document.getElementById('editingBadge');
@@ -796,7 +919,6 @@ const newsPayload = allNews.map(item => ({
     const postTitleInput = document.getElementById('postTitle');
     const postCategoryInput = document.getElementById('postCategory');
     const postAccessInput = document.getElementById('postAccess');
-    const postContentInput = document.getElementById('postContent');
 
     function startEditArticle(slug) {
       const articles = window.ALL_ARTICLES_DATA || [];
@@ -811,13 +933,16 @@ const newsPayload = allNews.map(item => ({
       dateInput.value = target.date;
       postCategoryInput.value = target.category;
       postAccessInput.value = target.accessLevel;
-      postContentInput.value = target.body;
+
+      if (editorInstance) {
+        editorInstance.setHtml(target.body);
+      }
+      rawHtmlTextarea.value = target.body;
 
       editingBadge.style.display = 'inline-flex';
       formHeaderTitle.textContent = `✏️ 正在修改: ${target.title}`;
       btnSubmit.textContent = '💾 保存修改并同步上线';
 
-      // 切换到编辑 tab
       switchTab('tab-publish');
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
@@ -826,47 +951,44 @@ const newsPayload = allNews.map(item => ({
       editingSlugInput.value = '';
       document.getElementById('articleForm').reset();
       dateInput.value = new Date().toISOString().split('T')[0];
+      if (editorInstance) editorInstance.setHtml('');
+      rawHtmlTextarea.value = '';
       editingBadge.style.display = 'none';
-      formHeaderTitle.textContent = '✍️ 发布新动态 / 成果简讯';
+      formHeaderTitle.textContent = '✍️ 可视化富文本排版与发布';
       btnSubmit.textContent = '🚀 立即发布并全网同步上线';
     }
 
-    if (btnCancelEdit) {
-      btnCancelEdit.addEventListener('click', resetFormToNew);
-    }
+    if (btnCancelEdit) btnCancelEdit.addEventListener('click', resetFormToNew);
 
     document.querySelectorAll('.btn-action-edit').forEach(btn => {
       btn.addEventListener('click', () => {
-        const slug = btn.getAttribute('data-slug');
-        startEditArticle(slug);
+        startEditArticle(btn.getAttribute('data-slug'));
       });
     });
 
     // ==========================================
-    // 核心功能二：删除文章 (直接通过 GitHub API)
+    // 核心功能：删除文章
     // ==========================================
     document.querySelectorAll('.btn-action-delete').forEach(btn => {
       btn.addEventListener('click', async () => {
         const slug = btn.getAttribute('data-slug');
         const title = btn.getAttribute('data-title');
         
-        if (!confirm(`⚠️ 危险操作：确定要彻底删除《${title}》吗？\n删除后全网将在 30 秒内自动同步下线。`)) {
+        if (!confirm(`⚠️ 确定要彻底删除《${title}》吗？\n删除后全网将在 30 秒内自动同步下线。`)) {
           return;
         }
 
         const t = getAdminToken();
         btn.disabled = true;
-        btn.textContent = '⏳ 正在删除...';
+        btn.textContent = '⏳ 删除中...';
 
         try {
-          // 1. 获取文件的 SHA
           const getResp = await fetch(`https://api.github.com/repos/zxwiii/wxz-group/contents/src/content/news/${slug}.md`, {
             headers: { 'Authorization': `token ${t}` }
           });
           const fileData = await getResp.json();
-          if (!fileData.sha) throw new Error('无法获取文件 SHA，可能已被删除或权限受限');
+          if (!fileData.sha) throw new Error('无法获取文件 SHA');
 
-          // 2. 发起 DELETE 请求
           const delResp = await fetch(`https://api.github.com/repos/zxwiii/wxz-group/contents/src/content/news/${slug}.md`, {
             method: 'DELETE',
             headers: {
@@ -897,92 +1019,7 @@ const newsPayload = allNews.map(item => ({
     });
 
     // ==========================================
-    // 核心功能三：上传并插入本地图片
-    // ==========================================
-    const imageFileInput = document.getElementById('imageFileInput');
-    const uploadStatusMsg = document.getElementById('uploadStatusMsg');
-
-    if (imageFileInput) {
-      imageFileInput.addEventListener('change', async (e) => {
-        const file = e.target.files[0];
-        if (!file) return;
-
-        const t = getAdminToken();
-        uploadStatusMsg.style.display = 'block';
-        uploadStatusMsg.innerHTML = `⏳ 正在将图片 <strong>${file.name}</strong> 上传至云端图库...`;
-
-        const reader = new FileReader();
-        reader.onload = async () => {
-          const base64Content = reader.result.split(',')[1];
-          const cleanName = file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
-          const fileName = `${Date.now()}_${cleanName}`;
-          const filePath = `public/images/uploads/${fileName}`;
-
-          try {
-            const resp = await fetch(`https://api.github.com/repos/zxwiii/wxz-group/contents/${filePath}`, {
-              method: 'PUT',
-              headers: {
-                'Authorization': `token ${t}`,
-                'Content-Type': 'application/json'
-              },
-              body: JSON.stringify({
-                message: `feat(media): upload image ${fileName}`,
-                content: base64Content
-              })
-            });
-
-            if (resp.ok) {
-              const imgHtml = `\n<div style="text-align:center; margin:20px 0;"><img src="/images/uploads/${fileName}" alt="${file.name}" style="max-width:100%; border-radius:8px; box-shadow:0 4px 12px rgba(0,0,0,0.08);" /><p style="font-size:13px; color:#64748b; margin-top:6px;">图：${file.name.replace(/\.[^/.]+$/, "")}</p></div>\n`;
-              
-              // 插入到文本框光标处或末尾
-              const textarea = postContentInput;
-              const startPos = textarea.selectionStart;
-              const endPos = textarea.selectionEnd;
-              if (startPos !== undefined) {
-                textarea.value = textarea.value.substring(0, startPos) + imgHtml + textarea.value.substring(endPos);
-              } else {
-                textarea.value += imgHtml;
-              }
-
-              uploadStatusMsg.innerHTML = `✅ 图片上传成功！已自动将 HTML 图片代码插入正文。`;
-              setTimeout(() => { uploadStatusMsg.style.display = 'none'; }, 4000);
-            } else {
-              const err = await resp.json();
-              uploadStatusMsg.innerHTML = `❌ 上传失败: ${err.message || '请检查网络与管理员Token'}`;
-            }
-          } catch (err) {
-            uploadStatusMsg.innerHTML = `❌ 上传出错: ${err.message}`;
-          }
-        };
-        reader.readAsDataURL(file);
-      });
-    }
-
-    // ==========================================
-    // 核心功能四：实时预览切换 (支持嵌入HTML与Markdown)
-    // ==========================================
-    const btnTogglePreview = document.getElementById('btnTogglePreview');
-    const previewArea = document.getElementById('previewArea');
-    let isPreviewMode = false;
-
-    if (btnTogglePreview && previewArea) {
-      btnTogglePreview.addEventListener('click', () => {
-        isPreviewMode = !isPreviewMode;
-        if (isPreviewMode) {
-          btnTogglePreview.textContent = '💻 返回源码编辑模式';
-          postContentInput.style.display = 'none';
-          previewArea.style.display = 'block';
-          previewArea.innerHTML = postContentInput.value;
-        } else {
-          btnTogglePreview.textContent = '👁️ 实时预览排版效果';
-          previewArea.style.display = 'none';
-          postContentInput.style.display = 'block';
-        }
-      });
-    }
-
-    // ==========================================
-    // 核心功能五：表单提交 (发布新文章 或 保存修改)
+    // 核心功能：提交发布或保存修改
     // ==========================================
     const articleForm = document.getElementById('articleForm');
     if (articleForm) {
@@ -994,7 +1031,8 @@ const newsPayload = allNews.map(item => ({
         const date = dateInput.value;
         const category = postCategoryInput.value;
         const accessLevel = postAccessInput.value;
-        const content = postContentInput.value.trim();
+        
+        const content = isSourceMode ? rawHtmlTextarea.value.trim() : (editorInstance ? editorInstance.getHtml() : '');
 
         btnSubmit.disabled = true;
         btnSubmit.textContent = '⏳ 正在向云端提交并触发全自动部署...';
@@ -1013,7 +1051,6 @@ ${content}
         const b64 = btoa(unescape(encodeURIComponent(mdText)));
 
         try {
-          // 如果是修改，先尝试获取已有文件的 sha
           let sha = null;
           if (editingSlug) {
             try {
@@ -1046,7 +1083,7 @@ ${content}
             window.location.reload();
           } else {
             const err = await resp.json();
-            alert('保存失败: ' + (err.message || '网络或权限异常'));
+            alert('保存失败: ' + (err.message || '请检查权限'));
           }
         } catch (err) {
           alert('提交出错: ' + err.message);
@@ -1054,6 +1091,82 @@ ${content}
           btnSubmit.disabled = false;
           btnSubmit.textContent = editingSlug ? '💾 保存修改并同步上线' : '🚀 立即发布并全网同步上线';
         }
+      });
+    }
+
+    // ==========================================
+    // 媒体库：动态载入已上传图片
+    // ==========================================
+    async function loadMediaLibrary() {
+      const grid = document.getElementById('mediaGrid');
+      const t = getAdminToken();
+      grid.innerHTML = '<div style="color:#64748b; padding:20px;">正在获取云端图片列表...</div>';
+
+      try {
+        const resp = await fetch(`https://api.github.com/repos/zxwiii/wxz-group/contents/public/images/uploads`, {
+          headers: { 'Authorization': `token ${t}` }
+        });
+        const files = await resp.json();
+        if (!Array.isArray(files) || files.length === 0) {
+          grid.innerHTML = '<div style="color:#94a3b8; padding:20px;">云端图库暂无自上传图片。在富文本编辑器中上传图片后将自动汇总在此！</div>';
+          return;
+        }
+
+        grid.innerHTML = '';
+        files.reverse().forEach(f => {
+          const item = document.createElement('div');
+          item.className = 'media-item';
+          item.innerHTML = `
+            <img src="/images/uploads/${f.name}" class="media-thumb" loading="lazy" />
+            <div class="media-info">
+              <span style="overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width:110px;" title="${f.name}">${f.name}</span>
+              <button type="button" class="btn-copy-url" onclick="navigator.clipboard.writeText('/images/uploads/${f.name}'); alert('已复制图片相对路径！');">复制链接</button>
+            </div>
+          `;
+          grid.appendChild(item);
+        });
+      } catch(e) {
+        grid.innerHTML = '<div style="color:#94a3b8; padding:20px;">媒体库已连接本地目录，暂无外链图片</div>';
+      }
+    }
+
+    // 媒体库直接上传新图片
+    const directUploadInput = document.getElementById('directUploadInput');
+    if (directUploadInput) {
+      directUploadInput.addEventListener('change', async (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        const t = getAdminToken();
+        const reader = new FileReader();
+        reader.onload = async () => {
+          const base64Content = reader.result.split(',')[1];
+          const fileName = `${Date.now()}_${file.name.replace(/[^a-zA-Z0-9._-]/g, '_')}`;
+          const filePath = `public/images/uploads/${fileName}`;
+
+          try {
+            const resp = await fetch(`https://api.github.com/repos/zxwiii/wxz-group/contents/${filePath}`, {
+              method: 'PUT',
+              headers: {
+                'Authorization': `token ${t}`,
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({
+                message: `feat(media): direct upload ${fileName}`,
+                content: base64Content
+              })
+            });
+            if (resp.ok) {
+              alert('🎉 图片已成功上传到云端媒体库！');
+              loadMediaLibrary();
+            } else {
+              alert('上传失败，请检查网络');
+            }
+          } catch(err) {
+            alert('上传出错: ' + err.message);
+          }
+        };
+        reader.readAsDataURL(file);
       });
     }
   </script>

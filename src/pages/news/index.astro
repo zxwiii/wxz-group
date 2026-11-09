@@ -96,10 +96,10 @@ const categories = ['全部', '科研进展', '学术交流', '组会安排', '�
               </div>
             </div>
             <h2 class="card-title">
-              <a href={`/news/${item.slug}`}>{item.data.title}</a>
+              <a href={item.data.accessLevel === "internal" ? `/internal/news/${item.slug}` : `/news/${item.slug}`}>{item.data.title}</a>
             </h2>
             <div class="card-footer">
-              <a href={`/news/${item.slug}`} class="read-more">
+              <a href={item.data.accessLevel === "internal" ? `/internal/news/${item.slug}` : `/news/${item.slug}`} class="read-more">
                 阅读全文
                 <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
                   <path d="M5 12h14M12 5l7 7-7 7"/>

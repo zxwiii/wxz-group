@@ -1,0 +1,249 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const newsEntries = await getCollection('news');
+  // 仅针对标记为 internal 的文章生成内部专属受保护页面
+  return newsEntries
+    .filter(entry => entry.data.accessLevel === 'internal')
+    .map(entry => ({
+      params: { slug: entry.slug },
+      props: { entry },
+    }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+
+function formatSafeDate(d: any) {
+  if (!d) return '2024-01-01';
+  try {
+    const dateObj = new Date(d);
+    if (isNaN(dateObj.getTime())) return String(d).slice(0, 10);
+    return dateObj.toISOString().split('T')[0];
+  } catch (e) {
+    return '2024-01-01';
+  }
+}
+
+const formattedDate = formatSafeDate(entry.data.date);
+---
+
+<Layout title={`${entry.data.title} - 内部受保护专区 - 王小治课题组`} activeNav="内部专区">
+  <div class="article-wrapper">
+    <!-- 面包屑 -->
+    <div class="article-breadcrumb">
+      <a href="/internal" class="back-link">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        返回内部资料专区
+      </a>
+      <span class="sep">/</span>
+      <span class="curr-cat">{entry.data.category || '组会纪要'}</span>
+    </div>
+
+    <!-- 微软 M365 受保护安全横幅 -->
+    <div class="ms-security-banner">
+      <div class="ms-logo">
+        <svg viewBox="0 0 21 21" width="22" height="22">
+          <rect x="1" y="1" width="9" height="9" fill="#f25022"/>
+          <rect x="11" y="1" width="9" height="9" fill="#7fba00"/>
+          <rect x="1" y="11" width="9" height="9" fill="#00a4ef"/>
+          <rect x="11" y="11" width="9" height="9" fill="#ffb900"/>
+        </svg>
+      </div>
+      <div class="ms-text">
+        <strong>Microsoft 365 / Cloudflare Zero Trust 身份认证受保护区域</strong>
+        <span>本页仅限扬州大学王小治课题组在籍师生与经授权的微软组织成员查阅，外网访客已被物理阻断。</span>
+      </div>
+    </div>
+
+    <!-- 文章主体头部 -->
+    <header class="article-header">
+      <h1 class="article-title">{entry.data.title}</h1>
+      <div class="article-meta">
+        <span class="meta-item">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+            <line x1="16" y1="2" x2="16" y2="6"></line>
+            <line x1="8" y1="2" x2="8" y2="6"></line>
+            <line x1="3" y1="10" x2="21" y2="10"></line>
+          </svg>
+          发布时间：{formattedDate}
+        </span>
+        <span class="badge-cat-detail">{entry.data.category || '组会纪要'}</span>
+        <span class="badge-internal-tag">🔒 组内专享资料</span>
+      </div>
+    </header>
+
+    <!-- 内部正文内容渲染 (支持原生 HTML 与多媒体) -->
+    <main class="article-content rich-text-body">
+      <Content />
+    </main>
+
+    <!-- 底部返回与声明 -->
+    <footer class="article-footer">
+      <div class="source-notice">
+        <strong>实验室保密须知：</strong>本文档包含组内核心实验数据、学术探讨或周报记录，版权归王小治课题组所有，严禁外传。
+      </div>
+      <div class="footer-actions">
+        <a href="/internal" class="btn-back">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+          </svg>
+          返回内部专区主页
+        </a>
+      </div>
+    </footer>
+  </div>
+
+  <style is:global>
+    .article-wrapper {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 30px 20px 80px;
+    }
+    .article-breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      color: #64748b;
+      margin-bottom: 20px;
+    }
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      color: #185a9d;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .back-link:hover { text-decoration: underline; }
+    .sep { color: #cbd5e1; }
+    .curr-cat { color: #94a3b8; }
+
+    /* 微软安全横幅 */
+    .ms-security-banner {
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      border-radius: 10px;
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 28px;
+    }
+    .ms-logo { flex-shrink: 0; display: flex; align-items: center; }
+    .ms-text {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      font-size: 13px;
+      color: #1e40af;
+    }
+    .ms-text strong { font-size: 14px; color: #1e3a8a; }
+
+    .article-header {
+      border-bottom: 1px solid #e2e8f0;
+      padding-bottom: 20px;
+      margin-bottom: 30px;
+    }
+    .article-title {
+      font-size: 28px;
+      font-weight: 800;
+      color: #0f172a;
+      line-height: 1.4;
+      margin-bottom: 16px;
+    }
+    .article-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      font-size: 13px;
+      color: #64748b;
+      align-items: center;
+    }
+    .meta-item { display: flex; align-items: center; gap: 6px; }
+    .badge-cat-detail {
+      background: #f1f5f9;
+      color: #334155;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .badge-internal-tag {
+      background: #fee2e2;
+      color: #b91c1c;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    /* 正文样式 */
+    .article-content {
+      font-size: 16px;
+      line-height: 1.85;
+      color: #334155;
+      min-height: 250px;
+    }
+    .article-content p { margin-bottom: 1.3em; text-align: justify; }
+    .article-content img {
+      max-width: 100% !important;
+      height: auto !important;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      margin: 20px auto;
+      display: block;
+    }
+    .article-content table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+    }
+    .article-content th, .article-content td {
+      border: 1px solid #e2e8f0;
+      padding: 10px 14px;
+      font-size: 14px;
+    }
+    .article-content th { background: #f8fafc; font-weight: 600; }
+    .article-content h2, .article-content h3 {
+      color: #185a9d;
+      margin-top: 1.6em;
+      margin-bottom: 0.8em;
+      font-weight: 700;
+    }
+
+    .article-footer {
+      margin-top: 50px;
+      padding-top: 24px;
+      border-top: 1px solid #e2e8f0;
+    }
+    .source-notice {
+      background: #fefce8;
+      border-left: 4px solid #eab308;
+      padding: 12px 16px;
+      border-radius: 0 8px 8px 0;
+      font-size: 13px;
+      color: #854d0e;
+      margin-bottom: 24px;
+    }
+    .btn-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 18px;
+      background: #185a9d;
+      color: #ffffff;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 500;
+      text-decoration: none;
+    }
+    .btn-back:hover { background: #0f3d6b; }
+  </style>
+</Layout>
