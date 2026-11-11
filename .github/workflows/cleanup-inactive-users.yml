@@ -1,25 +1,26 @@
-name: Clean Inactive Zero Trust Users
+name: Zero Trust 45人席位巡航与自动淘汰机器人
 
 on:
   schedule:
-    # 每天北京时间早上 8:00 (UTC 00:00) 自动执行
+    # 每天北京时间早上 8:00 (UTC 00:00) 自动执行巡检与按需淘汰
     - cron: '0 0 * * *'
-  # 支持在 GitHub Actions 页面随时手动点击运行测试
+  # 支持在 GitHub Actions 页面随时手动点击 Run workflow 运行巡检
   workflow_dispatch:
 
 jobs:
   cleanup:
+    name: 检查席位并维持45人水位
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Repository
+      - name: 检出仓库代码
         uses: actions/checkout@v4
 
-      - name: Set up Python
+      - name: 配置 Python 环境
         uses: actions/setup-python@v5
         with:
           python-version: '3.10'
 
-      - name: Run Inactive User Cleanup Robot
+      - name: 运行席位智能巡航机器人
         env:
           CF_ACCESS_TOKEN: ${{ secrets.CF_ACCESS_TOKEN }}
           CF_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
