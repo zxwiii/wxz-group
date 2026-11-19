@@ -8,16 +8,44 @@ const teachers = membersData.filter(m => m.category === '教师' && !m.name.incl
 const students = membersData.filter(m => m.category === '在读研究生');
 const alumni = membersData.filter(m => m.category === '校友');
 
-// 教育经历结构化辅助函数
+// 教育经历结构化辅助函数（带双重防断行保护）
 function getEduList(m: any) {
+  let list: string[] = [];
   if (m.education_list && Array.isArray(m.education_list) && m.education_list.length > 0) {
-    return m.education_list;
+    list = m.education_list;
+  } else if (m.education && typeof m.education === 'string' && m.education.trim().length >= 3) {
+    const cleaned = m.education.replace(/([-\u2013\u2014~至])\s*[\r\n]+\s*/g, '$1');
+    const rawParts = cleaned.split(/[\r\n]+/);
+    for (const p of rawParts) {
+      const sub = p.split(/(?<![-\u2013\u2014~至\d])(?=(?:19|20)\d{2}[.\-年/])/);
+      for (const s of sub) {
+        const trimmed = s.trim().replace(/^[，, ；;]+|[，, ；;]+$/g, '');
+        if (trimmed.length > 2) list.push(trimmed);
+      }
+    }
   }
-  if (!m.education || typeof m.education !== 'string' || m.education.trim().length < 3) {
-    return [];
+
+  // 双重保护：若某项以连字符结尾，自动与下一行合并，彻底杜绝年份断行
+  const merged: string[] = [];
+  for (let i = 0; i < list.length; i++) {
+    const cur = list[i].trim();
+    if (/[-\u2013\u2014~至]$/.test(cur) && i + 1 < list.length) {
+      merged.push(cur + list[i + 1].trim());
+      i++;
+    } else {
+      merged.push(cur);
+    }
   }
-  const parts = m.education.split(/(?:[\r\n]+|(?<=[^-\d])(?=\d{4}\.\d{2}-))/);
-  return parts.map((p: string) => p.trim().replace(/^[，, ；;]+/, '')).filter((p: string) => p.length > 2);
+  return merged;
+}
+
+// 格式化学习经历：提取日期范围并强制不换行 (white-space: nowrap)
+function renderEduItem(text: string) {
+  const m = text.match(/^((?:19|20)\d{2}[.\-年/]\d{1,2}(?:日)?\s*[-\u2013\u2014~至]\s*(?:(?:19|20)\d{2}[.\-年/]\d{1,2}(?:日)?|至今|现在))([，, \s]*.*)$/);
+  if (m) {
+    return { date: m[1].replace(/\s+/g, ''), desc: m[2] };
+  }
+  return { date: '', desc: text };
 }
 ---
 
@@ -31,7 +59,7 @@ function getEduList(m: any) {
     <!-- 快捷中文锚点条 -->
     <div class="anchor-bar">
       <a href="#pi" class="anchor-link">课题组负责人 / PI</a>
-      <a href="#teachers" class="anchor-link">骨干教师 ({teachers.length} 位)</a>
+      <a href="#teachers" class="anchor-link">教师 ({teachers.length} 位)</a>
       <a href="#students" class="anchor-link">在读研究生 ({students.length} 位)</a>
       <a href="#alumni" class="anchor-link">毕业校友 ({alumni.length} 位)</a>
     </div>
@@ -87,10 +115,10 @@ function getEduList(m: any) {
       </div>
     )}
 
-    <!-- 2. 骨干教师 4 列名片网格 -->
+    <!-- 2. 教师 4 列名片网格 -->
     <div id="teachers" class="section-head-divider">
       <div class="section-head-title">
-        骨干教师团队
+        教师
         <span class="count-pill">{teachers.length} 位</span>
       </div>
     </div>
@@ -172,12 +200,18 @@ function getEduList(m: any) {
               <div class="edu-header">教育与培养经历</div>
               <div class="edu-body">
                 {eduList.length > 0 ? (
-                  eduList.map((item: string) => (
-                    <div class="edu-item">
-                      <span class="edu-dot">•</span>
-                      <span class="edu-text">{item}</span>
-                    </div>
-                  ))
+                  eduList.map((item: string) => {
+                    const parsed = renderEduItem(item);
+                    return (
+                      <div class="edu-item">
+                        <span class="edu-dot">•</span>
+                        <span class="edu-text">
+                          {parsed.date && <span class="edu-date-range">{parsed.date}</span>}
+                          {parsed.desc}
+                        </span>
+                      </div>
+                    );
+                  })
                 ) : (
                   <div class="edu-placeholder">在读研究生培养中</div>
                 )}
@@ -245,34 +279,37 @@ function getEduList(m: any) {
               </span>
             </div>
 
-            {/* 教育经历（若有） */}
+            {/* 教育经历（若有，按结构化渲染并防止连字符断行） */}
             {eduList.length > 0 && (
               <div class="alumni-edu-mini">
-                {eduList.map((ed: string) => (
-                  <div class="alumni-edu-item">
-                    <span class="edu-dot">•</span>
-                    <span>{ed}</span>
-                  </div>
-                ))}
+                {eduList.map((ed: string) => {
+                  const parsed = renderEduItem(ed);
+                  return (
+                    <div class="alumni-edu-item">
+                      <span class="edu-dot">•</span>
+                      <span>
+                        {parsed.date && <span class="edu-date-range">{parsed.date}</span>}
+                        {parsed.desc}
+                      </span>
+                    </div>
+                  );
+                })}
               </div>
             )}
 
-            {/* 底部联系方式或主页 */}
-            {(a.email || a.phone || a.homepage_url) && (
+            {/* 底部联系方式（仅在有邮箱或手机号时展示，彻底不包含个人主页链接） */}
+            {(a.email || a.phone) && (
               <div class="alumni-card-footer">
                 {a.email && (
-                  <span class="alumni-contact-item" title={a.email}>
-                    ✉️ {a.email}
-                  </span>
+                  <a href={`mailto:${a.email}`} class="alumni-contact-item" title={a.email}>
+                    <svg class="icon-mail-gray" viewBox="0 0 24 24"><path fill="currentColor" d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                    <span>{a.email}</span>
+                  </a>
                 )}
                 {a.phone && (
-                  <span class="alumni-contact-item" title={a.phone}>
-                    📞 {a.phone}
-                  </span>
-                )}
-                {a.homepage_url && (
-                  <a href={a.homepage_url} target="_blank" rel="noopener noreferrer" class="alumni-link">
-                    校友主页 ↗
+                  <a href={`tel:${a.phone}`} class="alumni-contact-item" title={a.phone}>
+                    <svg class="icon-mail-gray" viewBox="0 0 24 24"><path fill="currentColor" d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+                    <span>{a.phone}</span>
                   </a>
                 )}
               </div>
@@ -869,25 +906,36 @@ function getEduList(m: any) {
     word-break: break-word;
   }
 
+  .edu-date-range {
+    white-space: nowrap !important;
+    font-weight: 700;
+    color: #1e293b;
+    margin-right: 3px;
+  }
+
   .alumni-card-footer {
     margin-top: auto;
     border-top: 1px solid #f1f5f9;
     padding-top: 0.5rem;
     display: flex;
     flex-direction: column;
-    gap: 3px;
+    gap: 4px;
     font-size: 0.75rem;
-    color: #94a3b8;
+    color: #64748b;
   }
   .alumni-contact-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: #64748b;
+    text-decoration: none;
+    font-size: 0.76rem;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    transition: color 0.2s;
   }
-  .alumni-link {
+  .alumni-contact-item:hover {
     color: #1d4ed8;
-    text-decoration: none;
-    font-weight: 700;
   }
-  .alumni-link:hover { text-decoration: underline; }
 </style>

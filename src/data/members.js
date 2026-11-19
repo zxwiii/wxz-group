@@ -2,7 +2,7 @@
 // 王小治课题组成员数据配置 (members.js)
 // 本文件由 scripts/update_members_from_csv.py 自动生成，请勿在此手动修改！
 // 如需更新成员信息，请直接修改根目录下 members.csv 并重新运行该脚本。
-// 生成时间: 2026-11-19 22:05:33
+// 生成时间: 2026-11-19 22:49:03
 // ==========================================================================
 
 export const membersData = [
@@ -286,13 +286,12 @@ export const membersData = [
     "email": "935919257@qq.com",
     "phone": "15152726672",
     "career": "在籍",
-    "education": "2020.09-\n2024.06，湖南农业大学，劳动与社会保障专业，导师： 胡扬名教授\n2026.09-至今，扬州大学，农业资源与环境专业，导师： 尹微琴高级农艺师",
+    "education": "2020.09-2024.06，湖南农业大学，劳动与社会保障专业，导师： 胡扬名教授\n2026.09-至今，扬州大学，农业资源与环境专业，导师： 尹微琴高级农艺师",
     "education_list": [
-      "2020.09-",
-      "2024.06，湖南农业大学，劳动与社会保障专业，导师： 胡扬名教授",
+      "2020.09-2024.06，湖南农业大学，劳动与社会保障专业，导师： 胡扬名教授",
       "2026.09-至今，扬州大学，农业资源与环境专业，导师： 尹微琴高级农艺师"
     ],
-    "homepage_url": "http://wxz.group/en/sys-nd/215.html",
+    "homepage_url": "",
     "avatar_url": "/images/members/m_52.jpg"
   },
   {
@@ -305,12 +304,11 @@ export const membersData = [
     "email": "1797751267@qq.com",
     "phone": "13274201818",
     "career": "在籍",
-    "education": "2022.09-\n2026.06，沈阳农业大学，土地整治工程专业，导师： 边振兴 教授",
+    "education": "2022.09-2026.06，沈阳农业大学，土地整治工程专业，导师： 边振兴 教授",
     "education_list": [
-      "2022.09-",
-      "2026.06，沈阳农业大学，土地整治工程专业，导师： 边振兴 教授"
+      "2022.09-2026.06，沈阳农业大学，土地整治工程专业，导师： 边振兴 教授"
     ],
-    "homepage_url": "http://wxz.group/en/sys-nd/216.html",
+    "homepage_url": "",
     "avatar_url": "/images/members/m_51.jpg"
   },
   {
@@ -323,12 +321,11 @@ export const membersData = [
     "email": "17695816245@163.com",
     "phone": "17695816245",
     "career": "在籍",
-    "education": "2019.09-\n2023.07，成都理工大学，地理信息科学专业",
+    "education": "2019.09-2023.07，成都理工大学，地理信息科学专业",
     "education_list": [
-      "2019.09-",
-      "2023.07，成都理工大学，地理信息科学专业"
+      "2019.09-2023.07，成都理工大学，地理信息科学专业"
     ],
-    "homepage_url": "http://wxz.group/en/sys-nd/217.html",
+    "homepage_url": "",
     "avatar_url": "/images/members/m_50.png"
   },
   {
@@ -341,15 +338,13 @@ export const membersData = [
     "email": "2030231134@qq.com",
     "phone": "15295708215",
     "career": "在籍",
-    "education": "2021.09-\n2024.07，江苏农林职业技术学院，现代农业技术专业，导师： 刘超\n2024.09-\n2026.06，南京理工大学泰州科技学院，环境工程专业，导师：张永兵教授\n2026.09-至今，扬州大学，资源利用与植物保护专业，导师：王小治教授",
+    "education": "2021.09-2024.07，江苏农林职业技术学院，现代农业技术专业，导师： 刘超\n2024.09-2026.06，南京理工大学泰州科技学院，环境工程专业，导师：张永兵教授\n2026.09-至今，扬州大学，资源利用与植物保护专业，导师：王小治教授",
     "education_list": [
-      "2021.09-",
-      "2024.07，江苏农林职业技术学院，现代农业技术专业，导师： 刘超",
-      "2024.09-",
-      "2026.06，南京理工大学泰州科技学院，环境工程专业，导师：张永兵教授",
+      "2021.09-2024.07，江苏农林职业技术学院，现代农业技术专业，导师： 刘超",
+      "2024.09-2026.06，南京理工大学泰州科技学院，环境工程专业，导师：张永兵教授",
       "2026.09-至今，扬州大学，资源利用与植物保护专业，导师：王小治教授"
     ],
-    "homepage_url": "http://wxz.group/en/sys-nd/218.html",
+    "homepage_url": "",
     "avatar_url": "/images/members/m_49.jpg"
   },
   {
@@ -362,13 +357,12 @@ export const membersData = [
     "email": "1455573833@qq.com",
     "phone": "",
     "career": "在籍",
-    "education": "2022.09-\n2026.07，南京信息工程大学，环境工程专业，导师： 徐磊磊教授\n2026.09-至今，扬州大学，资源与环境专业，导师：王小治教授",
+    "education": "2022.09-2026.07，南京信息工程大学，环境工程专业，导师： 徐磊磊教授\n2026.09-至今，扬州大学，资源与环境专业，导师：王小治教授",
     "education_list": [
-      "2022.09-",
-      "2026.07，南京信息工程大学，环境工程专业，导师： 徐磊磊教授",
+      "2022.09-2026.07，南京信息工程大学，环境工程专业，导师： 徐磊磊教授",
       "2026.09-至今，扬州大学，资源与环境专业，导师：王小治教授"
     ],
-    "homepage_url": "http://wxz.group/en/sys-nd/220.html",
+    "homepage_url": "",
     "avatar_url": "/images/members/m_48.jpg"
   },
   {
@@ -381,15 +375,13 @@ export const membersData = [
     "email": "xhm@zxw.ac.cn",
     "phone": "",
     "career": "在籍",
-    "education": "2018.09-\n2022.06，江苏海洋大学，环境工程专业，导师： 于婷婷讲师\n2022.09-\n2025.06，扬州大学，资源与环境专业，导师：王小治教授、朱兴旺副教授\n2025.09-至今，扬州大学，农业工程专业，导师：王小治教授、朱兴旺副教授",
+    "education": "2018.09-2022.06，江苏海洋大学，环境工程专业，导师： 于婷婷讲师\n2022.09-2025.06，扬州大学，资源与环境专业，导师：王小治教授、朱兴旺副教授\n2025.09-至今，扬州大学，农业工程专业，导师：王小治教授、朱兴旺副教授",
     "education_list": [
-      "2018.09-",
-      "2022.06，江苏海洋大学，环境工程专业，导师： 于婷婷讲师",
-      "2022.09-",
-      "2025.06，扬州大学，资源与环境专业，导师：王小治教授、朱兴旺副教授",
+      "2018.09-2022.06，江苏海洋大学，环境工程专业，导师： 于婷婷讲师",
+      "2022.09-2025.06，扬州大学，资源与环境专业，导师：王小治教授、朱兴旺副教授",
       "2025.09-至今，扬州大学，农业工程专业，导师：王小治教授、朱兴旺副教授"
     ],
-    "homepage_url": "http://wxz.group/en/sys-nd/13.html",
+    "homepage_url": "",
     "avatar_url": "/images/members/m_47.jpg"
   },
   {
@@ -402,13 +394,12 @@ export const membersData = [
     "email": "1289018453@qq.com",
     "phone": "17616241240",
     "career": "在籍",
-    "education": "2019.09-\n2023.07，江苏海洋大学，信息与计算科学专业，导师： 石瑞民教授\n2025.09-至今，扬州大学，资源与环境专业，导师：王小治教授 王玉军教授",
+    "education": "2019.09-2023.07，江苏海洋大学，信息与计算科学专业，导师： 石瑞民教授\n2025.09-至今，扬州大学，资源与环境专业，导师：王小治教授 王玉军教授",
     "education_list": [
-      "2019.09-",
-      "2023.07，江苏海洋大学，信息与计算科学专业，导师： 石瑞民教授",
+      "2019.09-2023.07，江苏海洋大学，信息与计算科学专业，导师： 石瑞民教授",
       "2025.09-至今，扬州大学，资源与环境专业，导师：王小治教授 王玉军教授"
     ],
-    "homepage_url": "http://wxz.group/en/sys-nd/205.html",
+    "homepage_url": "",
     "avatar_url": "/images/members/m_46.jpg"
   },
   {
@@ -421,13 +412,12 @@ export const membersData = [
     "email": "378191363@qq.com",
     "phone": "18001452234",
     "career": "在籍",
-    "education": "2021.09-\n2025.06，盐城工学院，学生；\n2025.09-至今，扬州大学，学生",
+    "education": "2021.09-2025.06，盐城工学院，学生；\n2025.09-至今，扬州大学，学生",
     "education_list": [
-      "2021.09-",
-      "2025.06，盐城工学院，学生；",
+      "2021.09-2025.06，盐城工学院，学生",
       "2025.09-至今，扬州大学，学生"
     ],
-    "homepage_url": "http://wxz.group/en/sys-nd/206.html",
+    "homepage_url": "",
     "avatar_url": "/images/members/m_45.jpg"
   },
   {
@@ -440,13 +430,12 @@ export const membersData = [
     "email": "1254385061@qq.com",
     "phone": "13805523930",
     "career": "在籍",
-    "education": "2021.09-\n2025.07，扬州大学，资源环境科学专业\n2025.09-至今，扬州大学，资源利用与植物保护专业，导师：王小治教授",
+    "education": "2021.09-2025.07，扬州大学，资源环境科学专业\n2025.09-至今，扬州大学，资源利用与植物保护专业，导师：王小治教授",
     "education_list": [
-      "2021.09-",
-      "2025.07，扬州大学，资源环境科学专业",
+      "2021.09-2025.07，扬州大学，资源环境科学专业",
       "2025.09-至今，扬州大学，资源利用与植物保护专业，导师：王小治教授"
     ],
-    "homepage_url": "http://wxz.group/en/sys-nd/208.html",
+    "homepage_url": "",
     "avatar_url": "/images/members/m_44.jpg"
   },
   {
@@ -459,13 +448,12 @@ export const membersData = [
     "email": "13705200882@163.com",
     "phone": "13705200882",
     "career": "在籍",
-    "education": "2021.09-\n2025.07，盐城工学院，环境工程专业，导师： 韩湘云教授\n2025.09-至今，扬州大学，资源与环境专业，导师：王小治教授",
+    "education": "2021.09-2025.07，盐城工学院，环境工程专业，导师： 韩湘云教授\n2025.09-至今，扬州大学，资源与环境专业，导师：王小治教授",
     "education_list": [
-      "2021.09-",
-      "2025.07，盐城工学院，环境工程专业，导师： 韩湘云教授",
+      "2021.09-2025.07，盐城工学院，环境工程专业，导师： 韩湘云教授",
       "2025.09-至今，扬州大学，资源与环境专业，导师：王小治教授"
     ],
-    "homepage_url": "http://wxz.group/en/sys-nd/209.html",
+    "homepage_url": "",
     "avatar_url": "/images/members/m_43.jpg"
   },
   {
@@ -478,13 +466,12 @@ export const membersData = [
     "email": "19957381187@163.com",
     "phone": "19957381187",
     "career": "在籍",
-    "education": "2022.09-\n2024.07，嘉兴大学，环境工程专业，导师： 王娟教授\n2024.09-至今，扬州大学，资源与环境专业，导师：王小治教授",
+    "education": "2022.09-2024.07，嘉兴大学，环境工程专业，导师： 王娟教授\n2024.09-至今，扬州大学，资源与环境专业，导师：王小治教授",
     "education_list": [
-      "2022.09-",
-      "2024.07，嘉兴大学，环境工程专业，导师： 王娟教授",
+      "2022.09-2024.07，嘉兴大学，环境工程专业，导师： 王娟教授",
       "2024.09-至今，扬州大学，资源与环境专业，导师：王小治教授"
     ],
-    "homepage_url": "http://wxz.group/en/sys-nd/210.html",
+    "homepage_url": "",
     "avatar_url": "/images/members/m_42.jpg"
   },
   {
@@ -497,14 +484,12 @@ export const membersData = [
     "email": "15252889837@163.com",
     "phone": "15252889837",
     "career": "在籍",
-    "education": "2021.09-\n2025.07，盐城工学院，环境工程专业，导师：郭雪洁讲师\n2025.09-\n2028.06，扬州大学，资源与环境专业，导师：王小治教授",
+    "education": "2021.09-2025.07，盐城工学院，环境工程专业，导师：郭雪洁讲师\n2025.09-2028.06，扬州大学，资源与环境专业，导师：王小治教授",
     "education_list": [
-      "2021.09-",
-      "2025.07，盐城工学院，环境工程专业，导师：郭雪洁讲师",
-      "2025.09-",
-      "2028.06，扬州大学，资源与环境专业，导师：王小治教授"
+      "2021.09-2025.07，盐城工学院，环境工程专业，导师：郭雪洁讲师",
+      "2025.09-2028.06，扬州大学，资源与环境专业，导师：王小治教授"
     ],
-    "homepage_url": "http://wxz.group/en/sys-nd/211.html",
+    "homepage_url": "",
     "avatar_url": "/images/members/m_41.jpg"
   },
   {
@@ -521,7 +506,7 @@ export const membersData = [
     "education_list": [
       "2025.09-至今，扬州大学，农业资源与环境专业，导师：王小治教授"
     ],
-    "homepage_url": "http://wxz.group/en/sys-nd/213.html",
+    "homepage_url": "",
     "avatar_url": "/images/members/m_40.png"
   },
   {
@@ -534,14 +519,12 @@ export const membersData = [
     "email": "wu1004xuan@163.com",
     "phone": "19352754298",
     "career": "在籍",
-    "education": "2019.09-\n2023.06 南京理工大学泰州科技学院 环境工程专业 导师：刘培副教授\n2024.09-\n2027.06 扬州大学 资源利用与植物保护专业 导师：尹微琴 高级农艺师",
+    "education": "2019.09-2023.06 南京理工大学泰州科技学院 环境工程专业 导师：刘培副教授\n2024.09-2027.06 扬州大学 资源利用与植物保护专业 导师：尹微琴 高级农艺师",
     "education_list": [
-      "2019.09-",
-      "2023.06 南京理工大学泰州科技学院 环境工程专业 导师：刘培副教授",
-      "2024.09-",
-      "2027.06 扬州大学 资源利用与植物保护专业 导师：尹微琴 高级农艺师"
+      "2019.09-2023.06 南京理工大学泰州科技学院 环境工程专业 导师：刘培副教授",
+      "2024.09-2027.06 扬州大学 资源利用与植物保护专业 导师：尹微琴 高级农艺师"
     ],
-    "homepage_url": "http://wxz.group/en/sys-nd/112.html",
+    "homepage_url": "",
     "avatar_url": "/images/members/m_39.jpg"
   },
   {
@@ -558,7 +541,7 @@ export const membersData = [
     "education_list": [
       "2024.09-至今，扬州大学，环境科学与工程专业，导师：王小治教授、朱兴旺副教授"
     ],
-    "homepage_url": "http://wxz.group/en/sys-nd/113.html",
+    "homepage_url": "",
     "avatar_url": "/images/members/m_38.jpg"
   },
   {
@@ -575,7 +558,7 @@ export const membersData = [
     "education_list": [
       "2024.09-至今，扬州大学，资源与环境专业，导师：王小治教授"
     ],
-    "homepage_url": "http://wxz.group/en/sys-nd/120.html",
+    "homepage_url": "",
     "avatar_url": "/images/members/m_37.jpg"
   },
   {
@@ -588,13 +571,12 @@ export const membersData = [
     "email": "2960138742@qq.com",
     "phone": "19903424009",
     "career": "在籍",
-    "education": "2020.09-\n2024.07，太原学院，建筑环境与能源应用工程专业\n2024.09-至今，扬州大学，资源与环境专业，导师：王小治教授",
+    "education": "2020.09-2024.07，太原学院，建筑环境与能源应用工程专业\n2024.09-至今，扬州大学，资源与环境专业，导师：王小治教授",
     "education_list": [
-      "2020.09-",
-      "2024.07，太原学院，建筑环境与能源应用工程专业",
+      "2020.09-2024.07，太原学院，建筑环境与能源应用工程专业",
       "2024.09-至今，扬州大学，资源与环境专业，导师：王小治教授"
     ],
-    "homepage_url": "http://wxz.group/en/sys-nd/207.html",
+    "homepage_url": "",
     "avatar_url": "/images/members/m_36.jpg"
   },
   {
@@ -607,13 +589,12 @@ export const membersData = [
     "email": "zishuzheng2001@163.com",
     "phone": "13176087885",
     "career": "在籍",
-    "education": "2019.09-\n2022.07，青岛农业大学，土地资源管理专业，导师：陈明利 教授\n2024.09-至今，扬州大学，农业资源与环境专业，导师：王小治教授",
+    "education": "2019.09-2022.07，青岛农业大学，土地资源管理专业，导师：陈明利 教授\n2024.09-至今，扬州大学，农业资源与环境专业，导师：王小治教授",
     "education_list": [
-      "2019.09-",
-      "2022.07，青岛农业大学，土地资源管理专业，导师：陈明利 教授",
+      "2019.09-2022.07，青岛农业大学，土地资源管理专业，导师：陈明利 教授",
       "2024.09-至今，扬州大学，农业资源与环境专业，导师：王小治教授"
     ],
-    "homepage_url": "http://wxz.group/en/sys-nd/212.html",
+    "homepage_url": "",
     "avatar_url": "/images/members/m_35.jpg"
   },
   {
@@ -628,7 +609,7 @@ export const membersData = [
     "career": "在籍",
     "education": "",
     "education_list": [],
-    "homepage_url": "http://wxz.group/en/sys-nd/111.html",
+    "homepage_url": "",
     "avatar_url": "/images/members/m_34.jpg"
   },
   {
@@ -641,14 +622,12 @@ export const membersData = [
     "email": "2628558911@qq.com",
     "phone": "18796601201",
     "career": "在籍",
-    "education": "2018.09-\n2022.07，滁州学院，土木工程专业\n2023.09-\n2026.06，扬州大学，资源利用与植物保护专业，导师：王小治教授",
+    "education": "2018.09-2022.07，滁州学院，土木工程专业\n2023.09-2026.06，扬州大学，资源利用与植物保护专业，导师：王小治教授",
     "education_list": [
-      "2018.09-",
-      "2022.07，滁州学院，土木工程专业",
-      "2023.09-",
-      "2026.06，扬州大学，资源利用与植物保护专业，导师：王小治教授"
+      "2018.09-2022.07，滁州学院，土木工程专业",
+      "2023.09-2026.06，扬州大学，资源利用与植物保护专业，导师：王小治教授"
     ],
-    "homepage_url": "http://wxz.group/en/sys-nd/28.html",
+    "homepage_url": "",
     "avatar_url": "/images/members/m_33.jpg"
   },
   {
@@ -663,7 +642,7 @@ export const membersData = [
     "career": "在籍",
     "education": "",
     "education_list": [],
-    "homepage_url": "http://wxz.group/en/sys-nd/29.html",
+    "homepage_url": "",
     "avatar_url": "/images/members/m_32.jpg"
   },
   {
@@ -676,12 +655,11 @@ export const membersData = [
     "email": "1277204238@qq.com",
     "phone": "13250227820",
     "career": "在籍",
-    "education": "2023.09-\n2026.06，扬州大学，资源与环境专业",
+    "education": "2023.09-2026.06，扬州大学，资源与环境专业",
     "education_list": [
-      "2023.09-",
-      "2026.06，扬州大学，资源与环境专业"
+      "2023.09-2026.06，扬州大学，资源与环境专业"
     ],
-    "homepage_url": "http://wxz.group/en/sys-nd/31.html",
+    "homepage_url": "",
     "avatar_url": "/images/members/m_31.jpg"
   },
   {
@@ -694,14 +672,12 @@ export const membersData = [
     "email": "supdonger@qq.com",
     "phone": "18912802151",
     "career": "在籍",
-    "education": "2019.9-\n2023.6 扬州大学 植物保护学院 生态学\n2023.9-\n2026.6 扬州大学 环境科学与工程学院 环境科学与工程 导师：王小治教授、徐乔副教授",
+    "education": "2019.9-2023.6 扬州大学 植物保护学院 生态学\n2023.9-2026.6 扬州大学 环境科学与工程学院 环境科学与工程 导师：王小治教授、徐乔副教授",
     "education_list": [
-      "2019.9-",
-      "2023.6 扬州大学 植物保护学院 生态学",
-      "2023.9-",
-      "2026.6 扬州大学 环境科学与工程学院 环境科学与工程 导师：王小治教授、徐乔副教授"
+      "2019.9-2023.6 扬州大学 植物保护学院 生态学",
+      "2023.9-2026.6 扬州大学 环境科学与工程学院 环境科学与工程 导师：王小治教授、徐乔副教授"
     ],
-    "homepage_url": "http://wxz.group/en/sys-nd/33.html",
+    "homepage_url": "",
     "avatar_url": "/images/members/m_30.jpg"
   },
   {
@@ -716,7 +692,7 @@ export const membersData = [
     "career": "已毕业",
     "education": "",
     "education_list": [],
-    "homepage_url": "http://wxz.group/en/sys-nd/34.html",
+    "homepage_url": "",
     "avatar_url": "/images/members/m_29.jpg"
   },
   {
@@ -731,7 +707,7 @@ export const membersData = [
     "career": "已毕业",
     "education": "",
     "education_list": [],
-    "homepage_url": "http://wxz.group/en/sys-nd/16.html",
+    "homepage_url": "",
     "avatar_url": "/images/members/m_28.jpg"
   },
   {
@@ -746,7 +722,7 @@ export const membersData = [
     "career": "已毕业",
     "education": "",
     "education_list": [],
-    "homepage_url": "http://wxz.group/en/sys-nd/13.html",
+    "homepage_url": "",
     "avatar_url": "/images/members/m_27.jpg"
   },
   {
@@ -761,7 +737,7 @@ export const membersData = [
     "career": "已毕业",
     "education": "",
     "education_list": [],
-    "homepage_url": "http://wxz.group/en/sys-nd/46.html",
+    "homepage_url": "",
     "avatar_url": "/images/members/m_26.jpg"
   },
   {
@@ -776,7 +752,7 @@ export const membersData = [
     "career": "已毕业",
     "education": "",
     "education_list": [],
-    "homepage_url": "http://wxz.group/en/sys-nd/47.html",
+    "homepage_url": "",
     "avatar_url": "/images/members/m_25.jpg"
   },
   {
@@ -791,7 +767,7 @@ export const membersData = [
     "career": "已毕业",
     "education": "",
     "education_list": [],
-    "homepage_url": "http://wxz.group/en/sys-nd/48.html",
+    "homepage_url": "",
     "avatar_url": "/images/members/m_24.jpg"
   },
   {
@@ -806,7 +782,7 @@ export const membersData = [
     "career": "已毕业",
     "education": "",
     "education_list": [],
-    "homepage_url": "http://wxz.group/en/sys-nd/49.html",
+    "homepage_url": "",
     "avatar_url": "/images/members/m_23.jpg"
   },
   {
@@ -821,7 +797,7 @@ export const membersData = [
     "career": "已毕业",
     "education": "",
     "education_list": [],
-    "homepage_url": "http://wxz.group/en/sys-nd/52.html",
+    "homepage_url": "",
     "avatar_url": "/images/members/m_22.jpg"
   },
   {
@@ -836,7 +812,7 @@ export const membersData = [
     "career": "已毕业",
     "education": "",
     "education_list": [],
-    "homepage_url": "http://wxz.group/en/sys-nd/50.html",
+    "homepage_url": "",
     "avatar_url": "/images/members/m_21.jpg"
   },
   {
@@ -851,7 +827,7 @@ export const membersData = [
     "career": "目前为扬州大学环境科学与工程学院实验中心教师",
     "education": "",
     "education_list": [],
-    "homepage_url": "http://wxz.group/en/sys-nd/51.html",
+    "homepage_url": "",
     "avatar_url": "/images/members/m_20.jpg"
   },
   {
@@ -866,7 +842,7 @@ export const membersData = [
     "career": "已毕业",
     "education": "",
     "education_list": [],
-    "homepage_url": "http://wxz.group/en/sys-nd/53.html",
+    "homepage_url": "",
     "avatar_url": "/images/members/m_19.png"
   },
   {
@@ -881,7 +857,7 @@ export const membersData = [
     "career": "已毕业",
     "education": "",
     "education_list": [],
-    "homepage_url": "http://wxz.group/en/sys-nd/54.html",
+    "homepage_url": "",
     "avatar_url": "/images/members/m_18.jpg"
   },
   {
@@ -896,7 +872,7 @@ export const membersData = [
     "career": "已毕业",
     "education": "",
     "education_list": [],
-    "homepage_url": "http://wxz.group/en/sys-nd/55.html",
+    "homepage_url": "",
     "avatar_url": "/images/members/m_17.png"
   },
   {
@@ -911,7 +887,7 @@ export const membersData = [
     "career": "目前从事土壤污染调查和环境咨询相关工作",
     "education": "",
     "education_list": [],
-    "homepage_url": "http://wxz.group/en/sys-nd/26.html",
+    "homepage_url": "",
     "avatar_url": "/images/members/m_16.jpg"
   },
   {
@@ -926,7 +902,7 @@ export const membersData = [
     "career": "目前从事水利勘测设计相关工作",
     "education": "",
     "education_list": [],
-    "homepage_url": "http://wxz.group/en/sys-nd/93.html",
+    "homepage_url": "",
     "avatar_url": "/images/members/m_15.png"
   },
   {
@@ -941,7 +917,7 @@ export const membersData = [
     "career": "目前从事环境类战略发展规划相关工作",
     "education": "",
     "education_list": [],
-    "homepage_url": "http://wxz.group/en/sys-nd/94.html",
+    "homepage_url": "",
     "avatar_url": "/images/members/m_14.webp"
   },
   {
@@ -956,7 +932,7 @@ export const membersData = [
     "career": "目前从事正极材料研发相关工作",
     "education": "",
     "education_list": [],
-    "homepage_url": "http://wxz.group/en/sys-nd/95.html",
+    "homepage_url": "",
     "avatar_url": "/images/members/m_13.png"
   },
   {
@@ -971,7 +947,7 @@ export const membersData = [
     "career": "目前从事行政相关工作",
     "education": "",
     "education_list": [],
-    "homepage_url": "http://wxz.group/en/sys-nd/96.html",
+    "homepage_url": "",
     "avatar_url": "/images/members/m_12.webp"
   },
   {
@@ -986,7 +962,7 @@ export const membersData = [
     "career": "已毕业",
     "education": "",
     "education_list": [],
-    "homepage_url": "http://wxz.group/en/sys-nd/6.html",
+    "homepage_url": "",
     "avatar_url": "/images/members/m_11.jpg"
   },
   {
@@ -1001,7 +977,7 @@ export const membersData = [
     "career": "目前从事化工仓储相关工作",
     "education": "",
     "education_list": [],
-    "homepage_url": "http://wxz.group/en/sys-nd/97.html",
+    "homepage_url": "",
     "avatar_url": "/images/members/m_10.jpg"
   },
   {
@@ -1016,7 +992,7 @@ export const membersData = [
     "career": "目前是一名公务员",
     "education": "",
     "education_list": [],
-    "homepage_url": "http://wxz.group/en/sys-nd/104.html",
+    "homepage_url": "",
     "avatar_url": "/images/members/m_9.png"
   },
   {
@@ -1031,7 +1007,7 @@ export const membersData = [
     "career": "目前从事农业相关工作",
     "education": "",
     "education_list": [],
-    "homepage_url": "http://wxz.group/en/sys-nd/106.html",
+    "homepage_url": "",
     "avatar_url": "/images/members/m_8.jpg"
   },
   {
@@ -1046,7 +1022,7 @@ export const membersData = [
     "career": "目前从事高校辅导员工作",
     "education": "",
     "education_list": [],
-    "homepage_url": "http://wxz.group/en/sys-nd/99.html",
+    "homepage_url": "",
     "avatar_url": "/images/members/m_7.png"
   },
   {
@@ -1061,7 +1037,7 @@ export const membersData = [
     "career": "目前从事建筑垃圾资源化利用相关工作",
     "education": "",
     "education_list": [],
-    "homepage_url": "http://wxz.group/en/sys-nd/101.html",
+    "homepage_url": "",
     "avatar_url": "/images/members/m_6.png"
   },
   {
@@ -1076,7 +1052,7 @@ export const membersData = [
     "career": "目前从事券商工作",
     "education": "",
     "education_list": [],
-    "homepage_url": "http://wxz.group/en/sys-nd/103.html",
+    "homepage_url": "",
     "avatar_url": "/images/members/m_5.png"
   },
   {
@@ -1091,7 +1067,7 @@ export const membersData = [
     "career": "目前从事稻田综合种养技术及投入品研发",
     "education": "",
     "education_list": [],
-    "homepage_url": "http://wxz.group/en/sys-nd/102.html",
+    "homepage_url": "",
     "avatar_url": "/images/members/m_4.png"
   },
   {
@@ -1106,7 +1082,7 @@ export const membersData = [
     "career": "在江苏沙钢集团从事环保管理相关工作",
     "education": "",
     "education_list": [],
-    "homepage_url": "http://wxz.group/en/sys-nd/105.html",
+    "homepage_url": "",
     "avatar_url": "/images/members/default_avatar.jpg"
   },
   {
@@ -1121,7 +1097,7 @@ export const membersData = [
     "career": "目前是一名水处理工艺工程师",
     "education": "",
     "education_list": [],
-    "homepage_url": "http://wxz.group/en/sys-nd/98.html",
+    "homepage_url": "",
     "avatar_url": "/images/members/m_2.png"
   },
   {
@@ -1136,7 +1112,7 @@ export const membersData = [
     "career": "目前从事职业卫生软件开发",
     "education": "",
     "education_list": [],
-    "homepage_url": "http://wxz.group/en/sys-nd/100.html",
+    "homepage_url": "",
     "avatar_url": "/images/members/m_1.png"
   }
 ];

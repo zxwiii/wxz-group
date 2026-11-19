@@ -74,19 +74,31 @@ def main():
             homepage_url = row.get('homepage_url', '').strip()
             avatar_url = row.get('avatar_url', '').strip()
 
+            # 仅教师保留官方主页（学生与校友清空，彻底避免指向将迁移的 wxz.group 旧站点）
+            if category != '教师' or 'wxz.group' in homepage_url:
+                homepage_url = ''
+
             # 电话与邮箱容错
             if not phone and re.match(r'^1[3-9]\d{9}$', email):
                 phone = email
                 email = ''
 
-            # 教育经历结构化：按行拆分为数组，便于前端自然多行渲染
+            # 教育经历结构化：修复连字符断行并按经历分项
             edu_lines = []
             if education:
+                # 彻底消除 2022.09-\n2024.07 等因破折号造成的错误断行
+                education = re.sub(r'([-\u2013\u2014~至])\s*[\r\n]+\s*', r'\1', education)
                 raw_lines = re.split(r'[\r\n]+', education)
                 for l in raw_lines:
                     l = l.strip()
-                    if l:
-                        edu_lines.append(l)
+                    if not l:
+                        continue
+                    # 避免在连字符处切分，仅在以年份开头的完整经历处切分
+                    subparts = re.split(r'(?<![-\u2013\u2014~至\d])(?=(?:19|20)\d{2}[.\-年/])', l)
+                    for sp in subparts:
+                        sp = sp.strip().strip('；;，, ')
+                        if sp:
+                            edu_lines.append(sp)
 
             # 头像映射校验
             if m_id in avatar_map:
