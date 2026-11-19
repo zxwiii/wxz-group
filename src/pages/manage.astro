@@ -1,6 +1,11 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { getCollection } from 'astro:content';
+import { membersData } from '../data/members.js';
+
+const facultyCount = membersData.filter(m => m.category === '教师').length;
+const studentCount = membersData.filter(m => m.category === '在读研究生').length;
+const alumniCount = membersData.filter(m => m.category === '校友').length;
 
 const allNews = await getCollection('news');
 
@@ -143,9 +148,9 @@ const newsPayload = allNews.map(item => ({
             <div class="stat-sub">✔ 翡翠绿授权状态全景收录</div>
           </div>
           <div class="stat-box">
-            <div class="stat-number">65 <span class="unit">位</span></div>
+            <div class="stat-number">{membersData.length} <span class="unit">位</span></div>
             <div class="stat-name">课题组成员名录</div>
-            <div class="stat-sub">13 教师 + 25 硕博 + 27 校友</div>
+            <div class="stat-sub">{facultyCount} 教师 + {studentCount} 硕博 + {alumniCount} 校友</div>
           </div>
           <div class="stat-box">
             <div class="stat-number">{allNews.length} <span class="unit">篇</span></div>

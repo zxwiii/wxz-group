@@ -1,33 +1,30 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import membersData from '../data/members.json';
+import { membersData } from '../data/members.js';
 
-// Filter members
+// 严格按照三大分类过滤
 const piMember = membersData.find(m => m.category === '教师' && m.name.includes('王小治'));
 const teachers = membersData.filter(m => m.category === '教师' && !m.name.includes('王小治'));
-const students = membersData.filter(m => m.category === '在读学生');
-const alumni = membersData.filter(m => m.category === '历届校友').map(a => {
-  let desc = a.education || '';
-  desc = desc.replace(/\.[a-zA-Z0-9_\-]+\s*\{[^}]*\}/g, '');
-  desc = desc.replace(/\{[^}]*\}/g, '');
-  desc = desc.replace(/[a-zA-Z0-9_\-]+:[^;]+;/g, '');
-  desc = desc.replace(/王小治课题组.*/g, '');
-  desc = desc.replace(/Issuing time:.*/g, '');
-  desc = desc.replace(/[\)）]/g, '').trim();
-  if (desc.length < 3) desc = '扬州大学环境科学与工程学院毕业生';
-  return { ...a, cleanDesc: desc };
-});
+const students = membersData.filter(m => m.category === '在读研究生');
+const alumni = membersData.filter(m => m.category === '校友');
 
-function formatStudentEdu(eduStr: string) {
-  if (!eduStr || eduStr.trim().length < 3) return [];
-  const parts = eduStr.split(/(?:[;；\n]|(?<=[^-\d])(?=\d{4}\.\d{2}-))/);
-  return parts.map(p => p.trim().replace(/^[，, ；;]+/, '')).filter(p => p.length > 2);
+// 教育经历结构化辅助函数
+function getEduList(m: any) {
+  if (m.education_list && Array.isArray(m.education_list) && m.education_list.length > 0) {
+    return m.education_list;
+  }
+  if (!m.education || typeof m.education !== 'string' || m.education.trim().length < 3) {
+    return [];
+  }
+  const parts = m.education.split(/(?:[\r\n]+|(?<=[^-\d])(?=\d{4}\.\d{2}-))/);
+  return parts.map((p: string) => p.trim().replace(/^[，, ；;]+/, '')).filter((p: string) => p.length > 2);
 }
 ---
 
-<Layout title="团队成员" activeNav="members">
+<Layout title="团队成员 - 王小治课题组" activeNav="members">
   <div class="page-title-banner">
     <h1 class="page-title-cn">团队成员</h1>
+    <p class="page-subtitle-cn">汇聚环境科学、催化化学与生态工程前沿领域的师生与青年创新人才</p>
   </div>
 
   <main class="members-main-wrap">
@@ -36,7 +33,7 @@ function formatStudentEdu(eduStr: string) {
       <a href="#pi" class="anchor-link">课题组负责人 / PI</a>
       <a href="#teachers" class="anchor-link">骨干教师 ({teachers.length} 位)</a>
       <a href="#students" class="anchor-link">在读研究生 ({students.length} 位)</a>
-      <a href="#alumni" class="anchor-link">历届校友 ({alumni.length} 位)</a>
+      <a href="#alumni" class="anchor-link">毕业校友 ({alumni.length} 位)</a>
     </div>
 
     <!-- 1. PI 单独首行大卡片 -->
@@ -49,35 +46,48 @@ function formatStudentEdu(eduStr: string) {
     {piMember && (
       <div class="pi-card">
         <div class="pi-avatar">
-          <img src="/images/wangxiaozhi_profile.webp" alt={piMember.name} />
+          <img 
+            src={piMember.avatar_url || '/images/members/faculty_wangxiaozhi.webp'} 
+            alt={piMember.name}
+            onerror="this.src='/images/members/default_avatar.jpg'" 
+          />
         </div>
         <div class="pi-content">
           <div class="pi-top">
             <div class="pi-name-group">
               <span class="pi-name">{piMember.name}</span>
               <span class="pi-role-tag">课题组负责人 / PI</span>
-              <span class="pi-title-badge">教授 · 博士生导师</span>
+              <span class="pi-title-badge">{piMember.title}</span>
             </div>
-            <a href={piMember.homepage_url} target="_blank" rel="noopener noreferrer" class="pi-link-btn">
-              个人官方主页 ↗
-            </a>
+            {piMember.homepage_url && (
+              <a href={piMember.homepage_url} target="_blank" rel="noopener noreferrer" class="pi-link-btn">
+                个人官方主页 ↗
+              </a>
+            )}
           </div>
           <div class="pi-unit">扬州大学环境科学与工程学院 · 农业资源与环境学科带头人</div>
           <div class="pi-research">
             <strong>研究方向：</strong>{piMember.research}
           </div>
-          <div class="pi-intro">
-            {piMember.education}
-          </div>
+          {piMember.education && (
+            <div class="pi-intro">
+              {piMember.education}
+            </div>
+          )}
           <div class="pi-contact">
-            <span>电子邮箱：<a href={`mailto:${piMember.email}`}>{piMember.email}</a></span>
+            {piMember.email && (
+              <span>电子邮箱：<a href={`mailto:${piMember.email}`}>{piMember.email}</a></span>
+            )}
+            {piMember.phone && (
+              <span>联系电话：<a href={`tel:${piMember.phone}`}>{piMember.phone}</a></span>
+            )}
             <span>办公地点：扬州大学文汇路校区</span>
           </div>
         </div>
       </div>
     )}
 
-    <!-- 2. 骨干教师 4 列名片网格 (严格复刻用户图 3) -->
+    <!-- 2. 骨干教师 4 列名片网格 -->
     <div id="teachers" class="section-head-divider">
       <div class="section-head-title">
         骨干教师团队
@@ -88,28 +98,40 @@ function formatStudentEdu(eduStr: string) {
       {teachers.map(t => (
         <div class="faculty-card-modern">
           <div class="faculty-avatar-circle">
-            <img src={t.avatar_url} alt={t.name} />
+            <img 
+              src={t.avatar_url || '/images/members/default_avatar.jpg'} 
+              alt={t.name}
+              onerror="this.src='/images/members/default_avatar.jpg'"
+            />
           </div>
           <div class="faculty-name">{t.name}</div>
           <div class="faculty-badge-row">
             <span class="faculty-title-badge">{t.title}</span>
           </div>
-          <div class="faculty-unit">扬州大学</div>
-          <div class="faculty-research">{t.research}</div>
+          <div class="faculty-unit">扬州大学环境科学与工程学院</div>
+          <div class="faculty-research">{t.research || '农业资源与环境、环境科学与工程'}</div>
           <div class="faculty-card-bottom">
-            <a href={`mailto:${t.email}`} class="faculty-email-link" title={t.email}>
-              <svg class="icon-mail" viewBox="0 0 24 24"><path fill="currentColor" d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
-              <span>{t.email.split('@')[0]}@...</span>
-            </a>
-            <a href={t.homepage_url} target="_blank" rel="noopener noreferrer" class="faculty-home-btn">
-              个人主页 ›
-            </a>
+            {t.email ? (
+              <a href={`mailto:${t.email}`} class="faculty-email-link" title={t.email}>
+                <svg class="icon-mail" viewBox="0 0 24 24"><path fill="currentColor" d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                <span>{t.email.split('@')[0]}@...</span>
+              </a>
+            ) : (
+              <span class="faculty-no-mail">校内教师</span>
+            )}
+            {t.homepage_url ? (
+              <a href={t.homepage_url} target="_blank" rel="noopener noreferrer" class="faculty-home-btn">
+                教师主页 ›
+              </a>
+            ) : (
+              <span class="faculty-home-btn disabled">教师主页</span>
+            )}
           </div>
         </div>
       ))}
     </div>
 
-    <!-- 3. 在读研究生 3 列网格 (修复断行) -->
+    <!-- 3. 在读研究生 3 列网格 (结构化多行教育经历) -->
     <div id="students" class="section-head-divider">
       <div class="section-head-title">
         在读研究生
@@ -118,76 +140,170 @@ function formatStudentEdu(eduStr: string) {
     </div>
     <div class="students-grid-three">
       {students.map(s => {
-        const eduList = formatStudentEdu(s.education);
+        const eduList = getEduList(s);
         const researchText = s.research && s.research !== '无' && s.research !== '暂无' ? s.research : '在读相关课题研究';
-        const emailText = s.email || '未公开';
         return (
           <div class="student-card-modern">
             <div class="student-head-row">
               <div class="student-avatar-wrap">
-                <img src={s.avatar_url} alt={s.name} />
+                <img 
+                  src={s.avatar_url || '/images/members/default_avatar.jpg'} 
+                  alt={s.name}
+                  onerror="this.src='/images/members/default_avatar.jpg'"
+                />
               </div>
               <div class="student-identity">
                 <div class="student-name-text">
                   {s.name}
-                  <span class="student-grade-pill">{s.grade}</span>
+                  <span class="student-grade-pill">{s.grade || s.title}</span>
                 </div>
-                <div class="student-status-text">{s.phone_or_status}</div>
+                <div class="student-status-text">
+                  {s.title && s.title !== s.grade ? `${s.title} · ` : ''}{s.career || '在籍'}
+                </div>
               </div>
             </div>
 
             <div class="student-field-row">
-              <span class="field-title">研究方向：</span>{researchText}
+              <span class="field-title">研究方向：</span>
+              <span class="field-val">{researchText}</span>
             </div>
 
             <div class="student-edu-container">
               <div class="edu-header">教育与培养经历</div>
               <div class="edu-body">
                 {eduList.length > 0 ? (
-                  eduList.map(item => (
+                  eduList.map((item: string) => (
                     <div class="edu-item">
-                      <span class="edu-dot">•</span> {item}
+                      <span class="edu-dot">•</span>
+                      <span class="edu-text">{item}</span>
                     </div>
                   ))
                 ) : (
-                  <div class="edu-placeholder">暂无详细经历记录</div>
+                  <div class="edu-placeholder">在读研究生培养中</div>
                 )}
               </div>
             </div>
 
             <div class="student-card-footer">
-              <svg class="icon-mail-gray" viewBox="0 0 24 24"><path fill="currentColor" d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
-              <span>{emailText}</span>
+              {s.email && (
+                <div class="contact-pill" title={s.email}>
+                  <svg class="icon-mail-gray" viewBox="0 0 24 24"><path fill="currentColor" d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                  <span>{s.email}</span>
+                </div>
+              )}
+              {s.phone && (
+                <div class="contact-pill" title={s.phone}>
+                  <svg class="icon-mail-gray" viewBox="0 0 24 24"><path fill="currentColor" d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+                  <span>{s.phone}</span>
+                </div>
+              )}
+              {!s.email && !s.phone && (
+                <span class="contact-placeholder">扬州大学在读研究生</span>
+              )}
             </div>
           </div>
         );
       })}
     </div>
 
-    <!-- 4. 历届校友 (无凡科垃圾代码) -->
+    <!-- 4. 毕业校友网格 (含照片、去向与经历) -->
     <div id="alumni" class="section-head-divider">
       <div class="section-head-title">
-        历届校友
+        毕业校友
         <span class="count-pill">{alumni.length} 位</span>
       </div>
     </div>
-    <div class="alumni-grid-clean">
-      {alumni.map(a => (
-        <div class="alumni-card-clean">
-          <div class="alumni-top-line">
-            <span class="alumni-name-txt">{a.name}</span>
-            <span class="alumni-year-pill">{a.grade}</span>
+    <div class="alumni-grid-enhanced">
+      {alumni.map(a => {
+        const eduList = getEduList(a);
+        const hasSpecificCareer = a.career && a.career !== '已毕业' && a.career !== '在籍';
+        return (
+          <div class="alumni-card-enhanced">
+            <div class="alumni-card-header">
+              <div class="alumni-avatar-box">
+                <img 
+                  src={a.avatar_url || '/images/members/default_avatar.jpg'} 
+                  alt={a.name}
+                  onerror="this.src='/images/members/default_avatar.jpg'"
+                  loading="lazy"
+                />
+              </div>
+              <div class="alumni-meta-info">
+                <div class="alumni-name-row">
+                  <span class="alumni-name-txt">{a.name}</span>
+                  <span class="alumni-year-pill">{a.grade || '往届校友'}</span>
+                </div>
+                <div class="alumni-degree-text">{a.title || '硕士研究生'}</div>
+              </div>
+            </div>
+
+            {/* 毕业去向高亮模块 */}
+            <div class="alumni-career-box">
+              <span class="career-icon">💼</span>
+              <span class="career-text">
+                {hasSpecificCareer ? a.career : (a.research && a.research.includes('目前') ? a.research : '扬州大学优秀毕业生')}
+              </span>
+            </div>
+
+            {/* 教育经历（若有） */}
+            {eduList.length > 0 && (
+              <div class="alumni-edu-mini">
+                {eduList.map((ed: string) => (
+                  <div class="alumni-edu-item">
+                    <span class="edu-dot">•</span>
+                    <span>{ed}</span>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {/* 底部联系方式或主页 */}
+            {(a.email || a.phone || a.homepage_url) && (
+              <div class="alumni-card-footer">
+                {a.email && (
+                  <span class="alumni-contact-item" title={a.email}>
+                    ✉️ {a.email}
+                  </span>
+                )}
+                {a.phone && (
+                  <span class="alumni-contact-item" title={a.phone}>
+                    📞 {a.phone}
+                  </span>
+                )}
+                {a.homepage_url && (
+                  <a href={a.homepage_url} target="_blank" rel="noopener noreferrer" class="alumni-link">
+                    校友主页 ↗
+                  </a>
+                )}
+              </div>
+            )}
           </div>
-          <div class="alumni-desc-txt">
-            {a.cleanDesc}
-          </div>
-        </div>
-      ))}
+        );
+      })}
     </div>
   </main>
 </Layout>
 
 <style>
+  .page-title-banner {
+    background: linear-gradient(135deg, #0f2c59 0%, #1e3a8a 100%);
+    color: #ffffff;
+    padding: 3.5rem 1.5rem 2.8rem 1.5rem;
+    text-align: center;
+  }
+  .page-title-cn {
+    font-size: 2.3rem;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    margin: 0 0 0.5rem 0;
+  }
+  .page-subtitle-cn {
+    font-size: 1.05rem;
+    color: #bfdbfe;
+    max-width: 700px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
   .members-main-wrap {
     max-width: 1240px;
     margin: 2rem auto 4rem auto;
@@ -202,22 +318,22 @@ function formatStudentEdu(eduStr: string) {
   .anchor-link {
     padding: 0.5rem 1.25rem;
     background: #ffffff;
-    border: 1px solid var(--border-color);
+    border: 1px solid var(--border-color, #e2e8f0);
     border-radius: 20px;
     text-decoration: none;
-    color: var(--text-dark);
+    color: #1e293b;
     font-size: 0.92rem;
     font-weight: 700;
     box-shadow: 0 1px 3px rgba(0,0,0,0.03);
     transition: all 0.2s ease;
   }
   .anchor-link:hover {
-    background: var(--primary-navy);
+    background: #0f2c59;
     color: #ffffff;
-    border-color: var(--primary-navy);
+    border-color: #0f2c59;
   }
   .section-head-divider {
-    border-bottom: 2px solid var(--primary-navy);
+    border-bottom: 2px solid #0f2c59;
     padding-bottom: 0.6rem;
     margin: 3rem 0 1.8rem 0;
     display: flex;
@@ -228,7 +344,7 @@ function formatStudentEdu(eduStr: string) {
   .section-head-title {
     font-size: 1.45rem;
     font-weight: 800;
-    color: var(--primary-navy);
+    color: #0f2c59;
     display: flex;
     align-items: center;
     gap: 12px;
@@ -247,31 +363,33 @@ function formatStudentEdu(eduStr: string) {
     font-weight: 700;
     padding: 0.2rem 0.75rem;
     background: #eff6ff;
-    color: var(--primary-blue);
+    color: #1d4ed8;
     border-radius: 20px;
-    border: 1px solid #bfdbfe;
+    border: 1px solid #dbeafe;
   }
 
-  /* PI 独立首行大卡片 */
+  /* 1. PI 卡片 */
   .pi-card {
-    background: #ffffff;
-    border: 1px solid #cbd5e1;
-    border-radius: 12px;
-    padding: 2rem;
     display: flex;
-    gap: 2rem;
-    box-shadow: 0 4px 15px rgba(15, 44, 89, 0.08);
+    gap: 2.2rem;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 2.2rem;
+    box-shadow: 0 4px 16px rgba(15, 44, 89, 0.06);
     margin-bottom: 2.5rem;
-    border-left: 6px solid var(--primary-navy);
+    align-items: flex-start;
+  }
+  @media (max-width: 800px) {
+    .pi-card { flex-direction: column; align-items: center; text-align: center; gap: 1.5rem; }
   }
   .pi-avatar {
     width: 170px;
-    height: 225px;
+    height: 220px;
     flex-shrink: 0;
-    border-radius: 8px;
+    border-radius: 10px;
     overflow: hidden;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    border: 1px solid #e2e8f0;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     background: #f1f5f9;
   }
   .pi-avatar img {
@@ -283,12 +401,12 @@ function formatStudentEdu(eduStr: string) {
     flex: 1;
     display: flex;
     flex-direction: column;
+    gap: 0.7rem;
   }
   .pi-top {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 0.5rem;
     flex-wrap: wrap;
     gap: 10px;
   }
@@ -299,112 +417,116 @@ function formatStudentEdu(eduStr: string) {
     flex-wrap: wrap;
   }
   .pi-name {
-    font-size: 1.8rem;
+    font-size: 1.85rem;
     font-weight: 800;
-    color: var(--primary-navy);
+    color: #0f2c59;
   }
   .pi-role-tag {
-    background: #fef3c7;
-    color: #92400e;
+    background: #0f2c59;
+    color: #ffffff;
     font-size: 0.85rem;
     font-weight: 700;
-    padding: 0.25rem 0.65rem;
+    padding: 0.25rem 0.8rem;
     border-radius: 4px;
-    border: 1px solid #fde68a;
   }
   .pi-title-badge {
     background: #eff6ff;
-    color: #1e40af;
+    color: #1d4ed8;
+    border: 1px solid #bfdbfe;
     font-size: 0.85rem;
     font-weight: 700;
-    padding: 0.25rem 0.65rem;
+    padding: 0.25rem 0.8rem;
     border-radius: 4px;
-    border: 1px solid #bfdbfe;
   }
   .pi-link-btn {
-    padding: 0.45rem 1.1rem;
-    background: var(--primary-navy);
-    color: #ffffff;
+    padding: 0.45rem 1rem;
+    background: #f8fafc;
+    border: 1px solid #cbd5e1;
+    color: #334155;
     border-radius: 6px;
-    font-size: 0.9rem;
-    font-weight: 700;
     text-decoration: none;
-    transition: background 0.2s;
+    font-size: 0.88rem;
+    font-weight: 700;
+    transition: all 0.2s;
   }
-  .pi-link-btn:hover { background: var(--primary-blue); }
+  .pi-link-btn:hover {
+    background: #0f2c59;
+    color: #ffffff;
+    border-color: #0f2c59;
+  }
   .pi-unit {
     font-size: 1rem;
-    color: #475569;
-    font-weight: 600;
-    margin-bottom: 0.8rem;
+    font-weight: 700;
+    color: #334155;
   }
   .pi-research {
-    font-size: 0.96rem;
-    color: #1e293b;
-    margin-bottom: 0.8rem;
+    font-size: 0.95rem;
+    color: #475569;
     line-height: 1.6;
   }
   .pi-intro {
     font-size: 0.92rem;
     color: #475569;
     line-height: 1.7;
-    margin-bottom: 1rem;
-    flex: 1;
+    white-space: pre-line;
   }
   .pi-contact {
     display: flex;
-    gap: 25px;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-top: 0.5rem;
+    padding-top: 0.8rem;
+    border-top: 1px solid #f1f5f9;
     font-size: 0.9rem;
     color: #64748b;
-    border-top: 1px dashed #cbd5e1;
-    padding-top: 0.8rem;
-    flex-wrap: wrap;
   }
   .pi-contact a {
-    color: #0284c7;
+    color: #1d4ed8;
     text-decoration: none;
-    font-weight: 700;
+    font-weight: 600;
   }
 
-  /* 骨干教师 4 列网格 (严格复刻用户图 3) */
+  /* 2. 教师 4 列网格 */
   .teachers-grid-four {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 1.5rem;
+    gap: 1.25rem;
   }
-  @media (max-width: 1100px) {
+  @media (max-width: 1050px) {
+    .teachers-grid-four { grid-template-columns: repeat(3, 1fr); }
+  }
+  @media (max-width: 768px) {
     .teachers-grid-four { grid-template-columns: repeat(2, 1fr); }
   }
-  @media (max-width: 600px) {
+  @media (max-width: 480px) {
     .teachers-grid-four { grid-template-columns: 1fr; }
   }
-
   .faculty-card-modern {
     background: #ffffff;
     border: 1px solid #e2e8f0;
-    border-radius: 12px;
-    padding: 1.8rem 1.25rem 1.25rem;
-    text-align: center;
+    border-radius: 10px;
+    padding: 1.5rem 1.2rem;
     display: flex;
     flex-direction: column;
     align-items: center;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    text-align: center;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.03);
     transition: all 0.25s ease;
   }
   .faculty-card-modern:hover {
-    border-color: #38bdf8;
-    transform: translateY(-4px);
-    box-shadow: 0 10px 20px rgba(2, 132, 199, 0.1);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(15, 44, 89, 0.08);
+    border-color: #cbd5e1;
   }
   .faculty-avatar-circle {
-    width: 100px;
-    height: 100px;
+    width: 96px;
+    height: 96px;
     border-radius: 50%;
     overflow: hidden;
-    margin-bottom: 1rem;
-    border: 3px solid #e0f2fe;
-    background: #0284c7;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    margin-bottom: 0.9rem;
+    border: 3px solid #f1f5f9;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    background: #f8fafc;
   }
   .faculty-avatar-circle img {
     width: 100%;
@@ -412,127 +534,121 @@ function formatStudentEdu(eduStr: string) {
     object-fit: cover;
   }
   .faculty-name {
-    font-size: 1.25rem;
+    font-size: 1.2rem;
     font-weight: 800;
-    color: #0f172a;
-    margin-bottom: 0.4rem;
+    color: #0f2c59;
+    margin-bottom: 0.35rem;
   }
   .faculty-badge-row {
     margin-bottom: 0.5rem;
   }
   .faculty-title-badge {
-    display: inline-block;
-    background: #eff6ff;
-    color: #2563eb;
     font-size: 0.78rem;
     font-weight: 700;
-    padding: 0.2rem 0.65rem;
+    background: #f1f5f9;
+    color: #475569;
+    padding: 0.2rem 0.6rem;
     border-radius: 12px;
   }
   .faculty-unit {
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     color: #64748b;
-    margin-bottom: 0.6rem;
+    margin-bottom: 0.5rem;
   }
   .faculty-research {
     font-size: 0.82rem;
-    color: #334155;
+    color: #475569;
     line-height: 1.5;
-    margin-bottom: 1.25rem;
+    margin-bottom: 1rem;
     flex: 1;
     display: -webkit-box;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
-    text-overflow: ellipsis;
   }
   .faculty-card-bottom {
     width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-top: 1px solid #f1f5f9;
     padding-top: 0.75rem;
-    margin-top: auto;
+    border-top: 1px solid #f1f5f9;
+    font-size: 0.8rem;
   }
   .faculty-email-link {
-    display: inline-flex;
+    display: flex;
     align-items: center;
     gap: 4px;
-    font-size: 0.78rem;
     color: #64748b;
     text-decoration: none;
-  }
-  .faculty-email-link:hover { color: #0284c7; }
-  .icon-mail { width: 14px; height: 14px; }
-  .faculty-home-btn {
-    padding: 0.25rem 0.65rem;
-    background: #eff6ff;
-    color: #2563eb;
-    border-radius: 6px;
     font-size: 0.8rem;
-    font-weight: 700;
+    transition: color 0.2s;
+  }
+  .faculty-email-link:hover { color: #1d4ed8; }
+  .icon-mail { width: 14px; height: 14px; }
+  .faculty-no-mail { color: #94a3b8; font-size: 0.78rem; }
+  .faculty-home-btn {
+    color: #1d4ed8;
     text-decoration: none;
-    transition: all 0.2s;
+    font-weight: 700;
+    font-size: 0.82rem;
   }
-  .faculty-home-btn:hover {
-    background: #2563eb;
-    color: #ffffff;
-  }
+  .faculty-home-btn.disabled { color: #cbd5e1; }
 
-  /* 在读研究生 3 列网格 */
+  /* 3. 在读研究生 3 列网格 */
   .students-grid-three {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem;
+    gap: 1.25rem;
   }
   @media (max-width: 950px) {
+    .students-grid-three { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 600px) {
     .students-grid-three { grid-template-columns: 1fr; }
   }
-
   .student-card-modern {
     background: #ffffff;
     border: 1px solid #e2e8f0;
     border-radius: 10px;
-    padding: 1.4rem;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+    padding: 1.25rem 1.25rem 1rem 1.25rem;
     display: flex;
     flex-direction: column;
-    transition: all 0.2s ease;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+    transition: all 0.25s ease;
   }
   .student-card-modern:hover {
-    border-color: #cbd5e1;
     transform: translateY(-2px);
-    box-shadow: 0 8px 16px rgba(15, 44, 89, 0.06);
+    box-shadow: 0 8px 18px rgba(0,0,0,0.06);
+    border-color: #cbd5e1;
   }
   .student-head-row {
     display: flex;
     align-items: center;
     gap: 14px;
-    margin-bottom: 0.8rem;
+    margin-bottom: 0.85rem;
   }
   .student-avatar-wrap {
-    width: 65px;
-    height: 80px;
-    border-radius: 6px;
+    width: 62px;
+    height: 62px;
+    border-radius: 50%;
     overflow: hidden;
-    border: 1px solid #e2e8f0;
-    background: #f1f5f9;
     flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    border: 2px solid #e2e8f0;
+    background: #f8fafc;
   }
   .student-avatar-wrap img {
     width: 100%;
     height: 100%;
     object-fit: cover;
   }
-  .student-identity { flex: 1; }
+  .student-identity {
+    flex: 1;
+  }
   .student-name-text {
     font-size: 1.15rem;
     font-weight: 800;
-    color: #0f172a;
+    color: #0f2c59;
     display: flex;
     align-items: center;
     gap: 8px;
@@ -541,21 +657,22 @@ function formatStudentEdu(eduStr: string) {
   .student-grade-pill {
     font-size: 0.75rem;
     font-weight: 700;
-    padding: 0.15rem 0.5rem;
     background: #eff6ff;
-    color: #1e40af;
-    border-radius: 4px;
+    color: #1d4ed8;
+    padding: 0.15rem 0.5rem;
+    border-radius: 12px;
+    border: 1px solid #dbeafe;
   }
   .student-status-text {
-    font-size: 0.78rem;
+    font-size: 0.8rem;
     color: #059669;
-    font-weight: 700;
+    font-weight: 600;
     margin-top: 3px;
   }
   .student-field-row {
-    font-size: 0.88rem;
+    font-size: 0.86rem;
     color: #334155;
-    margin-bottom: 0.8rem;
+    margin-bottom: 0.75rem;
     line-height: 1.5;
   }
   .field-title {
@@ -564,8 +681,8 @@ function formatStudentEdu(eduStr: string) {
   }
   .student-edu-container {
     background: #f8fafc;
-    border: 1px solid #edf2f7;
-    border-radius: 6px;
+    border: 1px solid #f1f5f9;
+    border-radius: 8px;
     padding: 0.75rem 0.85rem;
     margin-bottom: 0.85rem;
     flex: 1;
@@ -574,24 +691,30 @@ function formatStudentEdu(eduStr: string) {
     font-size: 0.8rem;
     font-weight: 800;
     color: #0f2c59;
-    margin-bottom: 0.4rem;
+    margin-bottom: 0.45rem;
   }
   .edu-body {
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 6px;
   }
   .edu-item {
     font-size: 0.8rem;
     color: #475569;
     line-height: 1.45;
     display: flex;
-    align-items: baseline;
-    gap: 5px;
+    align-items: flex-start;
+    gap: 6px;
+    word-break: break-word;
+    white-space: pre-line;
   }
   .edu-dot {
     color: #0284c7;
     font-weight: bold;
+    flex-shrink: 0;
+  }
+  .edu-text {
+    flex: 1;
   }
   .edu-placeholder {
     font-size: 0.78rem;
@@ -601,62 +724,170 @@ function formatStudentEdu(eduStr: string) {
   .student-card-footer {
     margin-top: auto;
     border-top: 1px solid #f1f5f9;
-    padding-top: 0.6rem;
+    padding-top: 0.65rem;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-size: 0.8rem;
+    color: #64748b;
+  }
+  .contact-pill {
     display: flex;
     align-items: center;
     gap: 6px;
-    font-size: 0.82rem;
-    color: #64748b;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
-  .icon-mail-gray { width: 14px; height: 14px; color: #94a3b8; }
+  .contact-placeholder {
+    font-size: 0.78rem;
+    color: #94a3b8;
+  }
+  .icon-mail-gray { width: 14px; height: 14px; color: #94a3b8; flex-shrink: 0; }
 
-  /* 历届校友网格 */
-  .alumni-grid-clean {
+  /* 4. 毕业校友网格 (大升级：带头像、去向徽章、经历) */
+  .alumni-grid-enhanced {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 1rem;
+    gap: 1.15rem;
   }
-  @media (max-width: 900px) {
-    .alumni-grid-clean { grid-template-columns: repeat(2, 1fr); }
+  @media (max-width: 1100px) {
+    .alumni-grid-enhanced { grid-template-columns: repeat(3, 1fr); }
   }
-  @media (max-width: 500px) {
-    .alumni-grid-clean { grid-template-columns: 1fr; }
+  @media (max-width: 768px) {
+    .alumni-grid-enhanced { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 480px) {
+    .alumni-grid-enhanced { grid-template-columns: 1fr; }
   }
 
-  .alumni-card-clean {
+  .alumni-card-enhanced {
     background: #ffffff;
     border: 1px solid #e2e8f0;
-    border-radius: 8px;
-    padding: 1rem 1.15rem;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.03);
-    transition: all 0.2s ease;
-  }
-  .alumni-card-clean:hover {
-    border-color: #cbd5e1;
-    transform: translateY(-2px);
-  }
-  .alumni-top-line {
+    border-radius: 10px;
+    padding: 1.15rem;
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.03);
+    transition: all 0.25s ease;
+  }
+  .alumni-card-enhanced:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(15, 44, 89, 0.08);
+    border-color: #cbd5e1;
+  }
+  .alumni-card-header {
+    display: flex;
     align-items: center;
-    margin-bottom: 0.4rem;
+    gap: 12px;
+    margin-bottom: 0.75rem;
+  }
+  .alumni-avatar-box {
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+    overflow: hidden;
+    flex-shrink: 0;
+    border: 2px solid #e2e8f0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    background: #f8fafc;
+  }
+  .alumni-avatar-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .alumni-meta-info {
+    flex: 1;
+    overflow: hidden;
+  }
+  .alumni-name-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+    margin-bottom: 2px;
   }
   .alumni-name-txt {
     font-size: 1.05rem;
     font-weight: 800;
-    color: var(--primary-navy);
+    color: #0f2c59;
   }
   .alumni-year-pill {
-    font-size: 0.78rem;
+    font-size: 0.72rem;
     font-weight: 700;
-    color: #b45309;
+    color: #92400e;
     background: #fef3c7;
-    padding: 0.15rem 0.5rem;
-    border-radius: 4px;
+    border: 1px solid #fde68a;
+    padding: 0.1rem 0.45rem;
+    border-radius: 10px;
+    white-space: nowrap;
   }
-  .alumni-desc-txt {
-    font-size: 0.82rem;
+  .alumni-degree-text {
+    font-size: 0.76rem;
     color: #64748b;
-    line-height: 1.5;
   }
+
+  .alumni-career-box {
+    background: #f0fdf4;
+    border: 1px solid #bbf7d0;
+    border-radius: 6px;
+    padding: 0.45rem 0.65rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+    margin-bottom: 0.65rem;
+    font-size: 0.8rem;
+    color: #166534;
+    line-height: 1.45;
+    word-break: break-word;
+  }
+  .career-icon {
+    flex-shrink: 0;
+  }
+  .career-text {
+    font-weight: 600;
+  }
+
+  .alumni-edu-mini {
+    background: #f8fafc;
+    border-radius: 6px;
+    padding: 0.5rem 0.65rem;
+    margin-bottom: 0.65rem;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-size: 0.75rem;
+    color: #64748b;
+    line-height: 1.4;
+    flex: 1;
+  }
+  .alumni-edu-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 5px;
+    word-break: break-word;
+  }
+
+  .alumni-card-footer {
+    margin-top: auto;
+    border-top: 1px solid #f1f5f9;
+    padding-top: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    font-size: 0.75rem;
+    color: #94a3b8;
+  }
+  .alumni-contact-item {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .alumni-link {
+    color: #1d4ed8;
+    text-decoration: none;
+    font-weight: 700;
+  }
+  .alumni-link:hover { text-decoration: underline; }
 </style>
