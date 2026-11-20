@@ -26,6 +26,61 @@ if (title && title !== '主页' && title !== '首页' && title !== '王小治课
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{pageTitle}</title>
   <meta name="description" content={description} />
+  <meta name="keywords" content="扬州大学 王小治, 王小治, 王小治教授, 王小治课题组, 扬州大学环境科学与工程学院, 农业面源污染防控, 水土环境化学, 新型环境功能材料, 生物炭, 单原子催化, 环境土壤学, Xiaozhi Wang, Yangzhou University" />
+  <meta name="author" content="王小治课题组, Prof. Xiaozhi Wang" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://wxz.zxw.ac.cn/" />
+
+  <!-- Open Graph / 社交分享与搜索引擎摘要 -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content={pageTitle} />
+  <meta property="og:description" content={description} />
+  <meta property="og:url" content="https://wxz.zxw.ac.cn/" />
+  <meta property="og:site_name" content="扬州大学王小治课题组" />
+  <meta property="og:image" content="https://wxz.zxw.ac.cn/images/hengfu/wxz横幅.jpg" />
+
+  <!-- 结构化数据 JSON-LD (Schema.org 针对 Google & Bing 知识图谱优化) -->
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "ResearchGroup",
+          "name": "王小治课题组",
+          "alternateName": "Wang Xiaozhi Research Group",
+          "url": "https://wxz.zxw.ac.cn/",
+          "logo": "https://wxz.zxw.ac.cn/favicon.ico",
+          "parentOrganization": {
+            "@type": "CollegeOrUniversity",
+            "name": "扬州大学",
+            "alternateName": "Yangzhou University",
+            "department": "环境科学与工程学院",
+            "url": "https://www.yzu.edu.cn/"
+          },
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "华扬西路196号 扬州大学扬子津校区学行楼",
+            "addressLocality": "扬州市",
+            "addressRegion": "江苏省",
+            "postalCode": "225127",
+            "addressCountry": "CN"
+          }
+        },
+        {
+          "@type": "Person",
+          "name": "王小治",
+          "alternateName": "Xiaozhi Wang",
+          "jobTitle": "教授、博士生导师、环境科学与工程学院院长",
+          "worksFor": {
+            "@type": "CollegeOrUniversity",
+            "name": "扬州大学"
+          },
+          "email": "xzwang@yzu.edu.cn",
+          "url": "https://wxz.zxw.ac.cn/faculty/wangxiaozhi"
+        }
+      ]
+    }
+  </script>
   <link rel="icon" type="image/x-icon" href="/favicon.ico" />
   <!-- Netlify Identity Widget for Decap CMS -->
   <script is:inline src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>

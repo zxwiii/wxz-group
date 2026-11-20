@@ -1,0 +1,191 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="404 - 页面未找到" activeNav="">
+  <div class="not-found-hero">
+    <div class="not-found-container">
+      <div class="code-404-glamour">404</div>
+      <h1 class="title-message">抱歉，您访问的页面已迷航或不存在</h1>
+      <p class="sub-message">
+        Oops! The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.
+      </p>
+
+      <div class="action-buttons-group">
+        <a href="/" class="btn-action-primary">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+            <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"></path>
+          </svg>
+          返回课题组首页
+        </a>
+        <button type="button" onclick="history.back()" class="btn-action-outline">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+            <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"></path>
+          </svg>
+          返回上一页
+        </button>
+      </div>
+
+      <div class="quick-nav-links">
+        <span class="quick-label">您可能想要访问：</span>
+        <a href="/">首页概况</a>
+        <span class="sep">·</span>
+        <a href="/research">研究方向</a>
+        <span class="sep">·</span>
+        <a href="/publications">学术文章</a>
+        <span class="sep">·</span>
+        <a href="/patents">专利成果</a>
+        <span class="sep">·</span>
+        <a href="/members">团队成员</a>
+        <span class="sep">·</span>
+        <a href="/contact">联系我们</a>
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .not-found-hero {
+    min-height: 68vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px;
+    background: radial-gradient(circle at 50% 35%, #0d274c 0%, #06152d 100%);
+    color: #ffffff;
+    text-align: center;
+  }
+
+  .not-found-container {
+    max-width: 680px;
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  /* 404 艺术大字 */
+  .code-404-glamour {
+    font-size: 160px;
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -3px;
+    background: linear-gradient(135deg, #38bdf8 0%, #0e8faa 50%, #ffffff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 10px 40px rgba(14, 143, 170, 0.35);
+    margin-bottom: 12px;
+    user-select: none;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  }
+
+  .title-message {
+    font-size: 1.65rem;
+    font-weight: 700;
+    color: #f1f5f9;
+    margin-bottom: 10px;
+    letter-spacing: 0.5px;
+  }
+
+  .sub-message {
+    font-size: 0.95rem;
+    color: #94a3b8;
+    line-height: 1.6;
+    max-width: 520px;
+    margin: 0 auto 32px;
+  }
+
+  /* 按钮组 */
+  .action-buttons-group {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 36px;
+  }
+
+  .btn-action-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 28px;
+    background: linear-gradient(135deg, #0e8faa 0%, #0284c7 100%);
+    color: #ffffff !important;
+    text-decoration: none !important;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 30px;
+    box-shadow: 0 4px 15px rgba(14, 143, 170, 0.4);
+    transition: all 0.25s ease;
+    border: none;
+    cursor: pointer;
+  }
+  .btn-action-primary:hover {
+    background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+    box-shadow: 0 6px 20px rgba(14, 143, 170, 0.6);
+    transform: translateY(-2px);
+  }
+
+  .btn-action-outline {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    background: rgba(255, 255, 255, 0.08);
+    color: #e2e8f0 !important;
+    text-decoration: none !important;
+    font-size: 0.95rem;
+    font-weight: 500;
+    border-radius: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(8px);
+    transition: all 0.25s ease;
+    cursor: pointer;
+  }
+  .btn-action-outline:hover {
+    background: rgba(255, 255, 255, 0.16);
+    color: #ffffff !important;
+    transform: translateY(-2px);
+  }
+
+  /* 快捷学术导航 */
+  .quick-nav-links {
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    padding-top: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    font-size: 0.88rem;
+  }
+  .quick-label {
+    color: #64748b;
+  }
+  .quick-nav-links a {
+    color: #38bdf8;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .quick-nav-links a:hover {
+    color: #7dd3fc;
+    text-decoration: underline;
+  }
+  .quick-nav-links .sep {
+    color: #475569;
+  }
+
+  @media (max-width: 600px) {
+    .code-404-glamour {
+      font-size: 110px;
+    }
+    .title-message {
+      font-size: 1.3rem;
+    }
+    .btn-action-primary,
+    .btn-action-outline {
+      width: 100%;
+      max-width: 260px;
+      justify-content: center;
+    }
+  }
+</style>

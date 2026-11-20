@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /manage/
+Disallow: /internal/
+
+Sitemap: https://wxz.zxw.ac.cn/sitemap.xml
