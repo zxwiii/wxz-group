@@ -109,6 +109,19 @@ def main():
                         if sp:
                             edu_lines.append(sp)
 
+                # 双重保护：合并末尾带连字符的分裂项，杜绝任何断行
+                merged_lines = []
+                idx = 0
+                while idx < len(edu_lines):
+                    cur = edu_lines[idx]
+                    if re.search(r'[-\u2013\u2014~至]$', cur) and idx + 1 < len(edu_lines):
+                        merged_lines.append(cur + edu_lines[idx + 1])
+                        idx += 2
+                    else:
+                        merged_lines.append(cur)
+                        idx += 1
+                edu_lines = merged_lines
+
             # 头像映射：优先使用用户在 CSV 中指定的 avatar_url
             if not avatar_url or avatar_url == '/images/default_avatar.jpg':
                 if m_id in avatar_map:

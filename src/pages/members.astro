@@ -92,25 +92,32 @@ function renderEduItem(text: string) {
     </div>
     {piMember && (
       <div class="pi-card">
-        <div class="pi-avatar">
-          <img 
-            src={piMember.avatar_url || '/images/members/faculty_wangxiaozhi.webp'} 
-            alt={piMember.name}
-            onerror="this.src='/images/members/default_avatar.jpg'" 
-          />
-        </div>
+        <a href="/faculty/wangxiaozhi" class="pi-avatar-link" title="点击查看王小治教授学术主页">
+          <div class="pi-avatar">
+            <img 
+              src={piMember.avatar_url || '/images/members/wangxiaozhi.jpg'} 
+              alt={piMember.name}
+              onerror="this.src='/images/members/default_avatar.jpg'" 
+            />
+          </div>
+        </a>
         <div class="pi-content">
           <div class="pi-top">
             <div class="pi-name-group">
-              <span class="pi-name">{piMember.name}</span>
+              <a href="/faculty/wangxiaozhi" class="pi-name-link" title="点击查看王小治教授学术主页">
+                <span class="pi-name">{piMember.name}</span>
+              </a>
               <span class="pi-role-tag">课题组负责人 / PI</span>
               <span class="pi-title-badge">{piMember.title}</span>
             </div>
-            {piMember.homepage_url && (
-              <a href={piMember.homepage_url} target="_blank" rel="noopener noreferrer" class="pi-link-btn">
-                个人官方主页 ↗
+            <div class="pi-links-group">
+              <a href="/faculty/wangxiaozhi" class="pi-link-btn primary" title="查看王小治教授详细学者主页">
+                学术详细简介 ›
               </a>
-            )}
+              <a href="https://hjxy.yzu.edu.cn/info/1018/1660.htm" target="_blank" rel="noopener noreferrer" class="pi-link-btn secondary">
+                扬大官方主页 ↗
+              </a>
+            </div>
           </div>
           <div class="pi-unit">扬州大学环境科学与工程学院 · 农业资源与环境学科带头人</div>
           <div class="pi-research">
@@ -240,16 +247,16 @@ function renderEduItem(text: string) {
             <div class="student-card-footer">
               <div class="student-contact-group">
                 {s.email && (
-                  <div class="contact-pill" title={s.email}>
+                  <a href={`mailto:${s.email}`} class="contact-pill" title={`发送邮件至 ${s.email}`}>
                     <svg class="icon-mail-gray" viewBox="0 0 24 24"><path fill="currentColor" d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
                     <span>{s.email}</span>
-                  </div>
+                  </a>
                 )}
                 {s.phone && (
-                  <div class="contact-pill" title={s.phone}>
+                  <a href={`tel:${s.phone}`} class="contact-pill" title={`拨打电话 ${s.phone}`}>
                     <svg class="icon-mail-gray" viewBox="0 0 24 24"><path fill="currentColor" d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
                     <span>{s.phone}</span>
-                  </div>
+                  </a>
                 )}
                 {!s.email && !s.phone && (
                   <span class="contact-placeholder">在籍在读研究生</span>
@@ -458,6 +465,15 @@ function renderEduItem(text: string) {
     box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     background: #f1f5f9;
   }
+  .pi-avatar-link {
+    display: block;
+    text-decoration: none;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+  }
+  .pi-avatar-link:hover {
+    transform: scale(1.02);
+  }
   .pi-avatar img {
     width: 100%;
     height: 100%;
@@ -482,10 +498,19 @@ function renderEduItem(text: string) {
     gap: 12px;
     flex-wrap: wrap;
   }
+  .pi-name-link {
+    text-decoration: none;
+    color: inherit;
+    transition: color 0.2s ease;
+  }
+  .pi-name-link:hover .pi-name {
+    color: #1d4ed8;
+  }
   .pi-name {
     font-size: 1.85rem;
     font-weight: 800;
     color: #0f2c59;
+    transition: color 0.2s ease;
   }
   .pi-role-tag {
     background: #0f2c59;
@@ -504,21 +529,43 @@ function renderEduItem(text: string) {
     padding: 0.25rem 0.8rem;
     border-radius: 4px;
   }
+  .pi-links-group {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
   .pi-link-btn {
     padding: 0.45rem 1rem;
-    background: #f8fafc;
-    border: 1px solid #cbd5e1;
-    color: #334155;
     border-radius: 6px;
     text-decoration: none;
     font-size: 0.88rem;
     font-weight: 700;
-    transition: all 0.2s;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
   }
-  .pi-link-btn:hover {
+  .pi-link-btn.primary {
     background: #0f2c59;
     color: #ffffff;
-    border-color: #0f2c59;
+    border: 1px solid #0f2c59;
+    box-shadow: 0 2px 6px rgba(15, 44, 89, 0.2);
+  }
+  .pi-link-btn.primary:hover {
+    background: #1d4ed8;
+    border-color: #1d4ed8;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(29, 78, 216, 0.3);
+  }
+  .pi-link-btn.secondary {
+    background: #f8fafc;
+    border: 1px solid #cbd5e1;
+    color: #334155;
+  }
+  .pi-link-btn.secondary:hover {
+    background: #e2e8f0;
+    color: #0f2c59;
+    border-color: #94a3b8;
   }
   .pi-unit {
     font-size: 1rem;
@@ -547,9 +594,13 @@ function renderEduItem(text: string) {
     color: #64748b;
   }
   .pi-contact a {
-    color: #1d4ed8;
+    color: #64748b;
     text-decoration: none;
     font-weight: 600;
+    transition: color 0.2s ease;
+  }
+  .pi-contact a:hover {
+    color: #1d4ed8 !important;
   }
 
   /* 2. 教师 4 列网格 */
@@ -651,7 +702,8 @@ function renderEduItem(text: string) {
     transition: color 0.2s;
   }
   .faculty-email-link:hover { color: #1d4ed8; }
-  .icon-mail { width: 14px; height: 14px; }
+  .faculty-email-link:hover .icon-mail { color: #1d4ed8; }
+  .icon-mail { width: 14px; height: 14px; transition: color 0.2s ease; }
   .faculty-no-mail { color: #94a3b8; font-size: 0.78rem; }
   .faculty-home-btn {
     color: #1d4ed8;
@@ -772,7 +824,6 @@ function renderEduItem(text: string) {
     align-items: flex-start;
     gap: 6px;
     word-break: break-word;
-    white-space: pre-line;
   }
   .edu-dot {
     color: #0284c7;
@@ -809,15 +860,26 @@ function renderEduItem(text: string) {
     display: flex;
     align-items: center;
     gap: 6px;
+    color: #64748b;
+    text-decoration: none;
+    font-size: 0.8rem;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    transition: color 0.2s ease;
+    cursor: pointer;
+  }
+  .contact-pill:hover {
+    color: #1d4ed8;
+  }
+  .contact-pill:hover .icon-mail-gray {
+    color: #1d4ed8;
   }
   .contact-placeholder {
     font-size: 0.76rem;
     color: #94a3b8;
   }
-  .icon-mail-gray { width: 14px; height: 14px; color: #94a3b8; flex-shrink: 0; }
+  .icon-mail-gray { width: 14px; height: 14px; color: #94a3b8; flex-shrink: 0; transition: color 0.2s ease; }
 
   /* 4. 毕业校友网格 (大升级：带头像、去向徽章、经历) */
   .alumni-grid-enhanced {
@@ -944,10 +1006,11 @@ function renderEduItem(text: string) {
   }
 
   .edu-date-range {
+    display: inline-block;
     white-space: nowrap !important;
     font-weight: 700;
     color: #1e293b;
-    margin-right: 3px;
+    margin-right: 4px;
   }
 
   .alumni-card-footer {
@@ -981,6 +1044,9 @@ function renderEduItem(text: string) {
     transition: color 0.2s;
   }
   .alumni-contact-item:hover {
+    color: #1d4ed8;
+  }
+  .alumni-contact-item:hover .icon-mail-gray {
     color: #1d4ed8;
   }
 

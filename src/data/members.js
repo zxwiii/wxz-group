@@ -2,7 +2,7 @@
 // 王小治课题组成员数据配置 (members.js)
 // 本文件由 scripts/update_members_from_csv.py 自动生成，请勿在此手动修改！
 // 如需更新成员信息，请直接修改根目录下 members.csv 并重新运行该脚本。
-// 生成时间: 2026-11-20 17:39:20
+// 生成时间: 2026-11-20 18:33:17
 // ==========================================================================
 
 export const membersData = [
@@ -26,7 +26,7 @@ export const membersData = [
     "id": "faculty_liuhailong",
     "category": "教师",
     "name": "刘海龙",
-    "title": "讲师 / 硕士生导师",
+    "title": "副教授 / 硕士生导师",
     "grade": "在职",
     "research": "土壤污染环境效应和污染修复、元素环境地球化学循环",
     "email": "liuhailong@yzu.edu.cn",
@@ -42,7 +42,7 @@ export const membersData = [
     "id": "faculty_limin",
     "category": "教师",
     "name": "李敏",
-    "title": "讲师 / 硕士生导师",
+    "title": "副教授 / 硕士生导师",
     "grade": "在职",
     "research": "微纳米材料的环境行为与生物效应、农田土壤重金属风险评估",
     "email": "molulimin@yzu.edu.cn",
@@ -74,7 +74,7 @@ export const membersData = [
     "id": "faculty_ningxin",
     "category": "教师",
     "name": "宁欣",
-    "title": "博士 / 硕士生导师",
+    "title": "讲师 / 硕士生导师",
     "grade": "在职",
     "research": "环境功能纳米材料、环境催化、大气污染控制",
     "email": "ningxin@yzu.edu.cn",
@@ -122,7 +122,7 @@ export const membersData = [
     "id": "faculty_gexiao",
     "category": "教师",
     "name": "葛骁",
-    "title": "校聘副教授 / 硕士生导师",
+    "title": "讲师 / 硕士生导师",
     "grade": "在职",
     "research": "单原子催化剂可控制备、环境功能纳米材料与环境修复",
     "email": "gexiao@yzu.edu.cn",
@@ -138,7 +138,7 @@ export const membersData = [
     "id": "faculty_xumeiling",
     "category": "教师",
     "name": "许美玲",
-    "title": "讲师 / 硕士生导师",
+    "title": "副教授 / 硕士生导师",
     "grade": "在职",
     "research": "新污染物环境效应、全球气候变化与环境科学",
     "email": "xuml@yzu.edu.cn",
@@ -154,7 +154,7 @@ export const membersData = [
     "id": "faculty_zhuxingwang",
     "category": "教师",
     "name": "朱兴旺",
-    "title": "副教授 / 硕士生导师",
+    "title": "副教授 / 博士生导师",
     "grade": "在职",
     "research": "人工光合成与催化碳重整、纳米催化材料设计、光催化水裂解",
     "email": "zxw@yzu.edu.cn",
@@ -170,7 +170,7 @@ export const membersData = [
     "id": "faculty_tangquan",
     "category": "教师",
     "name": "汤权",
-    "title": "博士 / 硕士生导师",
+    "title": "副教授 / 硕士生导师",
     "grade": "在职",
     "research": "碳氮生物地球化学循环、生态环境效应",
     "email": "qtang@yzu.edu.cn",
@@ -202,7 +202,7 @@ export const membersData = [
     "id": "faculty_qiuyaxin",
     "category": "教师",
     "name": "仇亚昕",
-    "title": "博士 / 研究生导师",
+    "title": "讲师 / 硕士生导师",
     "grade": "在职",
     "research": "环境新材料、智能响应材料、生物质降解高分子",
     "email": "yxqiu@yzu.edu.cn",
