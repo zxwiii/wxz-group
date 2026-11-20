@@ -2,11 +2,30 @@
 import Layout from '../layouts/Layout.astro';
 import { membersData } from '../data/members.js';
 
-// 严格按照三大分类过滤
+// 排序辅助函数
+function getGradeNum(text: any) {
+  if (!text) return 0;
+  const m = String(text).match(/\d{4}/);
+  return m ? parseInt(m[0], 10) : 0;
+}
+
+// 严格按照用户指定规则过滤与排序
 const piMember = membersData.find(m => m.category === '教师' && m.name.includes('王小治'));
+// 教师：严格保持当前在 CSV 中的排序
 const teachers = membersData.filter(m => m.category === '教师' && !m.name.includes('王小治'));
-const students = membersData.filter(m => m.category === '在读研究生');
-const alumni = membersData.filter(m => m.category === '校友');
+// 在读学生：以 p_ 开头（博士生）置顶，其余按年级降序排序（高年级/入学早的在下面）
+const students = membersData
+  .filter(m => m.category === '在读研究生')
+  .sort((a, b) => {
+    const aIsP = a.id.startsWith('p_') ? 0 : 1;
+    const bIsP = b.id.startsWith('p_') ? 0 : 1;
+    if (aIsP !== bIsP) return aIsP - bIsP;
+    return getGradeNum(b.grade || b.title) - getGradeNum(a.grade || a.title);
+  });
+// 校友：按年级降序排序（年级大的在下面，2023级在上，2008级在最底）
+const alumni = membersData
+  .filter(m => m.category === '校友')
+  .sort((a, b) => getGradeNum(b.grade || b.title) - getGradeNum(a.grade || a.title));
 
 // 教育经历结构化辅助函数（带双重防断行保护）
 function getEduList(m: any) {
@@ -219,20 +238,25 @@ function renderEduItem(text: string) {
             </div>
 
             <div class="student-card-footer">
-              {s.email && (
-                <div class="contact-pill" title={s.email}>
-                  <svg class="icon-mail-gray" viewBox="0 0 24 24"><path fill="currentColor" d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
-                  <span>{s.email}</span>
-                </div>
-              )}
-              {s.phone && (
-                <div class="contact-pill" title={s.phone}>
-                  <svg class="icon-mail-gray" viewBox="0 0 24 24"><path fill="currentColor" d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
-                  <span>{s.phone}</span>
-                </div>
-              )}
-              {!s.email && !s.phone && (
-                <span class="contact-placeholder">扬州大学在读研究生</span>
+              <div class="student-contact-group">
+                {s.email && (
+                  <div class="contact-pill" title={s.email}>
+                    <svg class="icon-mail-gray" viewBox="0 0 24 24"><path fill="currentColor" d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                    <span>{s.email}</span>
+                  </div>
+                )}
+                {s.phone && (
+                  <div class="contact-pill" title={s.phone}>
+                    <svg class="icon-mail-gray" viewBox="0 0 24 24"><path fill="currentColor" d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+                    <span>{s.phone}</span>
+                  </div>
+                )}
+                {!s.email && !s.phone && (
+                  <span class="contact-placeholder">在籍在读研究生</span>
+                )}
+              </div>
+              {s.update && (
+                <div class="member-update-badge" title="信息更新时间">更新于 {s.update}</div>
               )}
             </div>
           </div>
@@ -297,20 +321,25 @@ function renderEduItem(text: string) {
               </div>
             )}
 
-            {/* 底部联系方式（仅在有邮箱或手机号时展示，彻底不包含个人主页链接） */}
-            {(a.email || a.phone) && (
+            {/* 底部联系方式与更新时间 */}
+            {(a.email || a.phone || a.update) && (
               <div class="alumni-card-footer">
-                {a.email && (
-                  <a href={`mailto:${a.email}`} class="alumni-contact-item" title={a.email}>
-                    <svg class="icon-mail-gray" viewBox="0 0 24 24"><path fill="currentColor" d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
-                    <span>{a.email}</span>
-                  </a>
-                )}
-                {a.phone && (
-                  <a href={`tel:${a.phone}`} class="alumni-contact-item" title={a.phone}>
-                    <svg class="icon-mail-gray" viewBox="0 0 24 24"><path fill="currentColor" d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
-                    <span>{a.phone}</span>
-                  </a>
+                <div class="alumni-contact-group">
+                  {a.email && (
+                    <a href={`mailto:${a.email}`} class="alumni-contact-item" title={a.email}>
+                      <svg class="icon-mail-gray" viewBox="0 0 24 24"><path fill="currentColor" d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                      <span>{a.email}</span>
+                    </a>
+                  )}
+                  {a.phone && (
+                    <a href={`tel:${a.phone}`} class="alumni-contact-item" title={a.phone}>
+                      <svg class="icon-mail-gray" viewBox="0 0 24 24"><path fill="currentColor" d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+                      <span>{a.phone}</span>
+                    </a>
+                  )}
+                </div>
+                {a.update && (
+                  <div class="member-update-badge" title="信息更新时间">更新于 {a.update}</div>
                 )}
               </div>
             )}
@@ -763,10 +792,18 @@ function renderEduItem(text: string) {
     border-top: 1px solid #f1f5f9;
     padding-top: 0.65rem;
     display: flex;
-    flex-direction: column;
-    gap: 4px;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 8px;
     font-size: 0.8rem;
     color: #64748b;
+  }
+  .student-contact-group {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    overflow: hidden;
+    flex: 1;
   }
   .contact-pill {
     display: flex;
@@ -777,7 +814,7 @@ function renderEduItem(text: string) {
     white-space: nowrap;
   }
   .contact-placeholder {
-    font-size: 0.78rem;
+    font-size: 0.76rem;
     color: #94a3b8;
   }
   .icon-mail-gray { width: 14px; height: 14px; color: #94a3b8; flex-shrink: 0; }
@@ -918,10 +955,18 @@ function renderEduItem(text: string) {
     border-top: 1px solid #f1f5f9;
     padding-top: 0.5rem;
     display: flex;
-    flex-direction: column;
-    gap: 4px;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 6px;
     font-size: 0.75rem;
     color: #64748b;
+  }
+  .alumni-contact-group {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    overflow: hidden;
+    flex: 1;
   }
   .alumni-contact-item {
     display: flex;
@@ -937,5 +982,17 @@ function renderEduItem(text: string) {
   }
   .alumni-contact-item:hover {
     color: #1d4ed8;
+  }
+
+  /* 学生与校友卡片右下角：小字、灰色、斜体更新时间 */
+  .member-update-badge {
+    font-size: 0.72rem;
+    color: #94a3b8;
+    font-style: italic;
+    white-space: nowrap;
+    margin-left: auto;
+    align-self: flex-end;
+    line-height: 1.2;
+    padding-bottom: 1px;
   }
 </style>

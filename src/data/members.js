@@ -2,7 +2,7 @@
 // 王小治课题组成员数据配置 (members.js)
 // 本文件由 scripts/update_members_from_csv.py 自动生成，请勿在此手动修改！
 // 如需更新成员信息，请直接修改根目录下 members.csv 并重新运行该脚本。
-// 生成时间: 2026-11-19 22:49:03
+// 生成时间: 2026-11-20 17:39:20
 // ==========================================================================
 
 export const membersData = [
@@ -19,7 +19,8 @@ export const membersData = [
     "education": "",
     "education_list": [],
     "homepage_url": "https://hjxy.yzu.edu.cn/info/1018/1660.htm",
-    "avatar_url": "/images/members/faculty_wangxiaozhi.webp"
+    "avatar_url": "/images/members/wangxiaozhi.jpg",
+    "update": ""
   },
   {
     "id": "faculty_liuhailong",
@@ -33,8 +34,9 @@ export const membersData = [
     "career": "在职",
     "education": "",
     "education_list": [],
-    "homepage_url": "https://hjxy.yzu.edu.cn/",
-    "avatar_url": "/images/members/faculty_liuhailong.jpg"
+    "homepage_url": "http://teacher.yzu.edu.cn/LHL/zh_CN/index.htm",
+    "avatar_url": "/images/members/faculty_liuhailong.jpg",
+    "update": ""
   },
   {
     "id": "faculty_limin",
@@ -43,13 +45,14 @@ export const membersData = [
     "title": "讲师 / 硕士生导师",
     "grade": "在职",
     "research": "微纳米材料的环境行为与生物效应、农田土壤重金属风险评估",
-    "email": "limin@yzu.edu.cn",
+    "email": "molulimin@yzu.edu.cn",
     "phone": "",
     "career": "在职",
     "education": "",
     "education_list": [],
-    "homepage_url": "https://hjxy.yzu.edu.cn/",
-    "avatar_url": "/images/members/faculty_limin.jpg"
+    "homepage_url": "http://teacher.yzu.edu.cn/LM/zh_CN/index.htm",
+    "avatar_url": "/images/members/faculty_limin.jpg",
+    "update": ""
   },
   {
     "id": "faculty_xuqiao",
@@ -58,13 +61,14 @@ export const membersData = [
     "title": "副教授 / 硕士生导师",
     "grade": "在职",
     "research": "农业固碳技术与机制、农业资源与环境化学",
-    "email": "xuqiao@yzu.edu.cn",
+    "email": "007360@yzu.edu.cn",
     "phone": "",
     "career": "在职",
     "education": "",
     "education_list": [],
-    "homepage_url": "https://hjxy.yzu.edu.cn/",
-    "avatar_url": "/images/members/faculty_xuqiao.jpg"
+    "homepage_url": "http://teacher.yzu.edu.cn/XQ1234567/zh_CN/index/449923/list/index.htm",
+    "avatar_url": "/images/members/faculty_xuqiao.jpg",
+    "update": ""
   },
   {
     "id": "faculty_ningxin",
@@ -78,8 +82,9 @@ export const membersData = [
     "career": "在职",
     "education": "",
     "education_list": [],
-    "homepage_url": "https://hjxy.yzu.edu.cn/",
-    "avatar_url": "/images/members/faculty_ningxin.png"
+    "homepage_url": "https://hjxy.yzu.edu.cn/info/1022/2653.htm",
+    "avatar_url": "/images/members/faculty_ningxin.png",
+    "update": ""
   },
   {
     "id": "faculty_caoyu",
@@ -88,13 +93,14 @@ export const membersData = [
     "title": "讲师 / 硕士生导师",
     "grade": "在职",
     "research": "多孔环境功能材料、配位聚合物、纳米复合材料",
-    "email": "caoyu@yzu.edu.cn",
+    "email": "yucao@yzu.edu.cn",
     "phone": "",
     "career": "在职",
     "education": "",
     "education_list": [],
-    "homepage_url": "https://hjxy.yzu.edu.cn/",
-    "avatar_url": "/images/members/faculty_caoyu.jpg"
+    "homepage_url": "http://teacher.yzu.edu.cn/CY12345678/zh_CN/index.htm",
+    "avatar_url": "/images/members/faculty_caoyu.jpg",
+    "update": ""
   },
   {
     "id": "faculty_yijianjian",
@@ -103,13 +109,14 @@ export const membersData = [
     "title": "副教授 / 硕士生导师",
     "grade": "在职",
     "research": "催化材料表界面结构设计、晶相工程、能源环境催化",
-    "email": "yijianjian@yzu.edu.cn",
+    "email": "jjyi@yzu.edu.cn",
     "phone": "",
     "career": "在职",
     "education": "",
     "education_list": [],
-    "homepage_url": "https://hjxy.yzu.edu.cn/",
-    "avatar_url": "/images/members/faculty_yijianjian.jpg"
+    "homepage_url": "http://teacher.yzu.edu.cn/YJJ12/zh_CN/index/479011/list/index.htm",
+    "avatar_url": "/images/members/faculty_yijianjian.jpg",
+    "update": ""
   },
   {
     "id": "faculty_gexiao",
@@ -123,8 +130,9 @@ export const membersData = [
     "career": "在职",
     "education": "",
     "education_list": [],
-    "homepage_url": "https://hjxy.yzu.edu.cn/",
-    "avatar_url": "/images/members/faculty_gexiao.jpg"
+    "homepage_url": "http://teacher.yzu.edu.cn/GX123456789/zh_CN/index.htm",
+    "avatar_url": "/images/members/faculty_gexiao.jpg",
+    "update": ""
   },
   {
     "id": "faculty_xumeiling",
@@ -133,13 +141,14 @@ export const membersData = [
     "title": "讲师 / 硕士生导师",
     "grade": "在职",
     "research": "新污染物环境效应、全球气候变化与环境科学",
-    "email": "xumeiling@yzu.edu.cn",
+    "email": "xuml@yzu.edu.cn",
     "phone": "",
     "career": "在职",
     "education": "",
     "education_list": [],
-    "homepage_url": "https://hjxy.yzu.edu.cn/",
-    "avatar_url": "/images/members/faculty_xumeiling.jpg"
+    "homepage_url": "http://teacher.yzu.edu.cn/zwmb01/index.jsp?wbtreeid=1002&tstreeid=EBEB212BCBBD4A309B7F43F62DA52630&_t_uid=16482&a=007935&h=-1865385237&language=zh_CN&homepageuuid=696B0693FD2E4E25BC1B60AABC5FBCB4&templateuuid=0151AD15A72A4157BE04B6F223E08A4D&producttype=0",
+    "avatar_url": "/images/members/faculty_xumeiling.jpg",
+    "update": ""
   },
   {
     "id": "faculty_zhuxingwang",
@@ -148,13 +157,14 @@ export const membersData = [
     "title": "副教授 / 硕士生导师",
     "grade": "在职",
     "research": "人工光合成与催化碳重整、纳米催化材料设计、光催化水裂解",
-    "email": "xwzhu@yzu.edu.cn",
+    "email": "zxw@yzu.edu.cn",
     "phone": "",
     "career": "在职",
     "education": "",
     "education_list": [],
-    "homepage_url": "https://hjxy.yzu.edu.cn/info/1018/1684.htm",
-    "avatar_url": "/images/members/faculty_zhuxingwang.png"
+    "homepage_url": "https://zxw.ac.cn",
+    "avatar_url": "/images/members/faculty_zhuxingwang.png",
+    "update": ""
   },
   {
     "id": "faculty_tangquan",
@@ -163,13 +173,14 @@ export const membersData = [
     "title": "博士 / 硕士生导师",
     "grade": "在职",
     "research": "碳氮生物地球化学循环、生态环境效应",
-    "email": "tangquan@yzu.edu.cn",
+    "email": "qtang@yzu.edu.cn",
     "phone": "",
     "career": "在职",
     "education": "",
     "education_list": [],
-    "homepage_url": "https://hjxy.yzu.edu.cn/",
-    "avatar_url": "/images/members/faculty_tangquan.jpg"
+    "homepage_url": "http://teacher.yzu.edu.cn/~3IveE3/zh_CN/index.htm",
+    "avatar_url": "/images/members/faculty_tangquan.jpg",
+    "update": ""
   },
   {
     "id": "faculty_yanghui",
@@ -178,13 +189,14 @@ export const membersData = [
     "title": "讲师 / 硕士生导师",
     "grade": "在职",
     "research": "光催化污染物处置与资源化、光催化水分解、光电催化转化",
-    "email": "yanghui@yzu.edu.cn",
+    "email": "huiyang5211@yzu.edu.cn",
     "phone": "",
     "career": "在职",
     "education": "",
     "education_list": [],
-    "homepage_url": "https://hjxy.yzu.edu.cn/",
-    "avatar_url": "/images/members/faculty_yanghui.jpg"
+    "homepage_url": "http://teacher.yzu.edu.cn/yanghui5211/zh_CN/index.htm",
+    "avatar_url": "/images/members/faculty_yanghui.jpg",
+    "update": ""
   },
   {
     "id": "faculty_qiuyaxin",
@@ -193,13 +205,14 @@ export const membersData = [
     "title": "博士 / 研究生导师",
     "grade": "在职",
     "research": "环境新材料、智能响应材料、生物质降解高分子",
-    "email": "qiuyaxin@yzu.edu.cn",
+    "email": "yxqiu@yzu.edu.cn",
     "phone": "",
     "career": "在职",
     "education": "",
     "education_list": [],
-    "homepage_url": "https://hjxy.yzu.edu.cn/",
-    "avatar_url": "/images/members/faculty_qiuyaxin.jpg"
+    "homepage_url": "http://teacher.yzu.edu.cn/QiuYaxin/zh_CN/index.htm",
+    "avatar_url": "/images/members/faculty_qiuyaxin.jpg",
+    "update": ""
   },
   {
     "id": "faculty_liyuquan",
@@ -207,14 +220,15 @@ export const membersData = [
     "name": "李聿铨",
     "title": "讲师 / 硕士生导师",
     "grade": "在职",
-    "research": "",
-    "email": "",
+    "research": "电化学脱盐衰减机制、及其循环性优化",
+    "email": "liyuquan@yzu.edu.cn",
     "phone": "",
     "career": "在职",
     "education": "",
     "education_list": [],
     "homepage_url": "http://teacher.yzu.edu.cn/~gZryEv/zh_CN/index.htm",
-    "avatar_url": "/images/members/default_avatar.jpg"
+    "avatar_url": "/images/members/faculty_liyuquan.png",
+    "update": ""
   },
   {
     "id": "faculty_wanganqi",
@@ -222,14 +236,15 @@ export const membersData = [
     "name": "王安琪",
     "title": "讲师 / 硕士生导师",
     "grade": "在职",
-    "research": "",
-    "email": "",
+    "research": "零价铁的生物和化学改性以及农业水土环境修复与固碳减排",
+    "email": "itzanqiwang@yzu.edu.cn",
     "phone": "",
     "career": "在职",
     "education": "",
     "education_list": [],
     "homepage_url": "http://teacher.yzu.edu.cn/~2INRVn/zh_CN/index.htm",
-    "avatar_url": "/images/members/default_avatar.jpg"
+    "avatar_url": "/images/members/faculty_wanganqi.png",
+    "update": ""
   },
   {
     "id": "faculty_zhouxing",
@@ -237,14 +252,15 @@ export const membersData = [
     "name": "周杏",
     "title": "讲师 / 硕士生导师",
     "grade": "在职",
-    "research": "",
-    "email": "",
+    "research": "根际有机碳源调控土壤微生态防控植物病害的相关机制",
+    "email": "xzhou@yzu.edu.cn",
     "phone": "",
     "career": "在职",
     "education": "",
     "education_list": [],
     "homepage_url": "http://teacher.yzu.edu.cn/~MRfAf2/zh_CN/index.htm",
-    "avatar_url": "/images/members/default_avatar.jpg"
+    "avatar_url": "/images/members/faculty_zhouxing.png",
+    "update": ""
   },
   {
     "id": "faculty_xiafan",
@@ -252,14 +268,15 @@ export const membersData = [
     "name": "夏凡",
     "title": "讲师 / 硕士生导师",
     "grade": "在职",
-    "research": "",
-    "email": "",
+    "research": "内陆水体碳循环过程与微生物驱动机制",
+    "email": "009041@yzu.edu.cn",
     "phone": "",
     "career": "在职",
     "education": "",
     "education_list": [],
     "homepage_url": "http://teacher.yzu.edu.cn/XF12345678910111213/zh_CN/index.htm",
-    "avatar_url": "/images/members/default_avatar.jpg"
+    "avatar_url": "/images/members/faculty_xiafan.png",
+    "update": ""
   },
   {
     "id": "faculty_mashuai",
@@ -267,106 +284,18 @@ export const membersData = [
     "name": "马帅",
     "title": "讲师 / 硕士生导师",
     "grade": "在职",
-    "research": "",
-    "email": "",
+    "research": "农业水土环境保护与修复",
+    "email": "shuaima@yzu.edu.cn",
     "phone": "",
     "career": "在职",
     "education": "",
     "education_list": [],
     "homepage_url": "http://teacher.yzu.edu.cn/MS/zh_CN/index.htm",
-    "avatar_url": "/images/members/default_avatar.jpg"
+    "avatar_url": "/images/members/m_20.jpg",
+    "update": ""
   },
   {
-    "id": "m_52",
-    "category": "在读研究生",
-    "name": "高原",
-    "title": "2026级研究生",
-    "grade": "2026级",
-    "research": "暂无",
-    "email": "935919257@qq.com",
-    "phone": "15152726672",
-    "career": "在籍",
-    "education": "2020.09-2024.06，湖南农业大学，劳动与社会保障专业，导师： 胡扬名教授\n2026.09-至今，扬州大学，农业资源与环境专业，导师： 尹微琴高级农艺师",
-    "education_list": [
-      "2020.09-2024.06，湖南农业大学，劳动与社会保障专业，导师： 胡扬名教授",
-      "2026.09-至今，扬州大学，农业资源与环境专业，导师： 尹微琴高级农艺师"
-    ],
-    "homepage_url": "",
-    "avatar_url": "/images/members/m_52.jpg"
-  },
-  {
-    "id": "m_51",
-    "category": "在读研究生",
-    "name": "金禹池",
-    "title": "2026级研究生",
-    "grade": "2026级",
-    "research": "无",
-    "email": "1797751267@qq.com",
-    "phone": "13274201818",
-    "career": "在籍",
-    "education": "2022.09-2026.06，沈阳农业大学，土地整治工程专业，导师： 边振兴 教授",
-    "education_list": [
-      "2022.09-2026.06，沈阳农业大学，土地整治工程专业，导师： 边振兴 教授"
-    ],
-    "homepage_url": "",
-    "avatar_url": "/images/members/m_51.jpg"
-  },
-  {
-    "id": "m_50",
-    "category": "在读研究生",
-    "name": "尤润生",
-    "title": "2026级研究生",
-    "grade": "2026级",
-    "research": "无",
-    "email": "17695816245@163.com",
-    "phone": "17695816245",
-    "career": "在籍",
-    "education": "2019.09-2023.07，成都理工大学，地理信息科学专业",
-    "education_list": [
-      "2019.09-2023.07，成都理工大学，地理信息科学专业"
-    ],
-    "homepage_url": "",
-    "avatar_url": "/images/members/m_50.png"
-  },
-  {
-    "id": "m_49",
-    "category": "在读研究生",
-    "name": "王金鑫",
-    "title": "2026级研究生",
-    "grade": "2026级",
-    "research": "暂无",
-    "email": "2030231134@qq.com",
-    "phone": "15295708215",
-    "career": "在籍",
-    "education": "2021.09-2024.07，江苏农林职业技术学院，现代农业技术专业，导师： 刘超\n2024.09-2026.06，南京理工大学泰州科技学院，环境工程专业，导师：张永兵教授\n2026.09-至今，扬州大学，资源利用与植物保护专业，导师：王小治教授",
-    "education_list": [
-      "2021.09-2024.07，江苏农林职业技术学院，现代农业技术专业，导师： 刘超",
-      "2024.09-2026.06，南京理工大学泰州科技学院，环境工程专业，导师：张永兵教授",
-      "2026.09-至今，扬州大学，资源利用与植物保护专业，导师：王小治教授"
-    ],
-    "homepage_url": "",
-    "avatar_url": "/images/members/m_49.jpg"
-  },
-  {
-    "id": "m_48",
-    "category": "在读研究生",
-    "name": "华恒煜",
-    "title": "2026级研究生",
-    "grade": "2026级",
-    "research": "资源与环境",
-    "email": "1455573833@qq.com",
-    "phone": "",
-    "career": "在籍",
-    "education": "2022.09-2026.07，南京信息工程大学，环境工程专业，导师： 徐磊磊教授\n2026.09-至今，扬州大学，资源与环境专业，导师：王小治教授",
-    "education_list": [
-      "2022.09-2026.07，南京信息工程大学，环境工程专业，导师： 徐磊磊教授",
-      "2026.09-至今，扬州大学，资源与环境专业，导师：王小治教授"
-    ],
-    "homepage_url": "",
-    "avatar_url": "/images/members/m_48.jpg"
-  },
-  {
-    "id": "m_47",
+    "id": "p_47",
     "category": "在读研究生",
     "name": "徐航敏",
     "title": "2025级博士",
@@ -382,13 +311,108 @@ export const membersData = [
       "2025.09-至今，扬州大学，农业工程专业，导师：王小治教授、朱兴旺副教授"
     ],
     "homepage_url": "",
-    "avatar_url": "/images/members/m_47.jpg"
+    "avatar_url": "/images/members/m_47.jpg",
+    "update": "26-Sep"
+  },
+  {
+    "id": "m_52",
+    "category": "在读研究生",
+    "name": "高原",
+    "title": "2026级硕士生",
+    "grade": "2026级",
+    "research": "暂无",
+    "email": "935919257@qq.com",
+    "phone": "15152726672",
+    "career": "在籍",
+    "education": "2020.09-2024.06，湖南农业大学，劳动与社会保障专业，导师： 胡扬名教授\n2026.09-至今，扬州大学，农业资源与环境专业，导师： 尹微琴高级农艺师",
+    "education_list": [
+      "2020.09-2024.06，湖南农业大学，劳动与社会保障专业，导师： 胡扬名教授",
+      "2026.09-至今，扬州大学，农业资源与环境专业，导师： 尹微琴高级农艺师"
+    ],
+    "homepage_url": "",
+    "avatar_url": "/images/members/m_52.jpg",
+    "update": "26-Sep"
+  },
+  {
+    "id": "m_51",
+    "category": "在读研究生",
+    "name": "金禹池",
+    "title": "2026级硕士生",
+    "grade": "2026级",
+    "research": "无",
+    "email": "1797751267@qq.com",
+    "phone": "13274201818",
+    "career": "在籍",
+    "education": "2022.09-2026.06，沈阳农业大学，土地整治工程专业，导师： 边振兴 教授",
+    "education_list": [
+      "2022.09-2026.06，沈阳农业大学，土地整治工程专业，导师： 边振兴 教授"
+    ],
+    "homepage_url": "",
+    "avatar_url": "/images/members/m_51.jpg",
+    "update": "26-Sep"
+  },
+  {
+    "id": "m_50",
+    "category": "在读研究生",
+    "name": "尤润生",
+    "title": "2026级硕士生",
+    "grade": "2026级",
+    "research": "无",
+    "email": "17695816245@163.com",
+    "phone": "17695816245",
+    "career": "在籍",
+    "education": "2019.09-2023.07，成都理工大学，地理信息科学专业",
+    "education_list": [
+      "2019.09-2023.07，成都理工大学，地理信息科学专业"
+    ],
+    "homepage_url": "",
+    "avatar_url": "/images/members/m_50.png",
+    "update": "26-Sep"
+  },
+  {
+    "id": "m_49",
+    "category": "在读研究生",
+    "name": "王金鑫",
+    "title": "2026级硕士生",
+    "grade": "2026级",
+    "research": "暂无",
+    "email": "2030231134@qq.com",
+    "phone": "15295708215",
+    "career": "在籍",
+    "education": "2021.09-2024.07，江苏农林职业技术学院，现代农业技术专业，导师： 刘超\n2024.09-2026.06，南京理工大学泰州科技学院，环境工程专业，导师：张永兵教授\n2026.09-至今，扬州大学，资源利用与植物保护专业，导师：王小治教授",
+    "education_list": [
+      "2021.09-2024.07，江苏农林职业技术学院，现代农业技术专业，导师： 刘超",
+      "2024.09-2026.06，南京理工大学泰州科技学院，环境工程专业，导师：张永兵教授",
+      "2026.09-至今，扬州大学，资源利用与植物保护专业，导师：王小治教授"
+    ],
+    "homepage_url": "",
+    "avatar_url": "/images/members/m_49.jpg",
+    "update": "26-Sep"
+  },
+  {
+    "id": "m_48",
+    "category": "在读研究生",
+    "name": "华恒煜",
+    "title": "2026级硕士生",
+    "grade": "2026级",
+    "research": "资源与环境",
+    "email": "1455573833@qq.com",
+    "phone": "",
+    "career": "在籍",
+    "education": "2022.09-2026.07，南京信息工程大学，环境工程专业，导师： 徐磊磊教授\n2026.09-至今，扬州大学，资源与环境专业，导师：王小治教授",
+    "education_list": [
+      "2022.09-2026.07，南京信息工程大学，环境工程专业，导师： 徐磊磊教授",
+      "2026.09-至今，扬州大学，资源与环境专业，导师：王小治教授"
+    ],
+    "homepage_url": "",
+    "avatar_url": "/images/members/m_48.jpg",
+    "update": "26-Sep"
   },
   {
     "id": "m_46",
     "category": "在读研究生",
     "name": "冯雪洁",
-    "title": "2025级研究生",
+    "title": "2025级硕士生",
     "grade": "2025级",
     "research": "土壤环境化学与机器学习应用",
     "email": "1289018453@qq.com",
@@ -400,13 +424,14 @@ export const membersData = [
       "2025.09-至今，扬州大学，资源与环境专业，导师：王小治教授 王玉军教授"
     ],
     "homepage_url": "",
-    "avatar_url": "/images/members/m_46.jpg"
+    "avatar_url": "/images/members/m_46.jpg",
+    "update": "26-Sep"
   },
   {
     "id": "m_45",
     "category": "在读研究生",
     "name": "陈诚",
-    "title": "2025级研究生",
+    "title": "2025级硕士生",
     "grade": "2025级",
     "research": "单原子催化剂",
     "email": "378191363@qq.com",
@@ -418,13 +443,14 @@ export const membersData = [
       "2025.09-至今，扬州大学，学生"
     ],
     "homepage_url": "",
-    "avatar_url": "/images/members/m_45.jpg"
+    "avatar_url": "/images/members/m_45.jpg",
+    "update": "26-Sep"
   },
   {
     "id": "m_44",
     "category": "在读研究生",
     "name": "王延旭",
-    "title": "2025级研究生",
+    "title": "2025级硕士生",
     "grade": "2025级",
     "research": "土壤重金属污染",
     "email": "1254385061@qq.com",
@@ -436,13 +462,14 @@ export const membersData = [
       "2025.09-至今，扬州大学，资源利用与植物保护专业，导师：王小治教授"
     ],
     "homepage_url": "",
-    "avatar_url": "/images/members/m_44.jpg"
+    "avatar_url": "/images/members/m_44.jpg",
+    "update": "26-Sep"
   },
   {
     "id": "m_43",
     "category": "在读研究生",
     "name": "柴英皓",
-    "title": "2025级研究生",
+    "title": "2025级硕士生",
     "grade": "2025级",
     "research": "功能微生物-水生植物耦合的高效脱氮除磷",
     "email": "13705200882@163.com",
@@ -454,13 +481,14 @@ export const membersData = [
       "2025.09-至今，扬州大学，资源与环境专业，导师：王小治教授"
     ],
     "homepage_url": "",
-    "avatar_url": "/images/members/m_43.jpg"
+    "avatar_url": "/images/members/m_43.jpg",
+    "update": "26-Sep"
   },
   {
     "id": "m_42",
     "category": "在读研究生",
     "name": "郭伯厚",
-    "title": "2025级研究生",
+    "title": "2025级硕士生",
     "grade": "2025级",
     "research": "土壤重金属污染",
     "email": "19957381187@163.com",
@@ -472,13 +500,14 @@ export const membersData = [
       "2024.09-至今，扬州大学，资源与环境专业，导师：王小治教授"
     ],
     "homepage_url": "",
-    "avatar_url": "/images/members/m_42.jpg"
+    "avatar_url": "/images/members/m_42.jpg",
+    "update": "26-Sep"
   },
   {
     "id": "m_41",
     "category": "在读研究生",
     "name": "张含",
-    "title": "2025级研究生",
+    "title": "2025级硕士生",
     "grade": "2025级",
     "research": "空气取水水凝胶",
     "email": "15252889837@163.com",
@@ -490,13 +519,14 @@ export const membersData = [
       "2025.09-2028.06，扬州大学，资源与环境专业，导师：王小治教授"
     ],
     "homepage_url": "",
-    "avatar_url": "/images/members/m_41.jpg"
+    "avatar_url": "/images/members/m_41.jpg",
+    "update": "26-Sep"
   },
   {
     "id": "m_40",
     "category": "在读研究生",
     "name": "朱奕霏",
-    "title": "2025级研究生",
+    "title": "2025级硕士生",
     "grade": "2025级",
     "research": "生物炭材料",
     "email": "3184541690@qq.com",
@@ -507,13 +537,14 @@ export const membersData = [
       "2025.09-至今，扬州大学，农业资源与环境专业，导师：王小治教授"
     ],
     "homepage_url": "",
-    "avatar_url": "/images/members/m_40.png"
+    "avatar_url": "/images/members/m_40.png",
+    "update": "26-Sep"
   },
   {
     "id": "m_39",
     "category": "在读研究生",
     "name": "吴恩轩",
-    "title": "2024级研究生",
+    "title": "2024级硕士生",
     "grade": "2024级",
     "research": "茶园土壤氮素流失特征与累积稳定机制研究",
     "email": "wu1004xuan@163.com",
@@ -525,13 +556,14 @@ export const membersData = [
       "2024.09-2027.06 扬州大学 资源利用与植物保护专业 导师：尹微琴 高级农艺师"
     ],
     "homepage_url": "",
-    "avatar_url": "/images/members/m_39.jpg"
+    "avatar_url": "/images/members/m_39.jpg",
+    "update": "26-Sep"
   },
   {
     "id": "m_38",
     "category": "在读研究生",
     "name": "张鑫",
-    "title": "2024级研究生",
+    "title": "2024级硕士生",
     "grade": "2024级",
     "research": "硫化镉光催化还原二氧化碳",
     "email": "zhangxin@zxw.ac.cn",
@@ -542,13 +574,14 @@ export const membersData = [
       "2024.09-至今，扬州大学，环境科学与工程专业，导师：王小治教授、朱兴旺副教授"
     ],
     "homepage_url": "",
-    "avatar_url": "/images/members/m_38.jpg"
+    "avatar_url": "/images/members/m_38.jpg",
+    "update": "26-Sep"
   },
   {
     "id": "m_37",
     "category": "在读研究生",
     "name": "袁旭",
-    "title": "2024级研究生",
+    "title": "2024级硕士生",
     "grade": "2024级",
     "research": "单元子催化剂",
     "email": "1656323054@qq.com",
@@ -559,13 +592,14 @@ export const membersData = [
       "2024.09-至今，扬州大学，资源与环境专业，导师：王小治教授"
     ],
     "homepage_url": "",
-    "avatar_url": "/images/members/m_37.jpg"
+    "avatar_url": "/images/members/m_37.jpg",
+    "update": "26-Sep"
   },
   {
     "id": "m_36",
     "category": "在读研究生",
     "name": "仲海霞",
-    "title": "2024级研究生",
+    "title": "2024级硕士生",
     "grade": "2024级",
     "research": "土壤重金属修复",
     "email": "2960138742@qq.com",
@@ -577,13 +611,14 @@ export const membersData = [
       "2024.09-至今，扬州大学，资源与环境专业，导师：王小治教授"
     ],
     "homepage_url": "",
-    "avatar_url": "/images/members/m_36.jpg"
+    "avatar_url": "/images/members/m_36.jpg",
+    "update": "26-Sep"
   },
   {
     "id": "m_35",
     "category": "在读研究生",
     "name": "郑梓舒",
-    "title": "2024级研究生",
+    "title": "2024级硕士生",
     "grade": "2024级",
     "research": "土壤重金属修复",
     "email": "zishuzheng2001@163.com",
@@ -595,96 +630,102 @@ export const membersData = [
       "2024.09-至今，扬州大学，农业资源与环境专业，导师：王小治教授"
     ],
     "homepage_url": "",
-    "avatar_url": "/images/members/m_35.jpg"
+    "avatar_url": "/images/members/m_35.jpg",
+    "update": "26-Sep"
   },
   {
     "id": "m_34",
-    "category": "在读研究生",
+    "category": "校友",
     "name": "徐锦泽",
-    "title": "2023级研究生",
+    "title": "2023级硕士生",
     "grade": "2023级",
     "research": "单原子催化剂的可控合成",
     "email": "",
     "phone": "",
-    "career": "在籍",
+    "career": "已毕业",
     "education": "",
     "education_list": [],
     "homepage_url": "",
-    "avatar_url": "/images/members/m_34.jpg"
+    "avatar_url": "/images/members/m_34.jpg",
+    "update": "26-Sep"
   },
   {
     "id": "m_33",
-    "category": "在读研究生",
+    "category": "校友",
     "name": "李蔚",
-    "title": "2023级研究生",
+    "title": "2023级硕士生",
     "grade": "2023级",
     "research": "土壤重金属污染",
     "email": "2628558911@qq.com",
     "phone": "18796601201",
-    "career": "在籍",
+    "career": "已毕业",
     "education": "2018.09-2022.07，滁州学院，土木工程专业\n2023.09-2026.06，扬州大学，资源利用与植物保护专业，导师：王小治教授",
     "education_list": [
       "2018.09-2022.07，滁州学院，土木工程专业",
       "2023.09-2026.06，扬州大学，资源利用与植物保护专业，导师：王小治教授"
     ],
     "homepage_url": "",
-    "avatar_url": "/images/members/m_33.jpg"
+    "avatar_url": "/images/members/m_33.jpg",
+    "update": "26-Sep"
   },
   {
     "id": "m_32",
-    "category": "在读研究生",
+    "category": "校友",
     "name": "索毓聆",
-    "title": "2023级研究生",
+    "title": "2023级硕士生",
     "grade": "2023级",
     "research": "",
     "email": "",
     "phone": "",
-    "career": "在籍",
+    "career": "已毕业",
     "education": "",
     "education_list": [],
     "homepage_url": "",
-    "avatar_url": "/images/members/m_32.jpg"
+    "avatar_url": "/images/members/m_32.jpg",
+    "update": "26-Sep"
   },
   {
     "id": "m_31",
-    "category": "在读研究生",
+    "category": "校友",
     "name": "洪擎宇",
-    "title": "2023级研究生",
+    "title": "2023级硕士生",
     "grade": "2023级",
     "research": "水处理",
     "email": "1277204238@qq.com",
     "phone": "13250227820",
-    "career": "在籍",
+    "career": "2026年7月已在江苏省宜兴市鹏鹞环保入职。",
     "education": "2023.09-2026.06，扬州大学，资源与环境专业",
     "education_list": [
       "2023.09-2026.06，扬州大学，资源与环境专业"
     ],
     "homepage_url": "",
-    "avatar_url": "/images/members/m_31.jpg"
+    "avatar_url": "/images/members/m_31.jpg",
+    "update": "26-Sep"
   },
   {
     "id": "m_30",
-    "category": "在读研究生",
+    "category": "校友",
     "name": "赵英东",
-    "title": "2023级研究生",
+    "title": "2023级硕士生",
     "grade": "2023级",
     "research": "土壤碳循环及其微生物机制",
     "email": "supdonger@qq.com",
     "phone": "18912802151",
-    "career": "在籍",
+    "career": "升学南京农业大学博士研究生",
     "education": "2019.9-2023.6 扬州大学 植物保护学院 生态学\n2023.9-2026.6 扬州大学 环境科学与工程学院 环境科学与工程 导师：王小治教授、徐乔副教授",
     "education_list": [
       "2019.9-2023.6 扬州大学 植物保护学院 生态学",
       "2023.9-2026.6 扬州大学 环境科学与工程学院 环境科学与工程 导师：王小治教授、徐乔副教授"
     ],
     "homepage_url": "",
-    "avatar_url": "/images/members/m_30.jpg"
+    "avatar_url": "/images/members/m_30.jpg",
+    "update": "26-Sep"
   },
   {
     "id": "m_29",
     "category": "校友",
     "name": "吕调龙",
-    "title": "2023级研究生",
+    "title": "2023级硕士生",
     "grade": "2023级",
     "research": "",
     "email": "",
@@ -693,58 +734,46 @@ export const membersData = [
     "education": "",
     "education_list": [],
     "homepage_url": "",
-    "avatar_url": "/images/members/m_29.jpg"
+    "avatar_url": "/images/members/m_29.jpg",
+    "update": "26-Sep"
   },
   {
     "id": "m_28",
     "category": "校友",
     "name": "周港华",
-    "title": "2022级研究生",
+    "title": "2022级博士生",
     "grade": "2022级",
-    "research": "",
+    "research": "半导体表界面设计",
     "email": "",
     "phone": "",
-    "career": "已毕业",
+    "career": "在杭州高等研究院从事博士后工作",
     "education": "",
     "education_list": [],
     "homepage_url": "",
-    "avatar_url": "/images/members/m_28.jpg"
+    "avatar_url": "/images/members/m_28.jpg",
+    "update": "26-Sep"
   },
   {
     "id": "m_27",
     "category": "校友",
     "name": "徐航敏",
-    "title": "硕士研究生",
+    "title": "2022级硕士生",
     "grade": "2022级",
     "research": "",
     "email": "",
     "phone": "",
-    "career": "已毕业",
+    "career": "扬州大学博士研究生",
     "education": "",
     "education_list": [],
     "homepage_url": "",
-    "avatar_url": "/images/members/m_27.jpg"
-  },
-  {
-    "id": "m_26",
-    "category": "校友",
-    "name": "王杰",
-    "title": "硕士研究生",
-    "grade": "2022级",
-    "research": "",
-    "email": "",
-    "phone": "",
-    "career": "已毕业",
-    "education": "",
-    "education_list": [],
-    "homepage_url": "",
-    "avatar_url": "/images/members/m_26.jpg"
+    "avatar_url": "/images/members/m_27.jpg",
+    "update": "26-Sep"
   },
   {
     "id": "m_25",
     "category": "校友",
     "name": "李威",
-    "title": "硕士研究生",
+    "title": "2022级硕士生",
     "grade": "2022级",
     "research": "",
     "email": "",
@@ -753,13 +782,14 @@ export const membersData = [
     "education": "",
     "education_list": [],
     "homepage_url": "",
-    "avatar_url": "/images/members/m_25.jpg"
+    "avatar_url": "/images/members/m_25.jpg",
+    "update": "26-Sep"
   },
   {
     "id": "m_24",
     "category": "校友",
     "name": "代文霞",
-    "title": "硕士研究生",
+    "title": "2022级硕士生",
     "grade": "2022级",
     "research": "",
     "email": "",
@@ -768,13 +798,14 @@ export const membersData = [
     "education": "",
     "education_list": [],
     "homepage_url": "",
-    "avatar_url": "/images/members/m_24.jpg"
+    "avatar_url": "/images/members/m_24.jpg",
+    "update": "26-Sep"
   },
   {
     "id": "m_23",
     "category": "校友",
     "name": "刘馨雅",
-    "title": "硕士研究生",
+    "title": "2022级硕士生",
     "grade": "2022级",
     "research": "",
     "email": "",
@@ -783,13 +814,14 @@ export const membersData = [
     "education": "",
     "education_list": [],
     "homepage_url": "",
-    "avatar_url": "/images/members/m_23.jpg"
+    "avatar_url": "/images/members/m_23.jpg",
+    "update": "26-Sep"
   },
   {
     "id": "m_22",
     "category": "校友",
     "name": "张玲",
-    "title": "硕士研究生",
+    "title": "2022级硕士生",
     "grade": "2022级",
     "research": "",
     "email": "",
@@ -798,13 +830,14 @@ export const membersData = [
     "education": "",
     "education_list": [],
     "homepage_url": "",
-    "avatar_url": "/images/members/m_22.jpg"
+    "avatar_url": "/images/members/m_22.jpg",
+    "update": "26-Sep"
   },
   {
-    "id": "m_21",
+    "id": "m_26",
     "category": "校友",
-    "name": "王雪纯",
-    "title": "硕士研究生",
+    "name": "王杰",
+    "title": "2021级博士生",
     "grade": "2021级",
     "research": "",
     "email": "",
@@ -813,14 +846,79 @@ export const membersData = [
     "education": "",
     "education_list": [],
     "homepage_url": "",
-    "avatar_url": "/images/members/m_21.jpg"
+    "avatar_url": "/images/members/m_26.jpg",
+    "update": "26-Sep"
+  },
+  {
+    "id": "m_21",
+    "category": "校友",
+    "name": "王雪纯",
+    "title": "2021级硕士生",
+    "grade": "2021级",
+    "research": "",
+    "email": "",
+    "phone": "",
+    "career": "已毕业",
+    "education": "",
+    "education_list": [],
+    "homepage_url": "",
+    "avatar_url": "/images/members/m_21.jpg",
+    "update": "26-Sep"
+  },
+  {
+    "id": "m_19",
+    "category": "校友",
+    "name": "宋娴",
+    "title": "2021级硕士生",
+    "grade": "2021级",
+    "research": "",
+    "email": "",
+    "phone": "",
+    "career": "已毕业",
+    "education": "",
+    "education_list": [],
+    "homepage_url": "",
+    "avatar_url": "/images/members/m_19.jpg",
+    "update": "26-Sep"
+  },
+  {
+    "id": "m_18",
+    "category": "校友",
+    "name": "熊传琦",
+    "title": "2021级硕士生",
+    "grade": "2021级",
+    "research": "",
+    "email": "",
+    "phone": "",
+    "career": "已毕业",
+    "education": "",
+    "education_list": [],
+    "homepage_url": "",
+    "avatar_url": "/images/members/m_18.jpg",
+    "update": "26-Sep"
+  },
+  {
+    "id": "m_17",
+    "category": "校友",
+    "name": "夏雨",
+    "title": "2021级硕士生",
+    "grade": "2021级",
+    "research": "",
+    "email": "",
+    "phone": "",
+    "career": "已毕业",
+    "education": "",
+    "education_list": [],
+    "homepage_url": "",
+    "avatar_url": "/images/members/m_17.png",
+    "update": "26-Sep"
   },
   {
     "id": "m_20",
     "category": "校友",
     "name": "马帅",
-    "title": "硕士研究生",
-    "grade": "2021级",
+    "title": "2020级博士生",
+    "grade": "2020级",
     "research": "",
     "email": "",
     "phone": "",
@@ -828,58 +926,14 @@ export const membersData = [
     "education": "",
     "education_list": [],
     "homepage_url": "",
-    "avatar_url": "/images/members/m_20.jpg"
-  },
-  {
-    "id": "m_19",
-    "category": "校友",
-    "name": "宋娴",
-    "title": "硕士研究生",
-    "grade": "2021级",
-    "research": "",
-    "email": "",
-    "phone": "",
-    "career": "已毕业",
-    "education": "",
-    "education_list": [],
-    "homepage_url": "",
-    "avatar_url": "/images/members/m_19.png"
-  },
-  {
-    "id": "m_18",
-    "category": "校友",
-    "name": "熊传琦",
-    "title": "硕士研究生",
-    "grade": "2021级",
-    "research": "",
-    "email": "",
-    "phone": "",
-    "career": "已毕业",
-    "education": "",
-    "education_list": [],
-    "homepage_url": "",
-    "avatar_url": "/images/members/m_18.jpg"
-  },
-  {
-    "id": "m_17",
-    "category": "校友",
-    "name": "夏雨",
-    "title": "硕士研究生",
-    "grade": "2021级",
-    "research": "",
-    "email": "",
-    "phone": "",
-    "career": "已毕业",
-    "education": "",
-    "education_list": [],
-    "homepage_url": "",
-    "avatar_url": "/images/members/m_17.png"
+    "avatar_url": "/images/members/m_20.jpg",
+    "update": "26-Sep"
   },
   {
     "id": "m_16",
     "category": "校友",
     "name": "王圣杰",
-    "title": "硕士研究生",
+    "title": "2020级硕士生",
     "grade": "2020级",
     "research": "",
     "email": "",
@@ -888,13 +942,14 @@ export const membersData = [
     "education": "",
     "education_list": [],
     "homepage_url": "",
-    "avatar_url": "/images/members/m_16.jpg"
+    "avatar_url": "/images/members/m_16.jpg",
+    "update": "26-Sep"
   },
   {
     "id": "m_15",
     "category": "校友",
     "name": "周赒",
-    "title": "硕士研究生",
+    "title": "2020级硕士生",
     "grade": "2020级",
     "research": "",
     "email": "",
@@ -903,13 +958,14 @@ export const membersData = [
     "education": "",
     "education_list": [],
     "homepage_url": "",
-    "avatar_url": "/images/members/m_15.png"
+    "avatar_url": "/images/members/m_15.jpg",
+    "update": "26-Sep"
   },
   {
     "id": "m_14",
     "category": "校友",
     "name": "郁山",
-    "title": "硕士研究生",
+    "title": "2019级硕士生",
     "grade": "2019级",
     "research": "",
     "email": "",
@@ -918,13 +974,14 @@ export const membersData = [
     "education": "",
     "education_list": [],
     "homepage_url": "",
-    "avatar_url": "/images/members/m_14.webp"
+    "avatar_url": "/images/members/m_14.webp",
+    "update": "26-Sep"
   },
   {
     "id": "m_13",
     "category": "校友",
     "name": "徐秋月",
-    "title": "硕士研究生",
+    "title": "2019级硕士生",
     "grade": "2019级",
     "research": "",
     "email": "",
@@ -933,13 +990,14 @@ export const membersData = [
     "education": "",
     "education_list": [],
     "homepage_url": "",
-    "avatar_url": "/images/members/m_13.png"
+    "avatar_url": "/images/members/m_13.png",
+    "update": "26-Sep"
   },
   {
     "id": "m_12",
     "category": "校友",
     "name": "尹文华",
-    "title": "硕士研究生",
+    "title": "2019级硕士生",
     "grade": "2019级",
     "research": "",
     "email": "",
@@ -948,13 +1006,14 @@ export const membersData = [
     "education": "",
     "education_list": [],
     "homepage_url": "",
-    "avatar_url": "/images/members/m_12.webp"
+    "avatar_url": "/images/members/m_12.webp",
+    "update": "26-Sep"
   },
   {
     "id": "m_11",
     "category": "校友",
     "name": "孟莉蓉",
-    "title": "硕士研究生",
+    "title": "2017级硕士生",
     "grade": "2017级",
     "research": "",
     "email": "",
@@ -963,13 +1022,14 @@ export const membersData = [
     "education": "",
     "education_list": [],
     "homepage_url": "",
-    "avatar_url": "/images/members/m_11.jpg"
+    "avatar_url": "/images/members/m_11.jpg",
+    "update": "26-Sep"
   },
   {
     "id": "m_10",
     "category": "校友",
     "name": "董昊云",
-    "title": "硕士研究生",
+    "title": "2017级硕士生",
     "grade": "2017级",
     "research": "",
     "email": "",
@@ -978,13 +1038,14 @@ export const membersData = [
     "education": "",
     "education_list": [],
     "homepage_url": "",
-    "avatar_url": "/images/members/m_10.jpg"
+    "avatar_url": "/images/members/m_10.jpg",
+    "update": "26-Sep"
   },
   {
     "id": "m_9",
     "category": "校友",
     "name": "刘天宇",
-    "title": "硕士研究生",
+    "title": "2014级硕士生",
     "grade": "2014级",
     "research": "",
     "email": "",
@@ -993,13 +1054,14 @@ export const membersData = [
     "education": "",
     "education_list": [],
     "homepage_url": "",
-    "avatar_url": "/images/members/m_9.png"
+    "avatar_url": "/images/members/m_9.png",
+    "update": "26-Sep"
   },
   {
     "id": "m_8",
     "category": "校友",
     "name": "魏思雨",
-    "title": "硕士研究生",
+    "title": "2014级硕士生",
     "grade": "2014级",
     "research": "",
     "email": "",
@@ -1008,13 +1070,14 @@ export const membersData = [
     "education": "",
     "education_list": [],
     "homepage_url": "",
-    "avatar_url": "/images/members/m_8.jpg"
+    "avatar_url": "/images/members/m_8.jpg",
+    "update": "26-Sep"
   },
   {
     "id": "m_7",
     "category": "校友",
     "name": "薛红波",
-    "title": "硕士研究生",
+    "title": "2014级硕士生",
     "grade": "2014级",
     "research": "",
     "email": "",
@@ -1023,13 +1086,14 @@ export const membersData = [
     "education": "",
     "education_list": [],
     "homepage_url": "",
-    "avatar_url": "/images/members/m_7.png"
+    "avatar_url": "/images/members/m_7.png",
+    "update": "26-Sep"
   },
   {
     "id": "m_6",
     "category": "校友",
     "name": "王俊超",
-    "title": "硕士研究生",
+    "title": "2013级硕士生",
     "grade": "2013级",
     "research": "",
     "email": "",
@@ -1038,13 +1102,14 @@ export const membersData = [
     "education": "",
     "education_list": [],
     "homepage_url": "",
-    "avatar_url": "/images/members/m_6.png"
+    "avatar_url": "/images/members/m_6.png",
+    "update": "26-Sep"
   },
   {
     "id": "m_5",
     "category": "校友",
     "name": "郑凯琪",
-    "title": "硕士研究生",
+    "title": "2013级硕士生",
     "grade": "2013级",
     "research": "",
     "email": "",
@@ -1053,67 +1118,72 @@ export const membersData = [
     "education": "",
     "education_list": [],
     "homepage_url": "",
-    "avatar_url": "/images/members/m_5.png"
+    "avatar_url": "/images/members/m_5.png",
+    "update": "26-Sep"
   },
   {
     "id": "m_4",
     "category": "校友",
     "name": "徐荣",
-    "title": "硕士研究生",
+    "title": "2012级硕士生",
     "grade": "2012级",
-    "research": "目前从事稻田综合种养技术及投入品研发",
+    "research": "",
     "email": "",
     "phone": "",
     "career": "目前从事稻田综合种养技术及投入品研发",
     "education": "",
     "education_list": [],
     "homepage_url": "",
-    "avatar_url": "/images/members/m_4.png"
+    "avatar_url": "/images/members/m_4.png",
+    "update": "26-Sep"
   },
   {
     "id": "m_3",
     "category": "校友",
     "name": "郭海宁",
-    "title": "硕士研究生",
+    "title": "2012级硕士生",
     "grade": "2012级",
-    "research": "目前在江苏沙钢集团从事环保管理相关工作",
+    "research": "",
     "email": "",
     "phone": "",
     "career": "在江苏沙钢集团从事环保管理相关工作",
     "education": "",
     "education_list": [],
     "homepage_url": "",
-    "avatar_url": "/images/members/default_avatar.jpg"
+    "avatar_url": "/images/members/default_avatar.jpg",
+    "update": "26-Sep"
   },
   {
     "id": "m_2",
     "category": "校友",
     "name": "李买军",
-    "title": "硕士研究生",
+    "title": "2012级硕士生",
     "grade": "2012级",
-    "research": "目前是一名水处理工艺工程师",
+    "research": "",
     "email": "",
     "phone": "",
     "career": "目前是一名水处理工艺工程师",
     "education": "",
     "education_list": [],
     "homepage_url": "",
-    "avatar_url": "/images/members/m_2.png"
+    "avatar_url": "/images/members/m_2.png",
+    "update": "26-Sep"
   },
   {
     "id": "m_1",
     "category": "校友",
     "name": "张海进",
-    "title": "硕士研究生",
+    "title": "2008级硕士生",
     "grade": "2008级",
-    "research": "目前从事职业卫生软件开发",
+    "research": "",
     "email": "",
     "phone": "",
     "career": "目前从事职业卫生软件开发",
     "education": "",
     "education_list": [],
     "homepage_url": "",
-    "avatar_url": "/images/members/m_1.png"
+    "avatar_url": "/images/members/m_1.png",
+    "update": "26-Sep"
   }
 ];
 

@@ -3,12 +3,14 @@
 """
 课题组网站成员数据自动同步脚本 (members.csv -> members.js & members.json)
 ========================================================================
-功能：
-1. 读取项目根目录下的 members.csv（支持 UTF-8 及带 BOM 的 Excel 格式）
-2. 规范化并清洗各项数据（教师、在读研究生、校友，电话与邮箱分离，教育经历换行切分，毕业去向解析，头像防丢兼容）
-3. 自动生成前端成员页直接引入的纯 JS 模块：src/data/members.js
-4. 同步生成兼容的 JSON 文件：src/data/members.json
-5. 支持双击直接运行更新，方便日常成员变更运维。
+规则说明：
+1. 仅读取 members.csv，绝不修改、覆盖或格式化 CSV 文件本身！
+2. 完整读取新增字段，包括 update（更新时间）
+3. 严格遵循用户指定的排序规则：
+   - 教师：严格保持当前在 CSV 中的排序
+   - 在读研究生：以 p_ 开头的博士生置顶，其余按年级降序排序（高年级/入学早的在下面）
+   - 校友：按年级降序排序（入学年份早的在下面，2023级在最上，2008级在最底）
+4. 输出纯 JS 模块 src/data/members.js 和同步兼容的 JSON 数据
 """
 
 import os
@@ -17,7 +19,6 @@ import csv
 import json
 import re
 
-# 确定项目根目录（无论在项目根目录运行还是在 scripts/ 子目录下运行）
 current_dir = os.path.dirname(os.path.abspath(__file__))
 project_root = os.path.dirname(current_dir) if os.path.basename(current_dir) == 'scripts' else current_dir
 
@@ -25,6 +26,12 @@ csv_path = os.path.join(project_root, 'members.csv')
 target_js_path = os.path.join(project_root, 'src', 'data', 'members.js')
 target_json_path = os.path.join(project_root, 'src', 'data', 'members.json')
 avatar_dir = os.path.join(project_root, 'public', 'images', 'members')
+
+def get_grade_number(text):
+    if not text:
+        return 0
+    m = re.search(r'(\d{4})', str(text))
+    return int(m.group(1)) if m else 0
 
 def main():
     print("=" * 60)
@@ -38,14 +45,17 @@ def main():
 
     print(f"📄 正在读取数据源：{csv_path}")
 
-    # 扫描已有的头像文件，避免图片后缀写错破图
+    # 扫描已有的头像文件
     avatar_map = {}
     if os.path.exists(avatar_dir):
         for fn in os.listdir(avatar_dir):
             base, ext = os.path.splitext(fn)
             avatar_map[base] = f"/images/members/{fn}"
 
-    members = []
+    teachers = []
+    students = []
+    alumni = []
+
     with open(csv_path, 'r', encoding='utf-8-sig') as f:
         reader = csv.DictReader(f)
         for row in reader:
@@ -73,8 +83,9 @@ def main():
             education = row.get('education', '').strip()
             homepage_url = row.get('homepage_url', '').strip()
             avatar_url = row.get('avatar_url', '').strip()
+            update = row.get('update', '').strip()
 
-            # 仅教师保留官方主页（学生与校友清空，彻底避免指向将迁移的 wxz.group 旧站点）
+            # 仅教师保留官方主页（学生与校友清空，避免指向旧站点）
             if category != '教师' or 'wxz.group' in homepage_url:
                 homepage_url = ''
 
@@ -86,27 +97,26 @@ def main():
             # 教育经历结构化：修复连字符断行并按经历分项
             edu_lines = []
             if education:
-                # 彻底消除 2022.09-\n2024.07 等因破折号造成的错误断行
                 education = re.sub(r'([-\u2013\u2014~至])\s*[\r\n]+\s*', r'\1', education)
                 raw_lines = re.split(r'[\r\n]+', education)
                 for l in raw_lines:
                     l = l.strip()
                     if not l:
                         continue
-                    # 避免在连字符处切分，仅在以年份开头的完整经历处切分
                     subparts = re.split(r'(?<![-\u2013\u2014~至\d])(?=(?:19|20)\d{2}[.\-年/])', l)
                     for sp in subparts:
                         sp = sp.strip().strip('；;，, ')
                         if sp:
                             edu_lines.append(sp)
 
-            # 头像映射校验
-            if m_id in avatar_map:
-                avatar_url = avatar_map[m_id]
-            elif not avatar_url or avatar_url == '/images/default_avatar.jpg':
-                avatar_url = '/images/members/default_avatar.jpg'
+            # 头像映射：优先使用用户在 CSV 中指定的 avatar_url
+            if not avatar_url or avatar_url == '/images/default_avatar.jpg':
+                if m_id in avatar_map:
+                    avatar_url = avatar_map[m_id]
+                else:
+                    avatar_url = '/images/members/default_avatar.jpg'
 
-            members.append({
+            item = {
                 'id': m_id,
                 'category': category,
                 'name': name,
@@ -119,16 +129,32 @@ def main():
                 'education': education,
                 'education_list': edu_lines,
                 'homepage_url': homepage_url,
-                'avatar_url': avatar_url
-            })
+                'avatar_url': avatar_url,
+                'update': update
+            }
 
-    print(f"✅ 成功解析 {len(members)} 位成员数据：")
-    faculty_count = sum(1 for m in members if m['category'] == '教师')
-    student_count = sum(1 for m in members if m['category'] == '在读研究生')
-    alumni_count = sum(1 for m in members if m['category'] == '校友')
-    print(f"   - 教师：{faculty_count} 位")
-    print(f"   - 在读研究生：{student_count} 位")
-    print(f"   - 毕业校友：{alumni_count} 位")
+            if category == '教师':
+                teachers.append(item)
+            elif category == '在读研究生':
+                students.append(item)
+            else:
+                alumni.append(item)
+
+    # 排序规则执行：
+    # 1. 教师：严格保持用户当前在 CSV 中的顺序
+    # 2. 在读学生：p_X（博士生）置顶，其余按年级降序（年级大的/入学早的在下面）
+    students.sort(key=lambda s: (0 if s['id'].startswith('p_') else 1, -get_grade_number(s['grade'] or s['title'])))
+
+    # 3. 校友：按年级降序排序（年级大的在下面，例如 2023级在上面，2008级在最底）
+    alumni.sort(key=lambda a: -get_grade_number(a['grade'] or a['title']))
+
+    # 汇总全部成员
+    all_members = teachers + students + alumni
+
+    print(f"✅ 成功解析 {len(all_members)} 位成员数据：")
+    print(f"   - 教师：{len(teachers)} 位 (保持原序)")
+    print(f"   - 在读研究生：{len(students)} 位 (p_X置顶，年级降序)")
+    print(f"   - 毕业校友：{len(alumni)} 位 (年级降序)")
 
     # 1. 生成 src/data/members.js
     os.makedirs(os.path.dirname(target_js_path), exist_ok=True)
@@ -139,7 +165,7 @@ def main():
 // 生成时间: {import_time()}
 // ==========================================================================
 
-export const membersData = {json.dumps(members, ensure_ascii=False, indent=2)};
+export const membersData = {json.dumps(all_members, ensure_ascii=False, indent=2)};
 
 export default membersData;
 """
@@ -149,7 +175,7 @@ export default membersData;
 
     # 2. 同步生成 src/data/members.json (向后兼容)
     with open(target_json_path, 'w', encoding='utf-8') as f:
-        json.dump(members, f, ensure_ascii=False, indent=2)
+        json.dump(all_members, f, ensure_ascii=False, indent=2)
     print(f"📦 已同步更新 JSON 数据：{target_json_path}")
 
     print("=" * 60)
