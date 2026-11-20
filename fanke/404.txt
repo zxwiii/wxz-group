@@ -1,0 +1,230 @@
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>
+    404&nbsp;-&nbsp;页面未找到&nbsp;|&nbsp;王小治教授课题组
+</title><style type="text/css">* {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body, html {
+      height: 100%;
+      min-height: 100vh;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      background: #06152d radial-gradient(circle at 50% 35%, #0d274c 0%, #051329 100%) no-repeat;
+      color: #ffffff;
+      overflow-x: hidden;
+    }
+    
+    .page-wrapper {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      padding: 30px 20px 20px;
+      position: relative;
+    }
+
+    /* 顶部 Logo 区域 */
+    .header-logo {
+      text-align: center;
+      padding: 10px 0;
+    }
+    .header-logo a {
+      display: inline-block;
+      text-decoration: none !important;
+      border: none !important;
+      outline: none !important;
+      line-height: 0;
+    }
+    .header-logo img {
+      max-width: 220px;
+      height: auto;
+      border: 0;
+      display: block;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+      transition: transform 0.3s ease;
+    }
+    .header-logo img:hover {
+      transform: scale(1.03);
+    }
+
+    /* 404 主体内容 */
+    .content-container {
+      text-align: center;
+      max-width: 700px;
+      width: 100%;
+      margin: auto 0;
+    }
+
+    /* 404 巨型渐变数字 */
+    .code-404 {
+      font-size: 180px;
+      font-weight: 800;
+      line-height: 1;
+      letter-spacing: -2px;
+      background: linear-gradient(135deg, #38bdf8 0%, #0e8faa 50%, #ffffff 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 10px 40px rgba(14, 143, 170, 0.35);
+      margin-bottom: 10px;
+      user-select: none;
+    }
+
+    /* 提示文字 */
+    .title-message {
+      font-size: 26px;
+      font-weight: 600;
+      color: #f1f5f9;
+      margin-bottom: 12px;
+      letter-spacing: 0.5px;
+    }
+    .sub-message {
+      font-size: 15px;
+      color: #94a3b8;
+      line-height: 1.6;
+      max-width: 520px;
+      margin: 0 auto 36px;
+    }
+
+    /* 按钮组 */
+    .action-buttons {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-bottom: 40px;
+    }
+    .btn-home {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 28px;
+      background: linear-gradient(135deg, #0e8faa 0%, #0284c7 100%);
+      color: #ffffff !important;
+      text-decoration: none !important;
+      font-size: 16px;
+      font-weight: 600;
+      border-radius: 30px;
+      box-shadow: 0 4px 15px rgba(14, 143, 170, 0.4);
+      transition: all 0.25s ease;
+    }
+    .btn-home:hover {
+      background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+      box-shadow: 0 6px 20px rgba(14, 143, 170, 0.6);
+      transform: translateY(-2px);
+    }
+
+    .btn-back {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 24px;
+      background: rgba(255, 255, 255, 0.08);
+      color: #e2e8f0 !important;
+      text-decoration: none !important;
+      font-size: 15px;
+      font-weight: 500;
+      border-radius: 30px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      backdrop-filter: blur(8px);
+      transition: all 0.25s ease;
+      cursor: pointer;
+    }
+    .btn-back:hover {
+      background: rgba(255, 255, 255, 0.16);
+      color: #ffffff !important;
+      transform: translateY(-2px);
+    }
+
+    /* 快捷学术链接 */
+    .quick-links {
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding-top: 24px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .quick-links span {
+      font-size: 14px;
+      color: #64748b;
+    }
+    .quick-links a {
+      color: #38bdf8;
+      text-decoration: none;
+      font-size: 14px;
+      transition: color 0.2s;
+    }
+    .quick-links a:hover {
+      color: #7dd3fc;
+      text-decoration: underline;
+    }
+
+    /* 底部版权信息 */
+    .footer-copy {
+      font-size: 13px;
+      color: #64748b;
+      text-align: center;
+      padding: 15px 0;
+    }
+
+    /* 移动端适配 */
+    @media screen and (max-width: 600px) {
+      .header-logo img {
+        max-width: 170px;
+      }
+      .code-404 {
+        font-size: 110px;
+      }
+      .title-message {
+        font-size: 20px;
+      }
+      .sub-message {
+        font-size: 14px;
+        margin-bottom: 28px;
+      }
+      .btn-home, .btn-back {
+        width: 100%;
+        max-width: 260px;
+      }
+      .quick-links {
+        gap: 12px;
+      }
+    }</style>
+<div class="page-wrapper">
+    <div class="header-logo">
+        <a href="https://wxz.group/"><img src="//32031610.s21i.faiusr.com/4/3/ABUIABAEGAAgrq2y1gYolqeBqAcwwQM44AE.png" alt="王小治教授课题组 - LAP" /> &nbsp;</a>
+    </div>
+    <div class="content-container">
+        <h1 class="code-404">
+            404
+        </h1>
+        <h2 class="title-message">
+            抱歉，您访问的页面已迷航或不存在
+        </h2>
+        <p class="sub-message">
+            Oops!&nbsp;The&nbsp;page&nbsp;you&nbsp;are&nbsp;looking&nbsp;for&nbsp;might&nbsp;have&nbsp;been&nbsp;removed,&nbsp;had&nbsp;its&nbsp;name&nbsp;changed,&nbsp;or&nbsp;is&nbsp;temporarily&nbsp;unavailable.
+        </p>
+        <div class="action-buttons">
+            <a href="https://wxz.group/" class="btn-home"> &nbsp;
+                <svg style="width:18px;height:18px;fill:currentColor;margin-right:8px;" viewbox="0 0 24 24">
+                    <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z">
+                    </path>
+                </svg>返回课题组首页</a><a href="javascript:history.back();" class="btn-back"> &nbsp;
+                <svg style="width:16px;height:16px;fill:currentColor;margin-right:6px;" viewbox="0 0 24 24">
+                    <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z">
+                    </path>
+                </svg>返回上一页</a> &nbsp;
+        </div>
+        <div class="quick-links">
+            <span>您可能想要访问：</span><a href="https://wxz.group/">首页概况</a><a href="https://wxz.group/Publications/">科研成果</a><a href="https://wxz.group/Members/">团队成员</a> &nbsp;
+        </div>
+    </div>
+    <div class="footer-copy">
+        ©&nbsp;王小治教授课题组&nbsp;(Prof.&nbsp;Xiaozhi&nbsp;Wang&#39;s&nbsp;Lab)&nbsp;·&nbsp;All&nbsp;Rights&nbsp;Reserved
+    </div>
+</div>
