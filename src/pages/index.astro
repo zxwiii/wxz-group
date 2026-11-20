@@ -2,76 +2,123 @@
 import Layout from '../layouts/Layout.astro';
 import newsData from '../data/news.json';
 
-// 获取最新 4 篇动态/通知
-const recentNews = newsData.slice(0, 4);
+// 获取最新 5 篇通知公告
+const recentNews = newsData.slice(0, 5);
+
+// 顶部 Hero 横幅轮播列表
+const heroBanners = [
+  { src: '/images/hengfu/wxz横幅.jpg', alt: '王小治课题组欢迎您的加入 - 扬州大学' },
+  { src: '/images/hengfu/横幅2.png', alt: '先进环境功能材料与水土生态修复创新研究' },
+  { src: '/images/hengfu/横幅4.png', alt: '全球气候变化与土壤生物地球化学循环学术前沿' }
+];
+
+// 左侧科研前沿突破机理图轮播列表 (用户指定圈选的 4 张精选成果图)
+const researchHighlights = [
+  {
+    img: '/images/49_ABUIABACGAAgkoy5twYo0IiF_gYwuAg40gU.jpg',
+    title: '王小治教授、朱兴旺副教授、博士生周港华的研究论文在 Appl. Catal. B-Environ. 发表',
+    link: '/publications'
+  },
+  {
+    img: '/images/16_ABUIABACGAAg7pey1gYogLfshgEw3ww49gY.jpg',
+    title: '单原子功能催化位点构建与水土微污染物界面活化降解机制',
+    link: '/research'
+  },
+  {
+    img: '/images/40_ABUIABACGAAg_dzPsgYojNXBhgQwzgk4ngY.jpg',
+    title: '新型纳米复合光催化体系构建及光驱动 CO₂ 高效转化与重整',
+    link: '/research'
+  },
+  {
+    img: '/images/73_ABUIABACGAAgiJqy1gYo9oS83gEwpww49gY.jpg',
+    title: '界面电荷高效传输与光电催化微污染深度氧化机理研究',
+    link: '/publications'
+  }
+];
 ---
 
 <Layout title="主页" activeNav="首页">
-  <!-- 1. 顶部大气质感学术全宽横幅 (Banner Hero) -->
-  <section class="home-banner-wrap">
-    <div class="banner-inner-box">
-      <img 
-        src="/images/hengfu/wxz横幅.jpg" 
-        alt="王小治课题组欢迎您的加入 - 扬州大学环境科学与工程学院" 
-        class="banner-img-fluid"
-        loading="eager"
-      />
+  <!-- 1. 顶部 Hero Banner 多图平滑轮播 (支持自动+箭头+圆点切换) -->
+  <section class="home-hero-slider-wrap" id="heroSlider">
+    <div class="slider-viewport">
+      {heroBanners.map((b, idx) => (
+        <div class={`hero-slide ${idx === 0 ? 'active' : ''}`} data-index={idx}>
+          <img src={b.src} alt={b.alt} class="hero-banner-img" loading={idx === 0 ? 'eager' : 'lazy'} />
+        </div>
+      ))}
+    </div>
+
+    <!-- 左右悬浮切换按钮 -->
+    <button class="slider-arrow prev" id="heroPrev" aria-label="上一张横幅">‹</button>
+    <button class="slider-arrow next" id="heroNext" aria-label="下一张横幅">›</button>
+
+    <!-- 底部圆点指示器 -->
+    <div class="slider-dots" id="heroDots">
+      {heroBanners.map((_, idx) => (
+        <span class={`dot ${idx === 0 ? 'active' : ''}`} data-target={idx}></span>
+      ))}
     </div>
   </section>
 
-  <!-- 2. 横幅下方：科研机理图解 & 通知公告双栏看板 (完全还原用户参考布局) -->
-  <section class="home-highlights-section">
-    <div class="highlights-container">
-      <!-- 左栏：高水平科研突破机理图 -->
-      <div class="highlight-feature-card">
-        <div class="card-bar-title">
-          <span class="bar-icon">🔬</span>
-          <h3>前沿科研突破与机理探索</h3>
-          <a href="/research" class="bar-more" title="查看全部研究方向">了解更多 ›</a>
+  <!-- 2. 横幅下方：左侧科研突破图片轮播 + 右侧通知公告 (完全还原实拍版式) -->
+  <section class="home-bulletin-section">
+    <div class="bulletin-container">
+      
+      <!-- 左栏：前沿科研机理图画廊轮播 (对标图2) -->
+      <div class="bulletin-left-card">
+        <div class="sub-header-bar">
+          <span class="sub-bar-tag">前沿科研突破</span>
+          <a href="/research" class="sub-bar-link">more &gt;&gt;</a>
         </div>
-        <div class="feature-content-wrap">
-          <div class="feature-img-box">
-            <img 
-              src="/images/hengfu/横幅2.png" 
-              alt="先进催化材料与界面反应机制" 
-              onerror="this.src='/images/16_ABUIABACGAAg7pey1gYogLfshgEw3ww49gY.jpg'"
-            />
+
+        <div class="research-carousel" id="researchCarousel">
+          <div class="rc-viewport">
+            {researchHighlights.map((item, idx) => (
+              <a href={item.link} class={`rc-slide ${idx === 0 ? 'active' : ''}`} data-rc-index={idx}>
+                <img src={item.img} alt={item.title} class="rc-img" />
+                <div class="rc-caption-bar">
+                  <span class="rc-caption-text">{item.title}</span>
+                  <div class="rc-indicators">
+                    {researchHighlights.map((_, dotIdx) => (
+                      <span class={`rc-dot ${dotIdx === idx ? 'active' : ''}`}></span>
+                    ))}
+                  </div>
+                </div>
+              </a>
+            ))}
           </div>
-          <div class="feature-text-brief">
-            <h4>单原子功能材料与环境高级氧化机制</h4>
-            <p>课题组聚焦单原子催化剂微环境调控、高活性自由基与非自由基协同降解新途径，推动农业面源微污染物深度净化与碳资源转化利用。</p>
-            <div class="feature-tags-strip">
-              <span class="ft-tag">单原子催化</span>
-              <span class="ft-tag">水土微污染阻控</span>
-              <span class="ft-tag">光驱动转化</span>
-            </div>
-          </div>
+
+          <!-- 左右控制按钮 -->
+          <button class="rc-btn prev" id="rcPrev" aria-label="上一个科研成果">‹</button>
+          <button class="rc-btn next" id="rcNext" aria-label="下一个科研成果">›</button>
         </div>
       </div>
 
-      <!-- 右栏：通知公告与组内动态 -->
-      <div class="highlight-news-card">
-        <div class="card-bar-title">
-          <span class="bar-icon news">📢</span>
-          <h3>通知公告与最新动态</h3>
-          <a href="/news" class="bar-more" title="查看全部新闻动态">更多新闻 ›</a>
+      <!-- 右栏：通知公告与团队动态 -->
+      <div class="bulletin-right-card">
+        <div class="sub-header-bar">
+          <span class="sub-bar-tag news">通知公告</span>
+          <a href="/news" class="sub-bar-link">more &gt;&gt;</a>
         </div>
-        <ul class="home-news-list">
+
+        <ul class="bulletin-news-list">
           {recentNews.map(item => (
-            <li class="news-list-item">
-              <span class="news-badge-dot">•</span>
-              <a href={`/news/${item.slug}`} class="news-item-title" title={item.title}>
+            <li class="b-news-item">
+              <span class="b-news-dot">•</span>
+              <a href={`/news/${item.slug}`} class="b-news-title" title={item.title}>
                 {item.title}
               </a>
-              <span class="news-item-date">{item.date}</span>
+              <span class="b-news-date">{item.date}</span>
             </li>
           ))}
         </ul>
-        <div class="home-quick-actions">
-          <a href="/joinus" class="quick-action-btn primary">诚邀博士后与研究生 ›</a>
-          <a href="/publications" class="quick-action-btn outline">浏览代表作 (200+篇) ›</a>
+
+        <div class="bulletin-quick-actions">
+          <a href="/joinus" class="b-btn recruit">诚邀博士后与研究生 ›</a>
+          <a href="/publications" class="b-btn papers">浏览代表作 ›</a>
         </div>
       </div>
+
     </div>
   </section>
 
@@ -564,166 +611,295 @@ const recentNews = newsData.slice(0, 4);
 </Layout>
 
 <style>
-  /* 1. 顶部全宽横幅 */
-  .home-banner-wrap {
+  /* =========================================
+     1. 顶部 Hero Banner 轮播器 (多图切换)
+     ========================================= */
+  .home-hero-slider-wrap {
     width: 100%;
-    background: #8b0000;
-    line-height: 0;
+    position: relative;
+    background: #7f1d1d;
     overflow: hidden;
-    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.12);
+    line-height: 0;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
   }
-  .banner-inner-box {
-    max-width: 100%;
-    margin: 0 auto;
-  }
-  .banner-img-fluid {
+  .slider-viewport {
+    position: relative;
     width: 100%;
-    height: auto;
-    display: block;
-    max-height: 380px;
-    object-fit: cover;
-    object-position: center top;
+    height: 380px;
   }
-  @media (max-width: 768px) {
-    .banner-img-fluid {
-      min-height: 120px;
-    }
+  @media (max-width: 1024px) {
+    .slider-viewport { height: 280px; }
+  }
+  @media (max-width: 640px) {
+    .slider-viewport { height: 160px; }
   }
 
-  /* 2. 学术亮点与通知公告看板 */
-  .home-highlights-section {
+  .hero-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.6s ease, visibility 0.6s ease;
+  }
+  .hero-slide.active {
+    opacity: 1;
+    visibility: visible;
+  }
+  .hero-banner-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+  }
+
+  /* 悬浮切换箭头 */
+  .slider-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 44px;
+    height: 54px;
+    background: rgba(0, 0, 0, 0.35);
+    color: #ffffff;
+    border: none;
+    outline: none;
+    font-size: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 10;
+    transition: all 0.25s ease;
+    user-select: none;
+    line-height: 1;
+  }
+  .slider-arrow:hover {
+    background: rgba(0, 0, 0, 0.65);
+    color: #38bdf8;
+  }
+  .slider-arrow.prev { left: 0; border-radius: 0 6px 6px 0; }
+  .slider-arrow.next { right: 0; border-radius: 6px 0 0 6px; }
+
+  /* 底部圆点指示器 */
+  .slider-dots {
+    position: absolute;
+    bottom: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
+    z-index: 10;
+  }
+  .slider-dots .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.45);
+    cursor: pointer;
+    transition: all 0.25s ease;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+  }
+  .slider-dots .dot.active {
+    background: #ffffff;
+    width: 24px;
+    border-radius: 5px;
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+  }
+
+  /* =========================================
+     2. 学术看板：左侧机理图画廊 + 右侧通知公告
+     ========================================= */
+  .home-bulletin-section {
     max-width: 1240px;
     margin: 28px auto 10px;
     padding: 0 16px;
   }
-  .highlights-container {
+  .bulletin-container {
     display: grid;
-    grid-template-columns: 1.2fr 1fr;
+    grid-template-columns: 1.25fr 1fr;
     gap: 22px;
   }
-  @media (max-width: 900px) {
-    .highlights-container {
+  @media (max-width: 960px) {
+    .bulletin-container {
       grid-template-columns: 1fr;
     }
   }
 
-  .highlight-feature-card,
-  .highlight-news-card {
+  .bulletin-left-card,
+  .bulletin-right-card {
     background: #ffffff;
     border: 1px solid #e2e8f0;
-    border-radius: 12px;
-    padding: 18px 20px;
+    border-radius: 10px;
     box-shadow: 0 4px 16px rgba(15, 44, 89, 0.04);
     display: flex;
     flex-direction: column;
+    overflow: hidden;
   }
 
-  .card-bar-title {
+  /* 仿凡科风格标题条 */
+  .sub-header-bar {
     display: flex;
     align-items: center;
-    gap: 8px;
-    padding-bottom: 12px;
-    border-bottom: 2px solid #0f2c59;
-    margin-bottom: 14px;
+    justify-content: space-between;
+    padding: 12px 18px;
+    border-bottom: 2px solid #009688;
+    background: #fafafa;
   }
-  .card-bar-title .bar-icon {
-    font-size: 1.25rem;
-  }
-  .card-bar-title h3 {
-    font-size: 1.15rem;
+  .sub-bar-tag {
+    font-size: 1.05rem;
     font-weight: 800;
-    color: #0f2c59;
-    margin: 0;
-    flex: 1;
+    color: #00897b;
+    letter-spacing: 0.5px;
+    border-left: 4px solid #00897b;
+    padding-left: 10px;
+    line-height: 1.2;
   }
-  .card-bar-title .bar-more {
-    font-size: 0.82rem;
+  .sub-bar-tag.news {
     color: #0284c7;
+    border-left-color: #0284c7;
+  }
+  .sub-header-bar:has(.sub-bar-tag.news) {
+    border-bottom-color: #0284c7;
+  }
+  .sub-bar-link {
+    font-size: 0.82rem;
+    color: #94a3b8;
     text-decoration: none;
-    font-weight: 600;
     transition: color 0.2s;
   }
-  .card-bar-title .bar-more:hover {
-    color: #0369a1;
-    text-decoration: underline;
+  .sub-bar-link:hover {
+    color: #0284c7;
   }
 
-  /* 特色机理图解 */
-  .feature-content-wrap {
+  /* 左侧科研轮播组件 (完全对标图2) */
+  .research-carousel {
+    position: relative;
+    width: 100%;
+    height: 310px;
+    background: #0f172a;
+    overflow: hidden;
+  }
+  .rc-viewport {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+  .rc-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s ease;
+    text-decoration: none;
+    display: block;
+  }
+  .rc-slide.active {
+    opacity: 1;
+    visibility: visible;
+  }
+  .rc-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+  }
+  .rc-caption-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.68);
+    backdrop-filter: blur(4px);
+    padding: 8px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    color: #ffffff;
+  }
+  .rc-caption-text {
+    font-size: 0.85rem;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex: 1;
+    color: #f8fafc;
+  }
+  .rc-indicators {
+    display: flex;
+    gap: 5px;
+    flex-shrink: 0;
+  }
+  .rc-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.4);
+    transition: all 0.2s;
+  }
+  .rc-dot.active {
+    background: #ffffff;
+    width: 16px;
+    border-radius: 3px;
+  }
+
+  /* 科研轮播箭头 */
+  .rc-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 32px;
+    height: 44px;
+    background: rgba(0, 0, 0, 0.35);
+    color: #ffffff;
+    border: none;
+    font-size: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 5;
+    transition: background 0.2s;
+  }
+  .rc-btn:hover {
+    background: rgba(0, 0, 0, 0.7);
+  }
+  .rc-btn.prev { left: 0; border-radius: 0 4px 4px 0; }
+  .rc-btn.next { right: 0; border-radius: 4px 0 0 4px; }
+
+  /* 右侧通知公告列表 */
+  .bulletin-news-list {
+    list-style: none;
+    padding: 14px 18px;
+    margin: 0;
     display: flex;
     flex-direction: column;
     gap: 12px;
     flex: 1;
   }
-  .feature-img-box {
-    width: 100%;
-    height: 165px;
-    border-radius: 8px;
-    overflow: hidden;
-    background: #f1f5f9;
-  }
-  .feature-img-box img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-    transition: transform 0.3s ease;
-  }
-  .feature-img-box:hover img {
-    transform: scale(1.02);
-  }
-  .feature-text-brief h4 {
-    font-size: 1rem;
-    font-weight: 700;
-    color: #0f2c59;
-    margin: 0 0 6px 0;
-  }
-  .feature-text-brief p {
-    font-size: 0.85rem;
-    color: #475569;
-    line-height: 1.55;
-    margin: 0;
-  }
-  .feature-tags-strip {
-    display: flex;
-    gap: 6px;
-    margin-top: 10px;
-    flex-wrap: wrap;
-  }
-  .ft-tag {
-    font-size: 0.72rem;
-    background: #eff6ff;
-    color: #1d4ed8;
-    border: 1px solid #bfdbfe;
-    padding: 2px 8px;
-    border-radius: 4px;
-    font-weight: 600;
-  }
-
-  /* 通知列表 */
-  .home-news-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    flex: 1;
-  }
-  .news-list-item {
+  .b-news-item {
     display: flex;
     align-items: center;
     gap: 8px;
-    font-size: 0.88rem;
-    padding-bottom: 8px;
-    border-bottom: 1px dashed #f1f5f9;
+    font-size: 0.9rem;
+    padding-bottom: 9px;
+    border-bottom: 1px dashed #e2e8f0;
   }
-  .news-badge-dot {
+  .b-news-dot {
     color: #0284c7;
     font-size: 1.1rem;
     line-height: 1;
   }
-  .news-item-title {
+  .b-news-title {
     color: #1e293b;
     text-decoration: none;
     flex: 1;
@@ -732,46 +908,124 @@ const recentNews = newsData.slice(0, 4);
     white-space: nowrap;
     transition: color 0.2s;
   }
-  .news-item-title:hover {
+  .b-news-title:hover {
     color: #0284c7;
+    text-decoration: underline;
   }
-  .news-item-date {
+  .b-news-date {
     color: #94a3b8;
-    font-size: 0.78rem;
+    font-size: 0.8rem;
     white-space: nowrap;
   }
 
-  .home-quick-actions {
+  /* 底部按钮栏 */
+  .bulletin-quick-actions {
     display: flex;
-    gap: 10px;
-    margin-top: 16px;
-    padding-top: 12px;
+    gap: 12px;
+    padding: 12px 18px 16px;
+    background: #f8fafc;
     border-top: 1px solid #f1f5f9;
   }
-  .quick-action-btn {
+  .b-btn {
     flex: 1;
     text-align: center;
     padding: 8px 12px;
     border-radius: 6px;
-    font-size: 0.84rem;
+    font-size: 0.86rem;
     font-weight: 600;
     text-decoration: none;
     transition: all 0.2s;
   }
-  .quick-action-btn.primary {
+  .b-btn.recruit {
     background: #0f2c59;
     color: #ffffff;
   }
-  .quick-action-btn.primary:hover {
+  .b-btn.recruit:hover {
     background: #1e3a8a;
   }
-  .quick-action-btn.outline {
-    background: #f8fafc;
+  .b-btn.papers {
+    background: #ffffff;
     color: #334155;
     border: 1px solid #cbd5e1;
   }
-  .quick-action-btn.outline:hover {
-    background: #f1f5f9;
-    color: #0f2c59;
+  .b-btn.papers:hover {
+    border-color: #0284c7;
+    color: #0284c7;
   }
 </style>
+
+<script is:inline>
+  // 1. 顶部 Hero Banner 自动轮播控制
+  (function initHeroSlider() {
+    const slider = document.getElementById('heroSlider');
+    if (!slider) return;
+    const slides = slider.querySelectorAll('.hero-slide');
+    const dots = slider.querySelectorAll('#heroDots .dot');
+    const btnPrev = document.getElementById('heroPrev');
+    const btnNext = document.getElementById('heroNext');
+    let curIndex = 0;
+    let timer = null;
+
+    function goTo(idx) {
+      slides[curIndex].classList.remove('active');
+      dots[curIndex]?.classList.remove('active');
+      curIndex = (idx + slides.length) % slides.length;
+      slides[curIndex].classList.add('active');
+      dots[curIndex]?.classList.add('active');
+    }
+
+    function startTimer() {
+      stopTimer();
+      timer = setInterval(() => goTo(curIndex + 1), 5000);
+    }
+    function stopTimer() {
+      if (timer) clearInterval(timer);
+    }
+
+    btnPrev?.addEventListener('click', () => { goTo(curIndex - 1); startTimer(); });
+    btnNext?.addEventListener('click', () => { goTo(curIndex + 1); startTimer(); });
+    dots.forEach(d => {
+      d.addEventListener('click', (e) => {
+        const target = parseInt(e.target.dataset.target, 10);
+        goTo(target);
+        startTimer();
+      });
+    });
+
+    slider.addEventListener('mouseenter', stopTimer);
+    slider.addEventListener('mouseleave', startTimer);
+    startTimer();
+  })();
+
+  // 2. 左侧科研成果突破机理图画廊轮播控制
+  (function initResearchCarousel() {
+    const rc = document.getElementById('researchCarousel');
+    if (!rc) return;
+    const slides = rc.querySelectorAll('.rc-slide');
+    const btnPrev = document.getElementById('rcPrev');
+    const btnNext = document.getElementById('rcNext');
+    let rcIndex = 0;
+    let rcTimer = null;
+
+    function goTo(idx) {
+      slides[rcIndex].classList.remove('active');
+      rcIndex = (idx + slides.length) % slides.length;
+      slides[rcIndex].classList.add('active');
+    }
+
+    function startTimer() {
+      stopTimer();
+      rcTimer = setInterval(() => goTo(rcIndex + 1), 4000);
+    }
+    function stopTimer() {
+      if (rcTimer) clearInterval(rcTimer);
+    }
+
+    btnPrev?.addEventListener('click', (e) => { e.preventDefault(); goTo(rcIndex - 1); startTimer(); });
+    btnNext?.addEventListener('click', (e) => { e.preventDefault(); goTo(rcIndex + 1); startTimer(); });
+
+    rc.addEventListener('mouseenter', stopTimer);
+    rc.addEventListener('mouseleave', startTimer);
+    startTimer();
+  })();
+</script>
