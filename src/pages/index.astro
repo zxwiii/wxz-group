@@ -626,13 +626,21 @@ const researchHighlights = [
   .slider-viewport {
     position: relative;
     width: 100%;
-    height: 380px;
+    aspect-ratio: 3.2 / 1;
+    min-height: 180px;
+    max-height: 480px;
   }
   @media (max-width: 1024px) {
-    .slider-viewport { height: 280px; }
+    .slider-viewport {
+      aspect-ratio: 3.2 / 1;
+      min-height: 200px;
+    }
   }
   @media (max-width: 640px) {
-    .slider-viewport { height: 160px; }
+    .slider-viewport {
+      aspect-ratio: 2.8 / 1;
+      min-height: 140px;
+    }
   }
 
   .hero-slide {
@@ -653,11 +661,11 @@ const researchHighlights = [
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: center;
+    object-position: left center;
     display: block;
   }
 
-  /* 横幅悬浮文字 (自适应、支持书法字体与两侧发光圆点支架) */
+  /* 横幅悬浮文字 (自适应安全区，严格限制在右侧 30% 深蓝留白区，绝不遮挡人物) */
   .hero-text-overlay {
     position: absolute;
     top: 50%;
@@ -666,14 +674,14 @@ const researchHighlights = [
     line-height: normal;
     display: flex;
     align-items: center;
-    gap: 14px;
-    padding: 10px 14px;
+    gap: 12px;
+    padding: 8px 10px;
     pointer-events: none;
     box-sizing: border-box;
   }
   .hero-text-overlay.right {
-    right: 4.5%;
-    max-width: 44%;
+    right: 2%;
+    max-width: 29%;
   }
   .hero-text-overlay.center {
     left: 50%;
@@ -683,8 +691,8 @@ const researchHighlights = [
     text-align: center;
   }
   .hero-text-overlay.left {
-    left: 5%;
-    max-width: 44%;
+    left: 4%;
+    max-width: 29%;
   }
 
   .overlay-text-bracket {
@@ -713,35 +721,35 @@ const researchHighlights = [
 
   .overlay-text-content {
     font-family: "STXingkai", "Xingkai SC", "STKaiti", "KaiTi", "楷体", "Microsoft YaHei", serif;
-    font-size: clamp(14px, 2.1vw, 26px);
-    line-height: 1.85;
+    font-size: clamp(12px, 1.4vw, 21px);
+    line-height: 1.75;
     color: #ffffff;
-    letter-spacing: 2.5px;
+    letter-spacing: 1.5px;
     margin: 0;
-    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8), 0 0 12px rgba(15, 23, 42, 0.7);
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.85), 0 0 12px rgba(15, 23, 42, 0.7);
     word-break: break-word;
     font-weight: 500;
   }
 
   @media (max-width: 1024px) {
     .hero-text-overlay.right {
-      right: 3.5%;
-      max-width: 46%;
-      gap: 10px;
+      right: 1.5%;
+      max-width: 30%;
+      gap: 8px;
     }
     .overlay-text-content {
-      font-size: clamp(12px, 2.2vw, 18px);
-      line-height: 1.6;
-      letter-spacing: 1.5px;
+      font-size: clamp(10px, 1.5vw, 15px);
+      line-height: 1.55;
+      letter-spacing: 1px;
     }
   }
 
   @media (max-width: 640px) {
     .hero-text-overlay.right {
-      right: 2%;
-      max-width: 48%;
-      gap: 6px;
-      padding: 4px 6px;
+      right: 1%;
+      max-width: 32%;
+      gap: 5px;
+      padding: 2px 4px;
     }
     .overlay-text-bracket {
       width: 1.5px;
@@ -754,9 +762,9 @@ const researchHighlights = [
     .overlay-text-bracket::before { top: -2px; }
     .overlay-text-bracket::after { bottom: -2px; }
     .overlay-text-content {
-      font-size: clamp(9px, 2.7vw, 12px);
-      line-height: 1.4;
-      letter-spacing: 0.5px;
+      font-size: clamp(7.5px, 2.3vw, 10.5px);
+      line-height: 1.35;
+      letter-spacing: 0.3px;
     }
   }
 
