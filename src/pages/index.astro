@@ -1,16 +1,10 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import newsData from '../data/news.json';
+import heroBanners from '../data/banners.json';
 
 // 获取最新 5 篇通知公告
 const recentNews = newsData.slice(0, 5);
-
-// 顶部 Hero 横幅轮播列表
-const heroBanners = [
-  { src: '/images/hengfu/wxz横幅.jpg', alt: '王小治课题组欢迎您的加入 - 扬州大学' },
-  { src: '/images/hengfu/横幅2.png', alt: '先进环境功能材料与水土生态修复创新研究' },
-  { src: '/images/hengfu/横幅4.png', alt: '全球气候变化与土壤生物地球化学循环学术前沿' }
-];
 
 // 左侧科研前沿突破机理图轮播列表 (用户指定圈选的 4 张精选成果图)
 const researchHighlights = [
@@ -44,6 +38,13 @@ const researchHighlights = [
       {heroBanners.map((b, idx) => (
         <div class={`hero-slide ${idx === 0 ? 'active' : ''}`} data-index={idx}>
           <img src={b.src} alt={b.alt} class="hero-banner-img" loading={idx === 0 ? 'eager' : 'lazy'} />
+          {b.text && (
+            <div class={`hero-text-overlay ${b.textPosition || 'right'}`}>
+              <div class="overlay-text-bracket left"></div>
+              <p class="overlay-text-content">{b.text}</p>
+              <div class="overlay-text-bracket right"></div>
+            </div>
+          )}
         </div>
       ))}
     </div>
@@ -654,6 +655,109 @@ const researchHighlights = [
     object-fit: cover;
     object-position: center;
     display: block;
+  }
+
+  /* 横幅悬浮文字 (自适应、支持书法字体与两侧发光圆点支架) */
+  .hero-text-overlay {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 5;
+    line-height: normal;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 10px 14px;
+    pointer-events: none;
+    box-sizing: border-box;
+  }
+  .hero-text-overlay.right {
+    right: 4.5%;
+    max-width: 44%;
+  }
+  .hero-text-overlay.center {
+    left: 50%;
+    right: auto;
+    transform: translate(-50%, -50%);
+    max-width: 70%;
+    text-align: center;
+  }
+  .hero-text-overlay.left {
+    left: 5%;
+    max-width: 44%;
+  }
+
+  .overlay-text-bracket {
+    width: 2.5px;
+    align-self: stretch;
+    background: #38bdf8;
+    position: relative;
+    flex-shrink: 0;
+    box-shadow: 0 0 8px rgba(56, 189, 248, 0.8);
+    border-radius: 2px;
+  }
+  .overlay-text-bracket::before,
+  .overlay-text-bracket::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #38bdf8;
+    box-shadow: 0 0 6px rgba(56, 189, 248, 0.9);
+  }
+  .overlay-text-bracket::before { top: -4px; }
+  .overlay-text-bracket::after { bottom: -4px; }
+
+  .overlay-text-content {
+    font-family: "STXingkai", "Xingkai SC", "STKaiti", "KaiTi", "楷体", "Microsoft YaHei", serif;
+    font-size: clamp(14px, 2.1vw, 26px);
+    line-height: 1.85;
+    color: #ffffff;
+    letter-spacing: 2.5px;
+    margin: 0;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8), 0 0 12px rgba(15, 23, 42, 0.7);
+    word-break: break-word;
+    font-weight: 500;
+  }
+
+  @media (max-width: 1024px) {
+    .hero-text-overlay.right {
+      right: 3.5%;
+      max-width: 46%;
+      gap: 10px;
+    }
+    .overlay-text-content {
+      font-size: clamp(12px, 2.2vw, 18px);
+      line-height: 1.6;
+      letter-spacing: 1.5px;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .hero-text-overlay.right {
+      right: 2%;
+      max-width: 48%;
+      gap: 6px;
+      padding: 4px 6px;
+    }
+    .overlay-text-bracket {
+      width: 1.5px;
+    }
+    .overlay-text-bracket::before,
+    .overlay-text-bracket::after {
+      width: 5px;
+      height: 5px;
+    }
+    .overlay-text-bracket::before { top: -2px; }
+    .overlay-text-bracket::after { bottom: -2px; }
+    .overlay-text-content {
+      font-size: clamp(9px, 2.7vw, 12px);
+      line-height: 1.4;
+      letter-spacing: 0.5px;
+    }
   }
 
   /* 悬浮切换箭头 */

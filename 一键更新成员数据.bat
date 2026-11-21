@@ -18,7 +18,7 @@ if errorlevel 1 (
 
 echo.
 echo [步骤 2/3] 正在将更新提交并推送到云端仓库 (GitHub)...
-git add members.csv src/data/members.js src/data/members.json public/images/members/
+git add members.csv src/data/ public/images/
 git commit -m "update(members): sync members data and avatars via bat"
 git push origin main
 
