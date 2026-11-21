@@ -1,0 +1,1372 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { membersData } from '../data/members.js';
+
+// 提取轻量级成员索引供前端检索认领（过滤敏感信息，仅保留用于身份认领与回填的必要字段）
+const safeMembersIndex = membersData.map(m => ({
+  id: m.id,
+  category: m.category,
+  name: m.name,
+  title: m.title,
+  grade: m.grade,
+  research: m.research,
+  email: m.email,
+  phone: m.phone,
+  career: m.career,
+  education: m.education,
+  education_list: m.education_list || [],
+  avatar_url: m.avatar_url,
+  update: m.update
+}));
+---
+
+<Layout title="成员信息登记与自助更新 - 王小治课题组" activeNav="members">
+  <!-- 全站统一大气深蓝横幅 -->
+  <div class="page-title-banner">
+    <div class="banner-badge">测试开放版 · 自助信息系统</div>
+    <h1 class="page-title-cn">课题组成员信息登记与自助更新</h1>
+    <p class="page-subtitle-cn">支持在读研究生、毕业校友及教师在线认领本人名片并更新履历、研究方向与照片</p>
+  </div>
+
+  <main class="form-main-container">
+    <!-- 模式切换选项卡 -->
+    <div class="mode-switcher-card">
+      <button type="button" class="mode-tab active" data-mode="update" id="tabUpdate">
+        <span class="tab-icon">✏️</span>
+        <div class="tab-text">
+          <div class="tab-title">我是已有成员 · 更新资料</div>
+          <div class="tab-desc">检索并认领您的现有卡片，安全修改不重名</div>
+        </div>
+      </button>
+      <button type="button" class="mode-tab" data-mode="create" id="tabCreate">
+        <span class="tab-icon">🆕</span>
+        <div class="tab-text">
+          <div class="tab-title">我是新入组师生 · 新建名片</div>
+          <div class="tab-desc">课题组名录中暂无您的记录时选择此项</div>
+        </div>
+      </button>
+    </div>
+
+    <!-- 第一步：已有成员检索与防重名认领区（仅在 update 模式显示） -->
+    <section class="step-card" id="searchClaimSection">
+      <div class="step-header">
+        <span class="step-num">01</span>
+        <div>
+          <h2 class="step-title">检索并认领您的个人名片（防重名校验）</h2>
+          <p class="step-sub">请输入您的姓名关键词，从下方列表中核对「姓名 + 年级身份 + 研究方向」后点击认领</p>
+        </div>
+      </div>
+
+      <div class="search-input-wrap">
+        <span class="search-icon">🔍</span>
+        <input 
+          type="text" 
+          id="memberSearchInput" 
+          placeholder="输入姓名开始检索（例如：郭伯厚、张含、徐锦泽...）" 
+          autocomplete="off"
+        />
+        <button type="button" id="clearSearchBtn" class="clear-btn" style="display: none;">✕</button>
+      </div>
+
+      <!-- 搜索结果候选网格 -->
+      <div id="searchResultsBox" class="search-results-grid" style="display: none;"></div>
+
+      <!-- 已锁定身份提示条 -->
+      <div id="claimedBanner" class="claimed-identity-banner" style="display: none;">
+        <div class="claimed-left">
+          <img id="claimedAvatarSmall" src="/images/members/default_avatar.jpg" alt="已认领头像" />
+          <div>
+            <div class="claimed-tag-line">
+              <span class="lock-badge">🔒 已锁定本人档案</span>
+              <span id="claimedIdCode" class="id-code-pill">ID: m_xx</span>
+            </div>
+            <div class="claimed-name-line">
+              <strong id="claimedNameDisplay">姓名</strong>
+              <span id="claimedTitleDisplay" class="claimed-title-pill">2025级硕士生</span>
+            </div>
+          </div>
+        </div>
+        <button type="button" id="reselectBtn" class="reselect-btn">重新选择其他人</button>
+      </div>
+    </section>
+
+    <!-- 第二步：表单填报主体区 -->
+    <form id="memberProfileForm" class="step-card">
+      <div class="step-header">
+        <span class="step-num" id="formStepNum">02</span>
+        <div>
+          <h2 class="step-title" id="formStepTitle">完善与核对个人资料</h2>
+          <p class="step-sub">带 <span class="req">*</span> 号为必填项；已有内容已为您自动回填，仅修改变动部分即可</p>
+        </div>
+      </div>
+
+      <div class="form-layout-split">
+        <!-- 左侧：头像上传与实时预览 -->
+        <div class="avatar-upload-panel">
+          <div class="avatar-preview-frame">
+            <img id="avatarPreviewImg" src="/images/members/default_avatar.jpg" alt="个人头像预览" />
+            <div class="avatar-overlay-hint">建议 1:1 或 3:4 清晰正装/生活照</div>
+          </div>
+          <label for="avatarFileInput" class="upload-photo-btn">
+            📷 选择新照片上传
+          </label>
+          <input type="file" id="avatarFileInput" accept="image/jpeg,image/png,image/webp" style="display: none;" />
+          <div id="photoCompressInfo" class="compress-info">自动在本地压缩为轻量高清 JPG</div>
+        </div>
+
+        <!-- 右侧：结构化表单字段 -->
+        <div class="fields-grid">
+          <input type="hidden" id="fieldId" name="id" />
+
+          <div class="field-group">
+            <label for="fieldName">姓名 <span class="req">*</span></label>
+            <input type="text" id="fieldName" required placeholder="请输入真实姓名" />
+          </div>
+
+          <div class="field-group">
+            <label for="fieldCategory">成员类别 <span class="req">*</span></label>
+            <select id="fieldCategory" required>
+              <option value="在读研究生">在读研究生（硕士 / 博士）</option>
+              <option value="校友">毕业校友</option>
+              <option value="教师">教师</option>
+            </select>
+          </div>
+
+          <div class="field-group">
+            <label for="fieldRoleType">攻读学位 / 身份类型 <span class="req">*</span></label>
+            <select id="fieldRoleType">
+              <option value="master">硕士研究生（编号 m_ 开头）</option>
+              <option value="phd">博士研究生（编号 p_ 开头 · 列表置顶）</option>
+              <option value="alumni">已毕业校友</option>
+              <option value="faculty">课题组教师</option>
+            </select>
+          </div>
+
+          <div class="field-group">
+            <label for="fieldGrade">年级 / 入学届别 <span class="req">*</span></label>
+            <input type="text" id="fieldGrade" required placeholder="如：2025级、2026级、在职" />
+          </div>
+
+          <div class="field-group">
+            <label for="fieldTitle">展示身份头衔（用于防重名识别） <span class="req">*</span></label>
+            <input type="text" id="fieldTitle" required placeholder="如：2025级硕士生、2025级博士、副教授" />
+          </div>
+
+          <div class="field-group">
+            <label for="fieldCareer">当前状态 / 毕业去向</label>
+            <input type="text" id="fieldCareer" placeholder="在读填“在籍”，校友可填“已毕业”或具体就业深造单位" />
+          </div>
+
+          <div class="field-group full-width">
+            <label for="fieldResearch">研究方向</label>
+            <input type="text" id="fieldResearch" placeholder="例如：土壤重金属钝化修复、单原子光催化材料（多个方向用顿号分隔）" />
+          </div>
+
+          <div class="field-group">
+            <label for="fieldEmail">电子邮箱</label>
+            <input type="email" id="fieldEmail" placeholder="常用学术或个人邮箱" />
+          </div>
+
+          <div class="field-group">
+            <label for="fieldPhone">手机号码</label>
+            <input type="tel" id="fieldPhone" placeholder="11位手机号码（选填）" pattern="[0-9\-\+\s]{7,20}" />
+          </div>
+        </div>
+      </div>
+
+      <!-- 教育与培养经历（动态结构化添加器，杜绝格式错乱） -->
+      <div class="edu-builder-section">
+        <div class="edu-builder-header">
+          <div>
+            <label class="edu-section-label">教育与培养经历（按时间从早到晚添加）</label>
+            <p class="edu-section-hint">系统会自动规范连字符与标点，彻底防止手机端年份断行</p>
+          </div>
+          <button type="button" id="addEduRowBtn" class="add-edu-btn">+ 添加一段经历</button>
+        </div>
+
+        <div id="eduRowsContainer" class="edu-rows-list">
+          <!-- JS 动态渲染每一段教育经历 -->
+        </div>
+      </div>
+
+      <!-- 安全验证与提交按钮区 -->
+      <div class="submit-footer-bar">
+        <div class="passcode-box">
+          <label for="teamPasscode">课题组提交口令：</label>
+          <input type="password" id="teamPasscode" placeholder="默认测试口令：yzu" value="yzu" />
+        </div>
+        <button type="submit" class="submit-primary-btn" id="submitFormBtn">
+          ✨ 生成名片预览并提交更新
+        </button>
+      </div>
+    </form>
+  </main>
+
+  <!-- 结果预览与导出弹窗 -->
+  <div id="resultModal" class="modal-backdrop" style="display: none;">
+    <div class="modal-card">
+      <div class="modal-head">
+        <h3>✅ 资料核验通过 · 名片实时效果预览</h3>
+        <button type="button" id="closeModalBtn" class="modal-close">✕</button>
+      </div>
+      
+      <div class="modal-body">
+        <div class="cloud-status-box" id="cloudStatusBox">
+          <span class="status-spinner">⏳</span> 正在尝试同步至云端...
+        </div>
+
+        <!-- 模拟 /members 页面上的真实卡片渲染 -->
+        <div class="preview-card-wrapper">
+          <div class="sim-student-card">
+            <div class="sim-head">
+              <img id="simAvatar" src="/images/members/default_avatar.jpg" alt="" />
+              <div>
+                <div class="sim-name-row">
+                  <span id="simName" class="sim-name">姓名</span>
+                  <span id="simGrade" class="sim-grade-pill">2025级</span>
+                </div>
+                <div id="simSub" class="sim-sub">2025级硕士生 · 在籍</div>
+              </div>
+            </div>
+            <div class="sim-research">
+              <strong>研究方向：</strong><span id="simResearchVal">暂无</span>
+            </div>
+            <div class="sim-edu-box">
+              <div class="sim-edu-title">教育与培养经历</div>
+              <div id="simEduList" class="sim-edu-list"></div>
+            </div>
+            <div class="sim-footer">
+              <div id="simContact" class="sim-contact"></div>
+              <div id="simUpdate" class="sim-update">更新于 2026.11</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 标准 CSV / 头像导出工具（零后端直连时的万能保底方案） -->
+        <div class="export-tools-box">
+          <div class="export-title">📋 标准化数据凭证（可直接复制给助研或粘贴至 members.csv）</div>
+          <pre id="csvRowOutput" class="csv-code-block"></pre>
+          <div class="export-actions">
+            <button type="button" id="copyCsvBtn" class="action-btn secondary">📋 一键复制该行数据</button>
+            <a id="downloadAvatarBtn" href="#" download="avatar.jpg" class="action-btn primary" style="display: none;">⬇️ 下载标准尺寸头像 (<span id="dlAvatarName">id.jpg</span>)</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<script define:vars={{ safeMembersIndex }}>
+  // ==============================================================
+  // 课题组成员自助认领与防重名表单核心逻辑
+  // ==============================================================
+  const membersList = safeMembersIndex || [];
+  let currentMode = 'update'; // 'update' | 'create'
+  let selectedMember = null;
+  let compressedAvatarDataUrl = null;
+
+  // DOM 引用
+  const tabUpdate = document.getElementById('tabUpdate');
+  const tabCreate = document.getElementById('tabCreate');
+  const searchClaimSection = document.getElementById('searchClaimSection');
+  const searchInput = document.getElementById('memberSearchInput');
+  const clearSearchBtn = document.getElementById('clearSearchBtn');
+  const searchResultsBox = document.getElementById('searchResultsBox');
+  const claimedBanner = document.getElementById('claimedBanner');
+  const reselectBtn = document.getElementById('reselectBtn');
+
+  const formStepNum = document.getElementById('formStepNum');
+  const fieldId = document.getElementById('fieldId');
+  const fieldName = document.getElementById('fieldName');
+  const fieldCategory = document.getElementById('fieldCategory');
+  const fieldRoleType = document.getElementById('fieldRoleType');
+  const fieldGrade = document.getElementById('fieldGrade');
+  const fieldTitle = document.getElementById('fieldTitle');
+  const fieldCareer = document.getElementById('fieldCareer');
+  const fieldResearch = document.getElementById('fieldResearch');
+  const fieldEmail = document.getElementById('fieldEmail');
+  const fieldPhone = document.getElementById('fieldPhone');
+
+  const avatarFileInput = document.getElementById('avatarFileInput');
+  const avatarPreviewImg = document.getElementById('avatarPreviewImg');
+  const photoCompressInfo = document.getElementById('photoCompressInfo');
+  const eduRowsContainer = document.getElementById('eduRowsContainer');
+  const addEduRowBtn = document.getElementById('addEduRowBtn');
+
+  // 1. 模式切换逻辑
+  function switchMode(mode) {
+    currentMode = mode;
+    if (mode === 'update') {
+      tabUpdate.classList.add('active');
+      tabCreate.classList.remove('active');
+      searchClaimSection.style.display = 'block';
+      formStepNum.textContent = '02';
+      if (!selectedMember) {
+        resetFormFields();
+      }
+    } else {
+      tabCreate.classList.add('active');
+      tabUpdate.classList.remove('active');
+      searchClaimSection.style.display = 'none';
+      formStepNum.textContent = '01';
+      selectedMember = null;
+      resetFormFields();
+      // 赋予新成员默认初始值
+      fieldCategory.value = '在读研究生';
+      fieldRoleType.value = 'master';
+      fieldCareer.value = '在籍';
+      fieldId.value = '';
+      addEduRow('', '', '', '');
+    }
+  }
+
+  tabUpdate.addEventListener('click', () => switchMode('update'));
+  tabCreate.addEventListener('click', () => switchMode('create'));
+
+  // 2. 检索与防重名认领逻辑
+  function renderSearchResults(query) {
+    const q = query.trim().toLowerCase();
+    if (!q) {
+      searchResultsBox.style.display = 'none';
+      clearSearchBtn.style.display = 'none';
+      return;
+    }
+    clearSearchBtn.style.display = 'block';
+
+    const matched = membersList.filter(m =>
+      m.name.toLowerCase().includes(q) ||
+      (m.title && m.title.toLowerCase().includes(q)) ||
+      (m.grade && m.grade.toLowerCase().includes(q))
+    );
+
+    if (matched.length === 0) {
+      searchResultsBox.innerHTML = `
+        <div class="no-match-tip">
+          未找到与 "<strong>${escapeHtml(query)}</strong>" 匹配的记录。如果您是新入组同学，请点击上方「我是新入组师生 · 新建名片」。
+        </div>`;
+      searchResultsBox.style.display = 'block';
+      return;
+    }
+
+    searchResultsBox.innerHTML = matched.map(m => `
+      <div class="candidate-card" data-id="${escapeHtml(m.id)}">
+        <img src="${m.avatar_url || '/images/members/default_avatar.jpg'}" onerror="this.src='/images/members/default_avatar.jpg'" alt="${escapeHtml(m.name)}" />
+        <div class="cand-info">
+          <div class="cand-top">
+            <span class="cand-name">${escapeHtml(m.name)}</span>
+            <span class="cand-cat-tag">${escapeHtml(m.category)}</span>
+          </div>
+          <div class="cand-title-row">身份：<strong>${escapeHtml(m.title || m.grade || '未注明')}</strong></div>
+          <div class="cand-research">方向：${escapeHtml(m.research || '暂无')}</div>
+        </div>
+        <button type="button" class="claim-btn">认领并修改</button>
+      </div>
+    `).join('');
+    searchResultsBox.style.display = 'grid';
+
+    // 绑定认领事件
+    searchResultsBox.querySelectorAll('.candidate-card').forEach(card => {
+      card.addEventListener('click', () => {
+        const id = card.getAttribute('data-id');
+        const member = membersList.find(item => item.id === id);
+        if (member) claimMember(member);
+      });
+    });
+  }
+
+  searchInput.addEventListener('input', (e) => renderSearchResults(e.target.value));
+  clearSearchBtn.addEventListener('click', () => {
+    searchInput.value = '';
+    renderSearchResults('');
+  });
+
+  // 认领并回填数据（严格绑定唯一 ID，杜绝重名误操作）
+  function claimMember(m) {
+    selectedMember = m;
+    searchResultsBox.style.display = 'none';
+    searchInput.parentElement.style.display = 'none';
+    claimedBanner.style.display = 'flex';
+
+    document.getElementById('claimedAvatarSmall').src = m.avatar_url || '/images/members/default_avatar.jpg';
+    document.getElementById('claimedIdCode').textContent = `唯一ID: ${m.id}`;
+    document.getElementById('claimedNameDisplay').textContent = m.name;
+    document.getElementById('claimedTitleDisplay').textContent = `${m.category} · ${m.title || m.grade || ''}`;
+
+    // 自动回填所有表单字段
+    fieldId.value = m.id;
+    fieldName.value = m.name;
+    fieldCategory.value = m.category || '在读研究生';
+    if (m.category === '教师') fieldRoleType.value = 'faculty';
+    else if (m.category === '校友') fieldRoleType.value = 'alumni';
+    else if (m.id.startsWith('p_')) fieldRoleType.value = 'phd';
+    else fieldRoleType.value = 'master';
+
+    fieldGrade.value = m.grade || '';
+    fieldTitle.value = m.title || '';
+    fieldCareer.value = m.career || (m.category === '校友' ? '已毕业' : '在籍');
+    fieldResearch.value = (m.research && m.research !== '暂无') ? m.research : '';
+    fieldEmail.value = m.email || '';
+    fieldPhone.value = m.phone || '';
+
+    avatarPreviewImg.src = m.avatar_url || '/images/members/default_avatar.jpg';
+    compressedAvatarDataUrl = null;
+    photoCompressInfo.textContent = '当前沿用现有照片（如需更换请点击上方按钮）';
+
+    // 回填教育经历
+    eduRowsContainer.innerHTML = '';
+    const list = (m.education_list && m.education_list.length > 0)
+      ? m.education_list
+      : (m.education ? m.education.split(/[\r\n]+/).filter(Boolean) : []);
+
+    if (list.length > 0) {
+      list.forEach(item => {
+        const parsed = parseEduString(item);
+        addEduRow(parsed.time, parsed.school, parsed.major, parsed.mentor);
+      });
+    } else {
+      addEduRow('', '', '', '');
+    }
+  }
+
+  reselectBtn.addEventListener('click', () => {
+    selectedMember = null;
+    claimedBanner.style.display = 'none';
+    searchInput.parentElement.style.display = 'flex';
+    searchInput.value = '';
+    searchInput.focus();
+    resetFormFields();
+  });
+
+  function resetFormFields() {
+    fieldId.value = '';
+    fieldName.value = '';
+    fieldGrade.value = '';
+    fieldTitle.value = '';
+    fieldCareer.value = '';
+    fieldResearch.value = '';
+    fieldEmail.value = '';
+    fieldPhone.value = '';
+    avatarPreviewImg.src = '/images/members/default_avatar.jpg';
+    compressedAvatarDataUrl = null;
+    eduRowsContainer.innerHTML = '';
+  }
+
+  // 3. 结构化教育经历拆分与动态行管理
+  function parseEduString(str) {
+    // 尝试匹配: "2022.09-2025.06，扬州大学，资源与环境专业，导师：王小治教授"
+    const clean = str.trim();
+    const parts = clean.split(/[，,]/).map(s => s.trim()).filter(Boolean);
+    let time = '', school = '', major = '', mentor = '';
+    if (parts.length >= 1 && /^\d{4}/.test(parts[0])) {
+      time = parts[0];
+      school = parts[1] || '';
+      major = parts[2] || '';
+      const rest = parts.slice(3).join('，');
+      mentor = rest.replace(/^导师[：:]\s*/, '');
+    } else {
+      school = clean;
+    }
+    return { time, school, major, mentor };
+  }
+
+  function addEduRow(time = '', school = '', major = '', mentor = '') {
+    const row = document.createElement('div');
+    row.className = 'edu-builder-row';
+    row.innerHTML = `
+      <input type="text" class="edu-in-time" placeholder="起止年月 (如 2024.09-至今)" value="${escapeHtml(time)}" />
+      <input type="text" class="edu-in-school" placeholder="就读院校 / 单位 (如 扬州大学)" value="${escapeHtml(school)}" />
+      <input type="text" class="edu-in-major" placeholder="专业方向 (如 资源与环境)" value="${escapeHtml(major)}" />
+      <input type="text" class="edu-in-mentor" placeholder="导师姓名 (如 王小治教授)" value="${escapeHtml(mentor)}" />
+      <button type="button" class="remove-edu-btn" title="删除此段经历">✕</button>
+    `;
+    row.querySelector('.remove-edu-btn').addEventListener('click', () => {
+      if (eduRowsContainer.children.length > 1) {
+        row.remove();
+      } else {
+        row.querySelectorAll('input').forEach(inp => inp.value = '');
+      }
+    });
+    eduRowsContainer.appendChild(row);
+  }
+
+  addEduRowBtn.addEventListener('click', () => addEduRow('', '', '', ''));
+  // 初始化默认空行
+  if (eduRowsContainer.children.length === 0) {
+    addEduRow('', '', '', '');
+  }
+
+  // 4. 头像客户端自动压缩处理（支持手机相册大图秒压缩为 < 80KB 高清 JPEG）
+  avatarFileInput.addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+      const img = new Image();
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        const MAX_SIZE = 500;
+        let w = img.width;
+        let h = img.height;
+        if (w > h && w > MAX_SIZE) {
+          h = Math.round(h * (MAX_SIZE / w));
+          w = MAX_SIZE;
+        } else if (h >= w && h > MAX_SIZE) {
+          w = Math.round(w * (MAX_SIZE / h));
+          h = MAX_SIZE;
+        }
+        canvas.width = w;
+        canvas.height = h;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, w, h);
+        compressedAvatarDataUrl = canvas.toDataURL('image/jpeg', 0.85);
+        avatarPreviewImg.src = compressedAvatarDataUrl;
+        const kb = Math.round((compressedAvatarDataUrl.length * 0.75) / 1024);
+        photoCompressInfo.innerHTML = `<span style="color:#059669;font-weight:700;">✅ 已压缩优化为 ${w}×${h}px (${kb} KB)</span>`;
+      };
+      img.src = ev.target.result;
+    };
+    reader.readAsDataURL(file);
+  });
+
+  // 5. 表单提交与实时预览渲染
+  document.getElementById('memberProfileForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    if (currentMode === 'update' && !selectedMember) {
+      alert('请先在第一步中检索并点击认领您自己的名片记录（防止重名误改），如果是新成员请切换到「新建名片」模式！');
+      searchInput.focus();
+      return;
+    }
+
+    const passcode = document.getElementById('teamPasscode').value.trim();
+    if (!passcode) {
+      alert('请输入课题组提交口令！');
+      return;
+    }
+
+    // 组装教育经历字符串
+    const eduItems = [];
+    eduRowsContainer.querySelectorAll('.edu-builder-row').forEach(row => {
+      const t = row.querySelector('.edu-in-time').value.trim().replace(/\s+/g, '');
+      const s = row.querySelector('.edu-in-school').value.trim();
+      const m = row.querySelector('.edu-in-major').value.trim();
+      const mt = row.querySelector('.edu-in-mentor').value.trim();
+      if (t || s || m || mt) {
+        let line = [t, s, m].filter(Boolean).join('，');
+        if (mt) line += (line ? '，' : '') + '导师：' + mt;
+        eduItems.push(line);
+      }
+    });
+
+    const now = new Date();
+    const updateStr = `${now.getFullYear()}.${String(now.getMonth() + 1).padStart(2, '0')}`;
+
+    // 确定 ID（更新沿用原 ID，新建按身份前缀生成唯一 ID）
+    let finalId = fieldId.value.trim();
+    if (!finalId) {
+      const prefix = fieldRoleType.value === 'phd' ? 'p_' : (fieldRoleType.value === 'faculty' ? 'faculty_' : 'm_');
+      finalId = `${prefix}${now.getFullYear().toString().slice(-2)}${String(now.getMonth() + 1).padStart(2, '0')}${String(now.getDate()).padStart(2, '0')}_${Math.floor(100 + Math.random() * 900)}`;
+    }
+
+    const avatarPath = compressedAvatarDataUrl
+      ? `/images/members/${finalId}.jpg`
+      : (selectedMember?.avatar_url || '/images/members/default_avatar.jpg');
+
+    const payload = {
+      mode: currentMode,
+      passcode,
+      member: {
+        id: finalId,
+        category: fieldCategory.value,
+        name: fieldName.value.trim(),
+        title: fieldTitle.value.trim(),
+        grade: fieldGrade.value.trim(),
+        research: fieldResearch.value.trim() || '暂无',
+        email: fieldEmail.value.trim(),
+        phone: fieldPhone.value.trim(),
+        career: fieldCareer.value.trim() || (fieldCategory.value === '校友' ? '已毕业' : '在籍'),
+        education: eduItems.join('\n'),
+        homepage_url: '',
+        avatar_url: avatarPath,
+        update: updateStr
+      },
+      avatarBase64: compressedAvatarDataUrl
+    };
+
+    // 渲染名片实时预览弹窗
+    showResultModal(payload, eduItems);
+  });
+
+  async function showResultModal(payload, eduItems) {
+    const m = payload.member;
+    const modal = document.getElementById('resultModal');
+    modal.style.display = 'flex';
+
+    document.getElementById('simAvatar').src = payload.avatarBase64 || m.avatar_url;
+    document.getElementById('simName').textContent = m.name;
+    document.getElementById('simGrade').textContent = m.grade || m.title;
+    document.getElementById('simSub').textContent = `${m.title} · ${m.career}`;
+    document.getElementById('simResearchVal').textContent = m.research;
+    document.getElementById('simUpdate').textContent = `更新于 ${m.update}`;
+
+    const simEduList = document.getElementById('simEduList');
+    simEduList.innerHTML = eduItems.length > 0
+      ? eduItems.map(line => `<div class="sim-edu-item">• ${escapeHtml(line)}</div>`).join('')
+      : '<div style="color:#94a3b8;font-size:12px;">暂无经历记录</div>';
+
+    const contactParts = [];
+    if (m.email) contactParts.push(`<span>✉️ ${escapeHtml(m.email)}</span>`);
+    if (m.phone) contactParts.push(`<span>📞 ${escapeHtml(m.phone)}</span>`);
+    document.getElementById('simContact').innerHTML = contactParts.join(' &nbsp; ');
+
+    // 生成标准 CSV 行（精确转义引号与换行）
+    const csvCols = [
+      m.id, m.category, m.name, m.title, m.grade, m.research,
+      m.email, m.phone, m.career, m.education, m.homepage_url, m.avatar_url, m.update
+    ].map(val => {
+      const s = String(val || '');
+      return (s.includes(',') || s.includes('"') || s.includes('\n'))
+        ? `"${s.replace(/"/g, '""')}"`
+        : s;
+    });
+    document.getElementById('csvRowOutput').textContent = csvCols.join(',');
+
+    // 提供头像下载按钮
+    const dlBtn = document.getElementById('downloadAvatarBtn');
+    if (payload.avatarBase64) {
+      dlBtn.href = payload.avatarBase64;
+      dlBtn.download = `${m.id}.jpg`;
+      document.getElementById('dlAvatarName').textContent = `${m.id}.jpg`;
+      dlBtn.style.display = 'inline-flex';
+    } else {
+      dlBtn.style.display = 'none';
+    }
+
+    // 尝试自动推送至云端 Serverless 接口（若后端已配置 Worker 则直连入库）
+    const statusBox = document.getElementById('cloudStatusBox');
+    statusBox.className = 'cloud-status-box pending';
+    statusBox.innerHTML = '⏳ 正在向云端安全校验并提交更新...';
+
+    try {
+      const res = await fetch('/api/submit-member', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      if (res.ok) {
+        statusBox.className = 'cloud-status-box success';
+        statusBox.innerHTML = '🎉 <strong>云端同步成功！</strong> 您的最新个人档案已推送至仓库，约 1 分钟后官网自动生效！';
+      } else {
+        throw new Error('接口未激活或测试模式');
+      }
+    } catch (err) {
+      statusBox.className = 'cloud-status-box preview-mode';
+      statusBox.innerHTML = '💡 <strong>当前处于前端测试预览模式</strong>（暂未连接云端自动写入接口）。您可核对下方实时预览效果，点击「一键复制该行数据」发送给课题组管理员直接入库。';
+    }
+  }
+
+  document.getElementById('closeModalBtn').addEventListener('click', () => {
+    document.getElementById('resultModal').style.display = 'none';
+  });
+
+  document.getElementById('copyCsvBtn').addEventListener('click', () => {
+    const text = document.getElementById('csvRowOutput').textContent;
+    navigator.clipboard.writeText(text).then(() => {
+      const btn = document.getElementById('copyCsvBtn');
+      const old = btn.textContent;
+      btn.textContent = '✅ 已复制到剪贴板！';
+      setTimeout(() => btn.textContent = old, 2000);
+    });
+  });
+
+  function escapeHtml(str) {
+    return String(str || '')
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+</script>
+
+<style>
+  .page-title-banner {
+    background: linear-gradient(135deg, #0f2c59 0%, #1e3a8a 100%);
+    color: #ffffff;
+    padding: 3rem 1.5rem 2.5rem 1.5rem;
+    text-align: center;
+  }
+  .banner-badge {
+    display: inline-block;
+    background: rgba(56, 189, 248, 0.2);
+    border: 1px solid rgba(56, 189, 248, 0.5);
+    color: #bae6fd;
+    font-size: 0.78rem;
+    font-weight: 700;
+    padding: 3px 12px;
+    border-radius: 20px;
+    margin-bottom: 0.75rem;
+    letter-spacing: 0.5px;
+  }
+  .page-title-cn {
+    font-size: 2rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+    letter-spacing: 1.5px;
+  }
+  .page-subtitle-cn {
+    font-size: 0.98rem;
+    color: #cbd5e1;
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  .form-main-container {
+    max-width: 1000px;
+    margin: 2rem auto 4.5rem auto;
+    padding: 0 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    box-sizing: border-box;
+  }
+
+  /* 模式选择卡 */
+  .mode-switcher-card {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+  @media (max-width: 640px) {
+    .mode-switcher-card { grid-template-columns: 1fr; }
+  }
+  .mode-tab {
+    background: #ffffff;
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 1.15rem 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .mode-tab:hover {
+    border-color: #93c5fd;
+  }
+  .mode-tab.active {
+    border-color: #0284c7;
+    background: #f0f9ff;
+    box-shadow: 0 4px 14px rgba(2, 132, 199, 0.12);
+  }
+  .tab-icon { font-size: 1.8rem; }
+  .tab-title {
+    font-size: 1.02rem;
+    font-weight: 800;
+    color: #0f2c59;
+  }
+  .tab-desc {
+    font-size: 0.8rem;
+    color: #64748b;
+    margin-top: 2px;
+  }
+
+  /* 步进式卡片容器 */
+  .step-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 1.85rem 2rem;
+    box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04);
+  }
+  .step-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    border-bottom: 1px solid #f1f5f9;
+    padding-bottom: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  .step-num {
+    background: #0f2c59;
+    color: #ffffff;
+    font-size: 0.95rem;
+    font-weight: 800;
+    padding: 4px 10px;
+    border-radius: 8px;
+    flex-shrink: 0;
+  }
+  .step-title {
+    font-size: 1.18rem;
+    font-weight: 800;
+    color: #0f2c59;
+    margin: 0;
+  }
+  .step-sub {
+    font-size: 0.84rem;
+    color: #64748b;
+    margin: 4px 0 0 0;
+  }
+
+  /* 搜索与候选认领 */
+  .search-input-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+  .search-icon {
+    position: absolute;
+    left: 14px;
+    font-size: 1.05rem;
+  }
+  #memberSearchInput {
+    width: 100%;
+    padding: 0.85rem 2.5rem 0.85rem 2.6rem;
+    font-size: 0.98rem;
+    border: 2px solid #cbd5e1;
+    border-radius: 10px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  #memberSearchInput:focus {
+    border-color: #0284c7;
+  }
+  .clear-btn {
+    position: absolute;
+    right: 12px;
+    background: #e2e8f0;
+    border: none;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    cursor: pointer;
+    color: #475569;
+    font-size: 0.75rem;
+  }
+
+  .search-results-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+    gap: 0.85rem;
+    margin-top: 1rem;
+  }
+  :global(.candidate-card) {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0.85rem;
+    border: 1px solid #cbd5e1;
+    border-radius: 10px;
+    background: #f8fafc;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  :global(.candidate-card:hover) {
+    border-color: #0284c7;
+    background: #f0f9ff;
+    transform: translateY(-2px);
+  }
+  :global(.candidate-card img) {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #ffffff;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    flex-shrink: 0;
+  }
+  :global(.cand-info) {
+    flex: 1;
+    min-width: 0;
+  }
+  :global(.cand-top) {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  :global(.cand-name) {
+    font-weight: 800;
+    color: #0f2c59;
+    font-size: 0.98rem;
+  }
+  :global(.cand-cat-tag) {
+    font-size: 0.7rem;
+    background: #e0f2fe;
+    color: #0369a1;
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-weight: 700;
+  }
+  :global(.cand-title-row) {
+    font-size: 0.8rem;
+    color: #334155;
+    margin-top: 2px;
+  }
+  :global(.cand-research) {
+    font-size: 0.75rem;
+    color: #64748b;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  :global(.claim-btn) {
+    background: #0f2c59;
+    color: #ffffff;
+    border: none;
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-size: 0.76rem;
+    font-weight: 600;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+  :global(.no-match-tip) {
+    grid-column: 1 / -1;
+    padding: 1rem;
+    background: #fefce8;
+    border: 1px solid #fef08a;
+    color: #854d0e;
+    border-radius: 8px;
+    font-size: 0.88rem;
+  }
+
+  /* 已锁定身份卡 */
+  .claimed-identity-banner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #f0fdf4;
+    border: 1px solid #86efac;
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .claimed-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .claimed-left img {
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #ffffff;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  }
+  .claimed-tag-line {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 3px;
+  }
+  .lock-badge {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #15803d;
+    background: #dcfce7;
+    padding: 2px 8px;
+    border-radius: 4px;
+  }
+  .id-code-pill {
+    font-size: 0.74rem;
+    color: #475569;
+    font-family: monospace;
+  }
+  .claimed-name-line {
+    font-size: 1.05rem;
+    color: #0f2c59;
+  }
+  .claimed-title-pill {
+    font-size: 0.85rem;
+    color: #475569;
+    margin-left: 6px;
+  }
+  .reselect-btn {
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 0.82rem;
+    color: #334155;
+    cursor: pointer;
+    font-weight: 600;
+  }
+  .reselect-btn:hover {
+    border-color: #0f2c59;
+  }
+
+  /* 表单布局 */
+  .form-layout-split {
+    display: flex;
+    gap: 2rem;
+    align-items: flex-start;
+  }
+  @media (max-width: 768px) {
+    .form-layout-split { flex-direction: column; align-items: stretch; }
+  }
+  .avatar-upload-panel {
+    width: 210px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  @media (max-width: 768px) {
+    .avatar-upload-panel { width: 100%; }
+  }
+  .avatar-preview-frame {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 4px solid #e0f2fe;
+    box-shadow: 0 4px 12px rgba(15, 44, 89, 0.1);
+    position: relative;
+    margin-bottom: 0.85rem;
+  }
+  .avatar-preview-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .avatar-overlay-hint {
+    font-size: 0.72rem;
+    color: #64748b;
+    margin-top: 6px;
+  }
+  .upload-photo-btn {
+    display: inline-block;
+    background: #f1f5f9;
+    border: 1px solid #cbd5e1;
+    color: #0f2c59;
+    font-size: 0.85rem;
+    font-weight: 700;
+    padding: 8px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .upload-photo-btn:hover {
+    background: #e0f2fe;
+    border-color: #38bdf8;
+  }
+  .compress-info {
+    font-size: 0.74rem;
+    color: #64748b;
+    margin-top: 6px;
+  }
+
+  .fields-grid {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+  @media (max-width: 640px) {
+    .fields-grid { grid-template-columns: 1fr; }
+  }
+  .field-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  .field-group.full-width {
+    grid-column: 1 / -1;
+  }
+  .field-group label {
+    font-size: 0.84rem;
+    font-weight: 700;
+    color: #334155;
+  }
+  .req { color: #ef4444; }
+  .field-group input,
+  .field-group select {
+    padding: 0.65rem 0.85rem;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 0.92rem;
+    color: #0f172a;
+    outline: none;
+    background: #ffffff;
+  }
+  .field-group input:focus,
+  .field-group select:focus {
+    border-color: #0284c7;
+    box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.1);
+  }
+
+  /* 教育经历动态行 */
+  .edu-builder-section {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px dashed #cbd5e1;
+  }
+  .edu-builder-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .edu-section-label {
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: #0f2c59;
+  }
+  .edu-section-hint {
+    font-size: 0.78rem;
+    color: #64748b;
+    margin: 2px 0 0 0;
+  }
+  .add-edu-btn {
+    background: #eff6ff;
+    color: #1d4ed8;
+    border: 1px solid #bfdbfe;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    cursor: pointer;
+  }
+  .add-edu-btn:hover {
+    background: #dbeafe;
+  }
+  .edu-rows-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  :global(.edu-builder-row) {
+    display: grid;
+    grid-template-columns: 1.3fr 1.2fr 1.1fr 1fr auto;
+    gap: 8px;
+    align-items: center;
+    background: #f8fafc;
+    padding: 0.75rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+  }
+  @media (max-width: 820px) {
+    :global(.edu-builder-row) {
+      grid-template-columns: 1fr;
+    }
+  }
+  :global(.edu-builder-row input) {
+    padding: 0.55rem 0.75rem;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  :global(.remove-edu-btn) {
+    background: #fee2e2;
+    color: #dc2626;
+    border: none;
+    width: 30px;
+    height: 30px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+
+  /* 底部提交栏 */
+  .submit-footer-bar {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #e2e8f0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .passcode-box {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.88rem;
+    color: #334155;
+    font-weight: 700;
+  }
+  .passcode-box input {
+    padding: 0.55rem 0.8rem;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    width: 160px;
+  }
+  .submit-primary-btn {
+    background: linear-gradient(135deg, #0f2c59 0%, #0284c7 100%);
+    color: #ffffff;
+    border: none;
+    padding: 0.85rem 2rem;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 800;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(2, 132, 199, 0.25);
+    transition: transform 0.2s;
+  }
+  .submit-primary-btn:hover {
+    transform: translateY(-2px);
+  }
+
+  /* 弹窗预览 */
+  .modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.65);
+    backdrop-filter: blur(4px);
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+  }
+  .modal-card {
+    background: #ffffff;
+    border-radius: 14px;
+    max-width: 620px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+  }
+  .modal-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.1rem 1.5rem;
+    border-bottom: 1px solid #e2e8f0;
+  }
+  .modal-head h3 {
+    margin: 0;
+    font-size: 1.1rem;
+    color: #0f2c59;
+  }
+  .modal-close {
+    background: #f1f5f9;
+    border: none;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+  .modal-body {
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.15rem;
+  }
+  .cloud-status-box {
+    padding: 0.85rem 1rem;
+    border-radius: 8px;
+    font-size: 0.86rem;
+    line-height: 1.5;
+  }
+  .cloud-status-box.pending { background: #f8fafc; border: 1px solid #e2e8f0; color: #475569; }
+  .cloud-status-box.success { background: #f0fdf4; border: 1px solid #86efac; color: #166534; }
+  .cloud-status-box.preview-mode { background: #eff6ff; border: 1px solid #bfdbfe; color: #1e40af; }
+
+  /* 模拟成员页卡片 */
+  .sim-student-card {
+    border: 1px solid #cbd5e1;
+    border-radius: 12px;
+    padding: 1.25rem;
+    background: #ffffff;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.05);
+  }
+  .sim-head {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 0.85rem;
+  }
+  .sim-head img {
+    width: 58px;
+    height: 58px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  .sim-name-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .sim-name { font-size: 1.1rem; font-weight: 800; color: #0f2c59; }
+  .sim-grade-pill {
+    font-size: 0.72rem;
+    background: #e0f2fe;
+    color: #0369a1;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-weight: 700;
+  }
+  .sim-sub { font-size: 0.82rem; color: #059669; font-weight: 600; margin-top: 2px; }
+  .sim-research { font-size: 0.85rem; color: #334155; margin-bottom: 0.75rem; }
+  .sim-edu-box {
+    background: #f8fafc;
+    border: 1px solid #f1f5f9;
+    border-radius: 8px;
+    padding: 0.75rem;
+    margin-bottom: 0.75rem;
+  }
+  .sim-edu-title { font-size: 0.78rem; font-weight: 700; color: #0f2c59; margin-bottom: 4px; }
+  :global(.sim-edu-item) { font-size: 0.8rem; color: #475569; line-height: 1.5; }
+  .sim-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.76rem;
+    color: #64748b;
+  }
+  .sim-update { font-style: italic; color: #94a3b8; }
+
+  .export-tools-box {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 1rem;
+  }
+  .export-title { font-size: 0.82rem; font-weight: 700; color: #334155; margin-bottom: 6px; }
+  .csv-code-block {
+    background: #1e293b;
+    color: #e2e8f0;
+    padding: 0.75rem;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    overflow-x: auto;
+    white-space: pre-wrap;
+    word-break: break-all;
+    margin: 0 0 0.75rem 0;
+  }
+  .export-actions {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+  .action-btn {
+    padding: 7px 14px;
+    border-radius: 6px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    cursor: pointer;
+    text-decoration: none;
+    border: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .action-btn.secondary { background: #e2e8f0; color: #0f2c59; }
+  .action-btn.primary { background: #0284c7; color: #ffffff; }
+
+  @media (max-width: 640px) {
+    .step-card { padding: 1.25rem 1rem; }
+    .page-title-cn { font-size: 1.5rem; }
+  }
+</style>
