@@ -113,7 +113,7 @@ import Layout from '../../layouts/Layout.astro';
         <div class="timeline-category">
           <div class="category-heading">
             <span class="cat-dot"></span>
-            <h4>教育背景与海外访学</h4>
+            <h4>高等教育背景</h4>
           </div>
           <div class="timeline-list">
             <div class="timeline-item">
@@ -121,27 +121,6 @@ import Layout from '../../layouts/Layout.astro';
               <div class="time-content">
                 <div class="item-title">中国科学院南京土壤研究所</div>
                 <div class="item-desc">土壤学专业 · 工学博士学位</div>
-              </div>
-            </div>
-            <div class="timeline-item">
-              <div class="time-tag">2010.01 – 2011.01</div>
-              <div class="time-content">
-                <div class="item-title">德国吉森大学（Justus Liebig University Giessen）</div>
-                <div class="item-desc">废物管理与环境研究所 · 访问学者</div>
-              </div>
-            </div>
-            <div class="timeline-item">
-              <div class="time-tag">2007.07 – 2007.09</div>
-              <div class="time-content">
-                <div class="item-title">德国吉森大学（Justus Liebig University Giessen）</div>
-                <div class="item-desc">植物营养研究所 · 访问学者</div>
-              </div>
-            </div>
-            <div class="timeline-item">
-              <div class="time-tag">1998.02 – 1998.11</div>
-              <div class="time-content">
-                <div class="item-title">德国吉森大学（Justus Liebig University Giessen）</div>
-                <div class="item-desc">国际合作交流与访问学者研究</div>
               </div>
             </div>
             <div class="timeline-item">
@@ -161,11 +140,11 @@ import Layout from '../../layouts/Layout.astro';
           </div>
         </div>
 
-        <!-- 工作经历 -->
+        <!-- 工作与访学经历 -->
         <div class="timeline-category">
           <div class="category-heading">
             <span class="cat-dot primary"></span>
-            <h4>工作与任职历程</h4>
+            <h4>工作与学术访学经历</h4>
           </div>
           <div class="timeline-list">
             <div class="timeline-item highlight">
@@ -175,11 +154,25 @@ import Layout from '../../layouts/Layout.astro';
                 <div class="item-desc">教授、博士生导师 · 现任院长 · 环境科学与工程一级学科带头人 · 环境科学研究所所长</div>
               </div>
             </div>
+            <div class="timeline-item visiting">
+              <div class="time-tag">2010.01 – 2011.01</div>
+              <div class="time-content">
+                <div class="item-title">德国吉森大学（Justus Liebig University Giessen） <span class="visiting-pill">海外访学</span></div>
+                <div class="item-desc">废物管理与环境研究所 · 访问学者</div>
+              </div>
+            </div>
             <div class="timeline-item">
               <div class="time-tag">2008.03 – 2013.05</div>
               <div class="time-content">
                 <div class="item-title">扬州大学化学化工学院</div>
                 <div class="item-desc">博士后研究经历（材料与应用化学方向交叉）</div>
+              </div>
+            </div>
+            <div class="timeline-item visiting">
+              <div class="time-tag">2007.07 – 2007.09</div>
+              <div class="time-content">
+                <div class="item-title">德国吉森大学（Justus Liebig University Giessen） <span class="visiting-pill">海外访学</span></div>
+                <div class="item-desc">植物营养研究所 · 访问学者</div>
               </div>
             </div>
             <div class="timeline-item">
@@ -201,6 +194,13 @@ import Layout from '../../layouts/Layout.astro';
               <div class="time-content">
                 <div class="item-title">扬州大学农学院农学系</div>
                 <div class="item-desc">助教、讲师</div>
+              </div>
+            </div>
+            <div class="timeline-item visiting">
+              <div class="time-tag">1998.02 – 1998.11</div>
+              <div class="time-content">
+                <div class="item-title">德国吉森大学（Justus Liebig University Giessen） <span class="visiting-pill">海外访学</span></div>
+                <div class="item-desc">国际合作交流与访问学者研究</div>
               </div>
             </div>
           </div>
@@ -796,6 +796,22 @@ import Layout from '../../layouts/Layout.astro';
     background: #ef4444;
     box-shadow: 0 0 0 2px #fecaca;
   }
+  .timeline-item.visiting::before {
+    background: #0284c7;
+    box-shadow: 0 0 0 2px #bae6fd;
+  }
+  .visiting-pill {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: #0369a1;
+    background: #e0f2fe;
+    border: 1px solid #bae6fd;
+    padding: 1px 6px;
+    border-radius: 4px;
+    margin-left: 6px;
+    vertical-align: middle;
+  }
   .time-tag {
     font-size: 0.8rem;
     font-weight: 700;
@@ -850,22 +866,26 @@ import Layout from '../../layouts/Layout.astro';
     margin: 0;
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
+    gap: 0.85rem;
   }
   .honor-list li {
-    font-size: 0.9rem;
+    font-size: 0.92rem;
     color: #334155;
-    line-height: 1.55;
+    line-height: 1.6;
     position: relative;
-    padding-left: 1.2rem;
+    padding-left: 1.25rem;
+    text-align: left;
   }
   .honor-list li::before {
-    content: '▪';
+    content: '';
     position: absolute;
-    left: 0;
-    color: #0284c7;
-    font-size: 1.1rem;
-    line-height: 1;
+    left: 0.15rem;
+    top: 0.55em;
+    transform: translateY(-50%);
+    width: 6px;
+    height: 6px;
+    background-color: #0f2c59;
+    border-radius: 1.5px;
   }
 
   /* 3. 主讲课程与培养 */
@@ -1079,6 +1099,8 @@ import Layout from '../../layouts/Layout.astro';
     grid-template-columns: repeat(3, 1fr);
     gap: 1.25rem;
     margin-top: 1rem;
+    width: 100%;
+    box-sizing: border-box;
   }
   @media (max-width: 800px) {
     .profile-bottom-nav { grid-template-columns: 1fr; }
@@ -1095,6 +1117,9 @@ import Layout from '../../layouts/Layout.astro';
     color: #1e293b;
     box-shadow: 0 2px 6px rgba(0,0,0,0.02);
     transition: all 0.25s ease;
+    width: 100%;
+    box-sizing: border-box;
+    max-width: 100%;
   }
   .nav-card-link:hover {
     transform: translateY(-2px);
@@ -1102,12 +1127,17 @@ import Layout from '../../layouts/Layout.astro';
     box-shadow: 0 6px 18px rgba(15, 44, 89, 0.08);
   }
   .nav-card-link .icon { font-size: 1.8rem; flex-shrink: 0; }
-  .nav-card-link .text { flex: 1; overflow: hidden; }
+  .nav-card-link .text {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+  }
   .nav-card-link .title {
     font-size: 0.95rem;
     font-weight: 800;
     color: #0f2c59;
     margin-bottom: 2px;
+    line-height: 1.4;
   }
   .nav-card-link .desc {
     font-size: 0.78rem;
@@ -1120,9 +1150,64 @@ import Layout from '../../layouts/Layout.astro';
     font-size: 1.5rem;
     color: #94a3b8;
     font-weight: 300;
+    flex-shrink: 0;
   }
   .nav-card-link:hover .arrow {
     color: #1d4ed8;
     transform: translateX(3px);
+  }
+
+  /* 移动端增强适配：确保 100% 居中对称、无任何横向溢出 */
+  @media (max-width: 768px) {
+    .profile-hero-banner {
+      padding: 2.25rem 1rem 1.75rem 1rem;
+    }
+    .hero-title {
+      font-size: 1.75rem;
+    }
+    .hero-subtitle {
+      font-size: 0.9rem;
+    }
+
+    .profile-content-wrap {
+      padding: 0 1rem;
+      margin-top: -1rem;
+      box-sizing: border-box;
+      width: 100%;
+      overflow-x: hidden;
+    }
+
+    .profile-section-box {
+      padding: 1.35rem 1.1rem;
+      border-radius: 10px;
+      margin-bottom: 1.25rem;
+      box-sizing: border-box;
+      width: 100%;
+    }
+
+    .profile-bottom-nav {
+      grid-template-columns: 1fr;
+      width: 100%;
+      gap: 0.85rem;
+      box-sizing: border-box;
+      margin-top: 0.5rem;
+    }
+
+    .nav-card-link {
+      padding: 1.1rem 1.2rem;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .nav-card-link .desc {
+      white-space: normal;
+      line-height: 1.45;
+      font-size: 0.8rem;
+      margin-top: 3px;
+    }
+
+    .honor-card {
+      padding: 1.2rem 1rem;
+    }
   }
 </style>
